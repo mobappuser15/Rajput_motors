@@ -518,7 +518,7 @@ function Details({ selectedProduct }) {
 																<div className='row'>
 																	<div className='col-6'>
 																		<h4 className='b-detail__main-aside-desc-title'>
-																			Varient Description
+																			Variant Description
 																		</h4>
 																	</div>
 																	<div className='col-6'>

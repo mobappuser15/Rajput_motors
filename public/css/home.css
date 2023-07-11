@@ -475,11 +475,12 @@ a.m-langLink {
 
 .b-search__main-form select {
 	width: 100%;
-	padding: 10px 20px 10px 25px;
-	border: 1px solid #000;
-	border-radius: 30px;
+	padding: 25px 20px 10px 25px;
+	border: none !important;
+	border-radius: 5px;
+	background-color: #f2f3f5;
 	font: 400 14px "Outfit", sans-serif;
-	background: transparent;
+	/* background: transparent; */
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -1237,7 +1238,7 @@ a.m-langLink {
 }
 
 .b-auto__main-item:after {
-	background: url(../images/elements/chevron-down.png) center no-repeat;
+	/* background: url(../images/elements/chevron-down.png) center no-repeat; */
 	width: 15px;
 	left: 20px;
 	height: 7px;
