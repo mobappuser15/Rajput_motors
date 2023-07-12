@@ -475,9 +475,12 @@ a.m-langLink {
 
 .b-search__main-form select {
 	width: 100%;
-	padding: 25px 20px 10px 25px;
+	height: 50px !important;
+	padding-left: 10px;
 	border: none !important;
+	text-align: left;
 	border-radius: 5px;
+	margin-left: 2px;
 	background-color: #f2f3f5;
 	font: 400 14px "Outfit", sans-serif;
 	/* background: transparent; */
@@ -489,7 +492,7 @@ a.m-langLink {
 }
 
 .b-search__main-form select + span.fa {
-	top: 14px;
+	top: 19px;
 	right: 45px;
 	position: absolute;
 }

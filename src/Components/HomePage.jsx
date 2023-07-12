@@ -413,7 +413,7 @@ export default function HomePage() {
 										onSubmit={filterDataCars}>
 										<div className='row'>
 											<div className='col-xs-12 col-md-12'>
-												<div className='m-firstSelects'>
+												<div>
 													<div className='col-xs-3'>
 														<select
 															value={selectedItem}
@@ -425,24 +425,20 @@ export default function HomePage() {
 																</option>
 															))}
 														</select>
-														<span
-															style={{ marginTop: "20px" }}
-															className='fa fa-caret-down'></span>
+														<span className='fa fa-caret-down'></span>
 													</div>
 													<div className='col-xs-3'>
 														<select
 															value={selectmodel}
 															onChange={handleSelectChange3}>
-															<option value=''>Select Model</option>{" "}
+															<option value=''>Select Model</option>
 															{model.map((item, index) => (
 																<option key={index} value={item.code}>
 																	{item.description}
 																</option>
 															))}
 														</select>
-														<span
-															style={{ marginTop: "20px" }}
-															className='fa fa-caret-down'></span>
+														<span className='fa fa-caret-down'></span>
 													</div>
 
 													<div className='col-xs-3 '>
@@ -896,7 +892,7 @@ WELCOME TO SUSHIL CARS  section */}
 													</Link>
 												</div>
 
-												<h3>AUTO LOANS</h3>
+												<h3>Auto Loans</h3>
 											</div>
 										</div>
 										<div className='col-xs-12 text-right visible-md visible-lg'>
