@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./detail.css";
+import styled from "./Item";
 function About({ reloadPage }) {
 	return (
 		<div className>
@@ -55,12 +56,17 @@ function About({ reloadPage }) {
 										solution to sell yourPremium/ Luxury car at best price.
 										<br />
 									</p>
-									<a
-										href='listTableTwo.html'
+									<Link
+										style={{ backgroundColor: "#f76d2b" }}
+										id='procedbtn'
+										to='/detailsdata'
 										className='btn m-btn m-readMore wow zoomInUp'
 										data-wow-delay='0.1s'>
-										view listings<span className='fa fa-angle-right'></span>
-									</a>
+										view listings
+										<span
+											id='arrowiconbtn'
+											className='fa fa-angle-right'></span>
+									</Link>
 								</div>
 							</div>
 							<div className='col-sm-6 col-xs-12'>
@@ -77,7 +83,7 @@ function About({ reloadPage }) {
 										textAlign: "center",
 										fontWeight: "bold",
 										color: "",
-										marginLeft: "190px",
+										marginLeft: "225px",
 										fontSize: "20px",
 
 										// backgroundColor: "#f76d2b",
