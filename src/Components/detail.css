@@ -122,8 +122,8 @@ h3 {
 	border-radius: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
-	min-height: 220px !important;
-	object-fit: cover;
+	min-height: 250px !important;
+	/* object-fit: cover; */
 }
 
 .inputdata {
@@ -260,6 +260,30 @@ span {
 	position: absolute;
 }
 
+.b-auto__main-item2 {
+	border-radius: 40px;
+}
+
+#card4 {
+	padding: 4px;
+	width: 420px !important;
+	min-height: 370px;
+	border-radius: 50px !important;
+	background: #212121;
+	transition: 0.4s;
+	object-fit: cover;
+	margin: 13px;
+}
+
+#exclusiimg {
+	width: 30 !important;
+	padding: 50px !important;
+}
+
+#arrowiconbtn {
+	margin-top: 0px;
+}
+
 .form-check-label {
 	margin-top: 0 !important;
 	font-size: 12px !important;
@@ -276,8 +300,15 @@ button:active {
 	box-shadow: none !important;
 }
 
+#procedbtn {
+	padding: 10px 24px;
+	margin-top: 37px;
+}
+
 #image-gallery .modal-footer {
 	display: block;
+	/* max-height: 90% !important;
+	max-width: 100% !important; */
 }
 
 .thumb {
@@ -341,13 +372,13 @@ button:active {
 /* card cars detals in home page */
 
 .card2 {
-	padding: 4px;
-	width: 100%;
+	/* padding: 4px; */
+	/* width: 100%; */
 	min-height: 370px;
 	/* border-radius: 20px; */
 	/* background: #212121; */
 	transition: 0.4s;
-	object-fit: cover;
+	/* object-fit: cover; */
 	margin: 30px;
 	border: 1px solid rgb(221, 223, 226);
 }

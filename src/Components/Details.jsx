@@ -156,14 +156,14 @@ function Details({ selectedProduct }) {
 				navigate("/");
 
 				// Handle the response data here
-				console.log("Response:", data);
+				// console.log("Response:", data);
 			})
 			.catch((error) => {
 				// Handle any errors
-				console.error("Error:", error);
+				// console.error("Error:", error);
 			});
 
-		console.log(Datasecond, "secontdata");
+		// console.log(Datasecond, "secontdata");
 	};
 
 	useEffect(() => {
@@ -255,18 +255,17 @@ function Details({ selectedProduct }) {
 							<div key={item.uniqueSerial}>
 								<a
 									id='slider_img'
-									class='img-responsive center-block b-auto__main-item wow zoomInUp'
+									class=' '
 									href='#'
 									data-toggle='modal'
 									data-title={item.uri}
 									data-target='#image-gallery'>
 									<img
-										class='img-thumbnail'
+										className=' card '
 										src={item.uri}
 										onClick={(e) => setZoom(item.uri)}
 										alt='Another alt text'
-										style={{ aspectRatio: "3/2" }}
-										className=' card img-responsive center-block'
+										style={{ aspectRatio: "4/4" }}
 									/>
 								</a>
 
@@ -304,61 +303,18 @@ function Details({ selectedProduct }) {
 																	<div
 																		class='carousel-item active'
 																		key={item.uniqueSerial}>
-																		<img src={zoom} alt='...' />
+																		<img
+																			src={zoom}
+																			alt='...'
+																			className='card'
+																		/>
 																	</div>
 																))}
 															</div>
-
-															<button
-																class='carousel-control-prev'
-																type='button'
-																data-bs-target='#carouselExampleFade'
-																data-bs-slide='prev'>
-																<span
-																	style={{
-																		height: "14px",
-																		marginLeft: "-200px",
-																	}}
-																	class='carousel-control-prev-icon visually-hidden'
-																	aria-hidden='true'></span>
-																<span class='visually-hidden'>Previous</span>
-															</button>
-															<button
-																class='carousel-control-next'
-																type='button'
-																data-bs-target='#carouselExampleFade'
-																data-bs-slide='next'>
-																<span
-																	class='carousel-control-next-icon visually-hidden'
-																	aria-hidden='true'></span>
-																<span class='visually-hidden'>Next</span>
-															</button>
 														</div>
 													</section>
 
-													<div class='modal-footer'>
-														<button
-															type='button'
-															class='btn btn-secondary float-left  '
-															id='show-previous-image'
-															data-bs-target='#carouselExampleFade'
-															data-bs-slide='prev'>
-															<i
-																class='fa fa-arrow-left'
-																aria-hidden='true'></i>
-														</button>
-
-														<button
-															type='button'
-															id='show-next-image'
-															data-bs-target='#carouselExampleFade'
-															data-bs-slide='next'
-															class='btn btn-secondary float-right'>
-															<i
-																aria-hidden='true'
-																class='fa fa-arrow-right'></i>
-														</button>
-													</div>
+													<div class='modal-footer'></div>
 												</div>
 											</div>
 										</div>
@@ -673,10 +629,15 @@ function Details({ selectedProduct }) {
 																className='d-flex'
 																style={{
 																	backgroundColor: "grey",
+																	height: "26px",
 																}}>
-																<h2 style={{ marginLeft: "30px" }}>
+																<h3
+																	style={{
+																		marginLeft: "30px",
+																		marginTop: "-2px",
+																	}}>
 																	{num1} + {num2} = ?
-																</h2>
+																</h3>
 																<i
 																	style={{ marginLeft: "100px" }}
 																	onClick={resetCaptcha}
