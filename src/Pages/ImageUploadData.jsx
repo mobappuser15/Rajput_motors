@@ -2,11 +2,8 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { AppBar, Tabs, Tab, Typography, Box } from "@mui/material";
+
 import FiinalImage from "./FiinalImage";
 
 function TabPanel(props) {

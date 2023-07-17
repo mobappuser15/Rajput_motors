@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import "./style.css";
-import { makeStyles } from "@material-ui/core/styles";
-import Slider from "@material-ui/core/Slider";
-import Typography from "@material-ui/core/Typography";
-import { Table, TableCell, TableRow } from "@material-ui/core";
+
+import {
+	Table,
+	TableCell,
+	TableRow,
+	Typography,
+	Slider,
+	makeStyles,
+} from "@material-ui/core";
 import { Doughnut } from "react-chartjs-2";
 import Box from "@material-ui/core/Box";
 import "./detail.css";

@@ -81,6 +81,7 @@ function Signup({ loggedIn }) {
 	};
 
 	return (
+		<div className="singupcontainer">
 		<div className='container1'>
 			<div className='row'>
 				<div className='col-7'>
@@ -140,6 +141,7 @@ function Signup({ loggedIn }) {
 					</form>
 				</div>
 			</div>
+		</div>
 		</div>
 	);
 }

@@ -278,10 +278,8 @@
 
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+
+import { Typography, Tabs, Tab, Box } from "@mui/material";
 import "./admin.css";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";

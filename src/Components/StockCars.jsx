@@ -8,9 +8,7 @@ import Details from "./Details";
 import Collapse from "react-bootstrap/Collapse";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Slider from "@material-ui/core/Slider";
+import { Typography, Slider, makeStyles } from "@material-ui/core";
 
 const StockCars = () => {
 	// const classes = useStyles();
