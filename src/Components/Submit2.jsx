@@ -124,8 +124,6 @@ const Submit2 = () => {
 	const handleSelectChange11 = (event) => {
 		setSelectedstate(event.target.value);
 		setCode(event.target.value);
-
-		// console.log(event.target.value, "check event");
 	};
 	const handleSelectChange12 = (event) => {
 		setSelectcity(event.target.value);
@@ -364,7 +362,7 @@ const Submit2 = () => {
 															className='m-select'
 															value={selectedstate}
 															onChange={handleSelectChange11}>
-															<option value='regnCity'>Select item</option>
+															<option value='regnCity'>select item</option>
 															{statelist.map((item, index) => (
 																<option key={index} value={item.code}>
 																	{item.description}
@@ -389,7 +387,7 @@ const Submit2 = () => {
 															className='m-select'
 															value={selectcity}
 															onChange={handleSelectChange12}>
-															<option value='regnCity'>Select item</option>
+															<option value='regnCity'>select item</option>
 															{city.map((item, index) => (
 																<option key={index} value={item.code}>
 																	{item.description}
@@ -408,16 +406,28 @@ const Submit2 = () => {
 														<span
 															className='d-flex'
 															style={{
-																backgroundColor: "grey",
-																marginTop: "-25px",
+																fontWeight: "600",
+																marginTop: "-20px",
+																height: "26px",
+																color: "green",
 															}}>
-															<h2 style={{ marginLeft: "20px" }}>
+															<span
+																style={{
+																	fontSize: "25px",
+																	marginLeft: "20px",
+																	marginTop: "20px",
+																	color: "red",
+																	fontWeight: "800px ",
+																}}>
 																{num1} + {num2} = ?
-															</h2>
+															</span>
 															<i
-																style={{ marginLeft: "200px" }}
+																style={{
+																	marginLeft: "20px",
+																	marginTop: "30px",
+																}}
 																onClick={resetCaptcha}
-																class='fa fa-refresh fa-2x'
+																class='fa fa-refresh fa-1x'
 																aria-hidden='true'></i>
 														</span>
 
@@ -429,7 +439,7 @@ const Submit2 = () => {
 														<div className='d-flex'>
 															<input
 																className='s-relative'
-																placeholder='please Enter right captcha'
+																placeholder='Please enter  the Captcha'
 																type='text'
 																value={userAnswer}
 																onChange={(event) =>
@@ -452,22 +462,27 @@ const Submit2 = () => {
 									</div>
 									<div className='row '>
 										<div className='col-xs-12 col-md-12  col-lg-6 col-xl-6'>
-											<Link
-												to='/salecar'
-												style={{
-													backgroundColor: "#f76d2b",
-													color: "white",
-													marginTop: "30px",
-												}}
-												type='submit'
-												className='btn m-btn pull-right wow btn-danger'
-												data-wow-delay='0.3s'>
-												Click to &amp; Back
-												<span className='fa fa-arrow-left'></span>
+											<Link to='/salecar'>
+												<button
+													id='procedbtn'
+													style={{
+														backgroundColor: "#f76d2b",
+														color: "white",
+														marginTop: "30px",
+													}}
+													type='submit'
+													className='btn m-btn pull-right wow btn-danger'
+													data-wow-delay='0.3s'>
+													Click to &amp; Back
+													<span
+														id='arrowiconbtn'
+														className='fa fa-arrow-left'></span>
+												</button>
 											</Link>
 										</div>
 										<div className='col-xs-12 col-md-12 col-lg-6 col-xl-6'>
 											<button
+												id='procedbtn'
 												style={{ backgroundColor: "#f76d2b" }}
 												type='button'
 												onClick={handleSubmit}
@@ -476,7 +491,7 @@ const Submit2 = () => {
 												className='btn m-btn pull-right wow btn-danger'
 												data-wow-delay='0.3s'>
 												Click to &amp; Raise Request
-												<span className='fa fa-check'></span>
+												<span id='arrowiconbtn' className='fa fa-check'></span>
 											</button>
 
 											{!error && (
@@ -649,9 +664,13 @@ const Submit2 = () => {
 										been our motive.
 									</p>
 								</article>
-								<a href='about.html' className='btn m-btn'>
-									Read More<span className='fa fa-angle-right'></span>
-								</a>
+								<Link to='/about' className='btn m-btn'>
+									Read More
+									<span
+										style={{ paddingLeft: "7px !important" }}
+										id='arrowiconbtn'
+										className='fa fa-angle-right'></span>
+								</Link>
 							</aside>
 						</div>
 						<div className='col-md-3 col-xs-6'></div>
@@ -663,7 +682,7 @@ const Submit2 = () => {
 									<span className='fa fa-map-marker'></span>
 									<ol>
 										Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12 Dividing
-										Road Pincode 121006
+										Road Pin code 121006
 									</ol>
 								</div>
 								<div className='b-info__contacts-item'>

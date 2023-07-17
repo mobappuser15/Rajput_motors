@@ -1185,6 +1185,12 @@
 	.b-article__main-add .row > div {
 		width: 100%;
 	}
+	#searchdata {
+		margin-bottom: 9px !important;
+	}
+	#input_data {
+		margin-left: 4px !important;
+	}
 }
 
 img {

@@ -1229,9 +1229,13 @@ const StockCars = () => {
 										been our motive.
 									</p>
 								</article>
-								<a href='about.html' className='btn m-btn'>
-									Read More<span className='fa fa-angle-right'></span>
-								</a>
+								<Link to='/about' className='btn m-btn'>
+									Read More
+									<span
+										style={{ paddingLeft: "7px !important" }}
+										id='arrowiconbtn'
+										className='fa fa-angle-right'></span>
+								</Link>
 							</aside>
 						</div>
 

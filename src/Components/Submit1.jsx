@@ -798,13 +798,14 @@ const Submit1 = () => {
 											</div>
 
 											<button
-												style={{ backgroundColor: "#f76d2b" }}
+												id='procedbtn'
 												// to='/submit2'
 												type='submit'
-												class='btn m-btn pull-right wow  btn-danger'
+												class='btn m-btn  '
 												data-wow-delay='0.5s'>
 												Save &amp; PROCEED to next step
 												<span
+													id='arrowiconbtn'
 													class='fa fa-arrow-right'
 													aria-hidden='true'></span>
 											</button>
@@ -844,10 +845,13 @@ const Submit1 = () => {
 										been our motive.
 									</p>
 								</article>
-								<a href='about.html' class='btn m-btn'>
-									{" "}
-									Read More<span class='fa fa-angle-right'></span>
-								</a>
+								<Link to='/about' className='btn m-btn'>
+									Read More
+									<span
+										style={{ paddingLeft: "7px !important" }}
+										id='arrowiconbtn'
+										className='fa fa-angle-right'></span>
+								</Link>
 							</aside>
 						</div>
 

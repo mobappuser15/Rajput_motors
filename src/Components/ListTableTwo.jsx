@@ -126,8 +126,8 @@ const ListTableTwo = () => {
 												market. <br />
 												Enter car details & get best price instantly.
 											</p>
-											<Link to='/salecar' className='btn m-btn'>
-												REGISTER NOW<span className='fa fa-angle-right'></span>
+											<Link id='procedbtn' className='btn m-btn' to='/salecar'>
+												Sell Your Car
 											</Link>
 										</div>
 									</div>

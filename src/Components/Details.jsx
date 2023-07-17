@@ -597,16 +597,16 @@ function Details({ selectedProduct }) {
 															SCHEDULE TEST DRIVE
 														</a>
 													</div>
-													<form id='form1'>
+													<form id='form1' style={{ fontSize: "15px" }}>
 														<input
 															type='text'
-															placeholder='YOUR NAME'
+															placeholder='Please enter name'
 															name='contactName'
 															onChange={(e) => setcontactName(e.target.value)}
 														/>
 														<input
 															type='email'
-															placeholder='EMAIL ADDRESS'
+															placeholder=' Please enter email id'
 															onChange={(e) => setemail(e.target.value)}
 															name='email'
 														/>
@@ -619,37 +619,49 @@ function Details({ selectedProduct }) {
 
 														<input
 															type='tel'
-															placeholder='PinCode'
+															placeholder='Pincode'
 															name='pincode'
 															onChange={(e) => setpincode(e.target.value)}
 														/>
 
 														<form>
-															<div
+															<span
 																className='d-flex'
 																style={{
-																	backgroundColor: "grey",
+																	fontWeight: "600",
+																	marginTop: "-25px",
 																	height: "26px",
+																	color: "green",
 																}}>
-																<h3
+																<span
 																	style={{
-																		marginLeft: "30px",
-																		marginTop: "-2px",
+																		fontSize: "25px",
+																		marginLeft: "20px",
+																		marginTop: "20px",
+																		color: "red",
+																		fontWeight: "800px ",
 																	}}>
 																	{num1} + {num2} = ?
-																</h3>
+																</span>
 																<i
-																	style={{ marginLeft: "100px" }}
+																	style={{
+																		marginLeft: "20px",
+																		marginTop: "30px",
+																	}}
 																	onClick={resetCaptcha}
 																	class='fa fa-refresh fa-2x'
 																	aria-hidden='true'></i>
-															</div>
+															</span>
 
-															<label style={{ color: "black" }}></label>
-															<div className='' style={{ marginTop: "-60px" }}>
+															<label
+																style={{
+																	color: "black",
+																	marginTop: "10px",
+																}}></label>
+															<div className='' style={{ marginTop: "-30px" }}>
 																<input
 																	className='s-relative'
-																	placeholder='please Enter right captcha'
+																	placeholder='Please enter  the Captcha'
 																	type='text'
 																	value={userAnswer}
 																	onChange={(event) =>
@@ -666,6 +678,7 @@ function Details({ selectedProduct }) {
 														)}
 
 														<button
+															id=''
 															style={{ backgroundColor: "#f76d2b" }}
 															type='button'
 															data-toggle='modal'
@@ -673,7 +686,9 @@ function Details({ selectedProduct }) {
 															href='#ignismyModal'
 															className='btn m-btn'>
 															RAISE ENQUIRY
-															<span className='fa fa-ticket fa-5x'></span>
+															<span
+																id='arrowiconbtn'
+																className='fa fa-ticket fa-5x'></span>
 														</button>
 
 														{/* popup message */}
