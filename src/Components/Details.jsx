@@ -225,7 +225,7 @@ function Details({ selectedProduct }) {
 				data-equal-height='.b-tems_cell'>
 				<section className='b-pageHeader'>
 					<div className='container'>
-						<h1 className='wow zoomInLeft' data-wow-delay='0.5s'>
+						<h1 className='wow ' data-wow-delay='0.5s'>
 							Vehicle Details Page
 						</h1>
 					</div>
@@ -233,7 +233,7 @@ function Details({ selectedProduct }) {
 
 				<div
 					style={{ backgroundColor: "black" }}
-					className='b-breadCumbs s-shadow wow zoomInUp'
+					className='b-breadCumbs s-shadow wow '
 					data-wow-delay='0.5s'>
 					<div className='container'>
 						<a href='home.html' className='b-breadCumbs__page'>
@@ -249,7 +249,7 @@ function Details({ selectedProduct }) {
 
 				{/* test slider */}
 
-				<div className='carousel-wrapper'>
+				<div className='carousel-wrapper cor_mn'>
 					<Carousel breakPoints={breakPoints}>
 						{selectedProduct?.modelImages.map((item) => (
 							<div key={item.uniqueSerial}>
@@ -334,7 +334,7 @@ function Details({ selectedProduct }) {
 								<div className='col-md-8 col-xs-12'>
 									<div className='b-detail__main-info'>
 										<div
-											className='b-detail__main-info-images wow zoomInUp'
+											className='b-detail__main-info-images wow '
 											data-wow-delay='0.5s'>
 											<div className='row m-smallPadding'>
 												{selectedProduct ? (
@@ -345,7 +345,7 @@ function Details({ selectedProduct }) {
 
 														<aside className='b-detail__main-aside'>
 															<div
-																className='b-detail__main-aside-desc wow zoomInUp'
+																className='b-detail__main-aside-desc wow '
 																data-wow-delay='0.5s'>
 																<h2
 																	className='s-titleDet'
@@ -700,13 +700,13 @@ function Details({ selectedProduct }) {
 																		id='ignismyModal'
 																		role='dialog'>
 																		<div
-																			className='modal-dialog'
+																			className='modal-dialog mod_top_spc'
 																			style={{ margingTop: "90px" }}>
 																			<div className='modal-content'>
-																				<div className='modal-header'>
+																				<div className='modal-header mdl_hd'>
 																					<button
 																						type='button'
-																						className='close'
+																						className='close cls_btn'
 																						data-dismiss='modal'
 																						aria-label=''>
 																						<span>×</span>
@@ -732,11 +732,7 @@ function Details({ selectedProduct }) {
 																							Are you sure to raise enquiry?
 																						</h4>
 																						<p></p>
-																						<div
-																							className='d-flex '
-																							style={{
-																								marginLeft: "170px",
-																							}}>
+																						<div className='d-flex flx_mn_btn '>
 																							<button
 																								onClick={HandleDataSave}
 																								style={{
@@ -761,7 +757,7 @@ function Details({ selectedProduct }) {
 																									margin: "5px",
 																								}}
 																								type='button'
-																								className='close'
+																								className='close no_btn'
 																								data-dismiss='modal'
 																								aria-label=''>
 																								No
@@ -844,9 +840,13 @@ function Details({ selectedProduct }) {
 										been our motive.
 									</p>
 								</article>
-								<a href='about.html' className='btn m-btn'>
-									Read More<span className='fa fa-angle-right'></span>
-								</a>
+								<Link to='/about' className='btn m-btn'>
+									Read More
+									<span
+										style={{ paddingLeft: "7px !important" }}
+										id='arrowiconbtn'
+										className='fa fa-angle-right'></span>
+								</Link>
 							</aside>
 						</div>
 

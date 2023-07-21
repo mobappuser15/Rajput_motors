@@ -1,8 +1,8 @@
 .prizeslider {
 	margin-left: 22px;
-	width: 279px !important;
+	width: 267px !important;
 	height: 6px;
-	background-color: rgb(40, 43, 44);
+	background-color: rgb(162, 165, 167);
 	margin-top: 10px;
 	margin-bottom: 20px;
 }
@@ -11,7 +11,7 @@
 	width: 20px;
 	height: 20px;
 	/* cursor: pointer; */
-	background-color: orangered;
+	background-color: #f76d2b;
 	border-radius: 50%;
 	border: 2px solid black;
 	top: -20px;
@@ -22,10 +22,36 @@
 }
 
 .prizetext {
-	font-size: 10px;
-	padding: 4px;
+	font-size: 13px;
+	padding: 10px;
 	text-align: center;
-	width: 50px;
-	margin-left: 50px;
+	width: 100%;
+	margin-left: 0px;
 	margin-top: 10px;
+}
+
+.prise_mn {
+	width: 100%;
+}
+
+.rsarr {
+	margin: 0 0 0 5px;
+}
+
+@media screen and (max-width: 480px) {
+	.prise_mn {
+		width: 100%;
+		background: #000;
+		display: inline-block;
+		margin-bottom: 20px;
+		margin-top: -14px;
+	}
+	.prizeslider {
+		width: 267px !important;
+		height: 6px;
+		background-color: rgb(162, 165, 167);
+		margin-top: 10px;
+		margin-bottom: 20px;
+		margin-left: 54px;
+	}
 }

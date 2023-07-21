@@ -236,3 +236,139 @@ body {
 .b-what h3.s-titleBg {
 	width: 290px !important;
 }
+
+.no_btn {
+	opacity: inherit;
+	border-radius: 4px;
+	padding: 10px !important;
+}
+
+.thank-you-pop h4 {
+	margin-left: 0 !important;
+	text-align: center;
+}
+
+.modl_hit {
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.cls_btn {
+	opacity: inherit !important;
+	float: right;
+	text-align: right;
+	display: inline-block;
+	width: 100%;
+	padding: 0 20px 0px 0px !important;
+	font-size: 26px;
+}
+
+.thank-you-pop {
+	text-align: center;
+}
+
+.thank-you-pop img {
+	width: 15%;
+	margin-left: 0 !important;
+	text-align: center;
+	margin: 0 auto;
+	float: none;
+	display: inline-block !important;
+}
+
+.flx_mn_btn {
+	display: inline-block !important;
+}
+
+.mdl_top {
+	margin-top: 100px;
+}
+
+.btn_wd1 {
+	display: inline-block;
+	width: 27%;
+	float: right;
+	text-align: right;
+}
+
+#procedbtn22 {
+	padding: 10px 24px;
+	margin-top: 0 !important;
+}
+
+.sum_pding {
+	margin-bottom: 15px !important;
+}
+
+.b-info__contacts-item {
+	font: 400 12px "Outfit", sans-serif;
+	margin-bottom: 20px !important;
+}
+
+.b-info {
+	padding: 55px 0 0px 0 !important;
+}
+
+.cor_mn {
+	width: 100%;
+	padding: 15px 15px;
+}
+
+.icon-style {
+	background-color: black;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	color: #fff;
+	cursor: pointer;
+	/* animation: movebtn 3s ease-in-out infinite; */
+	transition: all 0.5s ease-in-out;
+	z-index: 999 !important;
+}
+
+.b-detail {
+	padding: 40px 0 40px 0 !important;
+}
+
+.close {
+	opacity: inherit !important;
+}
+
+.b-info__aside > a span {
+	width: 25px !important;
+	height: 25px !important;
+	padding: 5px !important;
+	font-size: 14px !important;
+	margin-left: 13px !important;
+	text-align: center !important;
+}
+
+.mod_top_spc {
+	margin-top: 140px !important;
+}
+
+.mdl_hd {
+	padding: 0 !important;
+}
+
+.cls_btn {
+	margin-top: 0;
+	float: right;
+	text-align: right;
+	width: 100%;
+	padding: 0 14px 0 0;
+	font-size: 22px;
+}
+
+.no_top1 {
+	padding-top: 4px;
+	display: block;
+}
+
+.b-pageHeader {
+	margin-top: 69px !important;
+	padding: 20px 0 !important;
+	background: url(../images/backgrounds/pageHead.jpg) center;
+	background-size: cover;
+}

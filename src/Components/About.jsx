@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./detail.css";
 import styled from "./Item";
+import "./about.css";
 function About({ reloadPage }) {
 	return (
 		<div className>
@@ -109,7 +110,8 @@ function About({ reloadPage }) {
 						</div>
 					</div>
 				</section>
-				<section
+
+				{/* <section
 					className='b-what s-shadow m-home'
 					style={{ marginTop: "-80px" }}>
 					<div className='container'>
@@ -174,7 +176,73 @@ function About({ reloadPage }) {
 							</div>
 						</Link>
 					</div>
-				</section>
+				</section> */}
+
+				<div className='abc'>
+					<div className='container'>
+						<div className='row'>
+							<div className='col-md-4 col-sm-6' data-wow-delay='.5s'>
+								<div className='box'>
+									<div className='box-heading'>
+										<h3 className='title'>WE OFFER</h3>
+										<p>Low Prices, No Haggling</p>
+									</div>
+									<div className='boxContent'>
+										<p className='description'>
+											Gurgaon-based dealer-networking solutions provider is
+											enabling new OEMs to expand swiftly by using its
+											cost-efficient, fully integrated offerings for managing
+											sales and aftersales operations.
+										</p>
+										<a href='news.php' className='read'>
+											Read More <i className='fa fa-angle-right'></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div className='col-md-4 col-sm-6' data-wow-delay='.5s'>
+								<div className='box'>
+									<div className='box-heading'>
+										<h3 className='title'>WE ARE THE</h3>
+										<p>Largest Car Dealership</p>
+										<p></p>
+									</div>
+									<div className='boxContent'>
+										<p className='description'>
+											We offer IT services and ready-to-use Web hosted software
+											systems for a number of verticals which can be customized
+											easily to meet your specific needs
+										</p>
+										<a href='technology.php' className='read'>
+											Read More <i className='fa fa-angle-right'></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div className='col-md-4 col-sm-6 ' data-wow-delay='.5s'>
+								<div className='box'>
+									<div className='box-heading'>
+										<h3 className='title'>OUR CUSTOMERS GET</h3>
+										<p>Multipoint Safety Check</p>
+									</div>
+									a
+									<div className='boxContent'>
+										<p className='description'>
+											We can assist you in the outsourcing of critical business
+											operations backed by our in-house IT support. We will
+											assist you for any outsourced business process for your
+											organization.
+										</p>
+										<a href='outsourcing.php' className='read'>
+											Read More <i className='fa fa-angle-right'></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<section className='b-more'>
 					<div className='container'>
 						<div className='row'>

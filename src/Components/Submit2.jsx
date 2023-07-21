@@ -301,7 +301,7 @@ const Submit2 = () => {
 							<div className='b-submit__main'>
 								<form className='s-submit'>
 									<div
-										className='b-submit__main-contacts wow'
+										className='b-submit__main-contacts wow sum_pding'
 										data-wow-delay='0.3s'>
 										<header className='s-headerSubmit s-lineDownLeft'>
 											<h2>Contact Details</h2>
@@ -460,11 +460,11 @@ const Submit2 = () => {
 											</div>
 										</div>
 									</div>
-									<div className='row '>
-										<div className='col-xs-12 col-md-12  col-lg-6 col-xl-6'>
+									<div className=' '>
+										<div className='btn_wd1'>
 											<Link to='/salecar'>
 												<button
-													id='procedbtn'
+													id='procedbtn22'
 													style={{
 														backgroundColor: "#f76d2b",
 														color: "white",
@@ -480,9 +480,9 @@ const Submit2 = () => {
 												</button>
 											</Link>
 										</div>
-										<div className='col-xs-12 col-md-12 col-lg-6 col-xl-6'>
+										<div className='btn_wd1'>
 											<button
-												id='procedbtn'
+												id='procedbtn22'
 												style={{ backgroundColor: "#f76d2b" }}
 												type='button'
 												onClick={handleSubmit}
@@ -503,13 +503,13 @@ const Submit2 = () => {
 																id='ignismyModal'
 																role='dialog'>
 																<div
-																	className='modal-dialog'
+																	className='modal-dialog mdl_top'
 																	style={{ margingTop: "90px" }}>
 																	<div className='modal-content'>
-																		<div className='modal-header'>
+																		<div className='modal-header modl_hit'>
 																			<button
 																				type='button'
-																				className='close'
+																				className='close cls_btn'
 																				data-dismiss='modal'
 																				aria-label=''>
 																				<span>×</span>
@@ -520,24 +520,11 @@ const Submit2 = () => {
 																		<div className='modal-body'>
 																			<div className='thank-you-pop'>
 																				<img
-																					className='hidden-xs'
-																					style={{
-																						width: "50px",
-																						marginLeft: "200px",
-																					}}
+																					className=''
 																					src='http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png'
 																					alt=''
 																				/>
 
-																				<img
-																					className='visible-xs'
-																					style={{
-																						width: "50px",
-																						marginLeft: "150px",
-																					}}
-																					src='http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png'
-																					alt=''
-																				/>
 																				<h4
 																					className=''
 																					style={{
@@ -561,10 +548,8 @@ const Submit2 = () => {
 																				{/* </h4>  */}
 																				<p></p>
 																				<div
-																					className='d-flex'
-																					style={{
-																						marginLeft: "150px",
-																					}}>
+																					className='d-flex flx_mn_btn'
+																					style={{}}>
 																					<button
 																						onClick={handleSaveData}
 																						style={{
@@ -589,7 +574,7 @@ const Submit2 = () => {
 																							margin: "5px",
 																						}}
 																						type='button'
-																						className='close'
+																						className='close no_btn'
 																						data-dismiss='modal'
 																						aria-label=''>
 																						No

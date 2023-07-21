@@ -126,13 +126,13 @@ h3 {
 }
 
 .card {
-	box-shadow: 2px 3px 3px 2px #888888;
 	background: #ffff;
 	border-radius: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
 	min-height: 250px !important;
-	/* object-fit: cover; */
+	object-fit: cover;
+	width: 96%;
 }
 
 .inputdata {
@@ -332,7 +332,9 @@ button:active {
 
 #selectdata {
 	width: 28rem !important;
-	font-size: 17px;
+	font-size: 15px;
+	border-radius: 4px;
+	padding: 0px 3px;
 }
 
 .iMqSPA {
@@ -466,6 +468,8 @@ button:active {
 }
 
 .btnn1 {
+	width: 194px;
+	margin-left: 0px;
 	background-color: rgb(247, 109, 43) !important;
 	color: #fff !important;
 	border: none !important;
@@ -698,5 +702,24 @@ button:active {
 	}
 	.b-nav__logo img {
 		margin-left: 10px;
+	}
+	.inputdata {
+		padding-left: 10px;
+		width: 100%;
+		height: 40px !important;
+		text-align: left;
+		border: none;
+		border-radius: 5px;
+		font: 400 14px "Outfit", sans-serif;
+		background-color: #f2f3f5;
+	}
+	.b-search__main-form select {
+		width: 100%;
+		height: 40px !important;
+	}
+	.b-search__main-form select + span.fa {
+		top: 12px;
+		right: 33px;
+		position: absolute;
 	}
 }

@@ -524,7 +524,7 @@ export default function HomePage() {
 									<section
 										className='b-homeAuto  hidden-xs  '
 										style={{ marginTop: "-38px" }}>
-										<div className='container-fluid'>
+										<div className='container'>
 											<div className='col-xs-12   visible-xs-horizental-scroll'>
 												<div className='b-homeAuto__latest'>
 													<h5
@@ -541,7 +541,7 @@ export default function HomePage() {
 														LATEST VEHICLES ON SALE
 													</h2>
 
-													<div className='container ' id='cardrow'>
+													<div className='' id='cardrow'>
 														<Row xs={12} md={4} id='cardrow'>
 															{demo
 																?.filter(

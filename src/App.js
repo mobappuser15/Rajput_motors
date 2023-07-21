@@ -72,7 +72,7 @@ export default function App({ isLoggedIn }) {
 										<span className='fa fa-youtube-square'></span>
 									</a>
 									<a href='#' style={{ marginTop: "10px" }}>
-										<span className=''>
+										<span className='no_top1'>
 											<i class='fa-sharp fa-solid fa-phone'></i> +91 92509 22333
 										</span>
 									</a>
