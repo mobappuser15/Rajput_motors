@@ -1,0 +1,31 @@
+.prizeslider {
+	margin-left: 22px;
+	width: 279px !important;
+	height: 6px;
+	background-color: rgb(40, 43, 44);
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.prizeslider .thumb {
+	width: 20px;
+	height: 20px;
+	/* cursor: pointer; */
+	background-color: orangered;
+	border-radius: 50%;
+	border: 2px solid black;
+	top: -20px;
+}
+
+.track-1 {
+	background-color: aquamarine;
+}
+
+.prizetext {
+	font-size: 10px;
+	padding: 4px;
+	text-align: center;
+	width: 50px;
+	margin-left: 50px;
+	margin-top: 10px;
+}

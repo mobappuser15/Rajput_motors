@@ -17,6 +17,7 @@
 /*Page Header */
 
 .b-pageHeader {
+	margin-top: 69px !important;
 	padding: 40px 0;
 	background: url(../images/backgrounds/pageHead.jpg) center;
 	background-size: cover;

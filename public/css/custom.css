@@ -78,6 +78,7 @@ body {
 	color: #333;
 	font-size: 12px;
 	padding: 4px 0 4px 0;
+	font-weight: bold;
 }
 
 .b-auto__main-item {
@@ -152,4 +153,86 @@ body {
 
 .mt-40 {
 	margin-top: 40px;
+}
+
+.getng_t_text {
+}
+
+.getng_t_text p {
+	font-size: 36px;
+	font-weight: bolder;
+	line-height: 48px;
+}
+
+.getng_t_text span {
+	font-size: 17px;
+	margin-bottom: 18px;
+	display: block;
+	margin-top: 20px;
+}
+
+.rate_ts_mn ul li {
+	list-style: none;
+	display: inline-block;
+	margin: 0 10px 0px 0px;
+}
+
+.iFvrtY {
+	box-sizing: border-box;
+	padding: 0px;
+	transition: all 250ms ease 0s;
+	border: none;
+	margin: 5px;
+	background-color: rgb(246 109 43) !important;
+	font-size: 1.3em;
+	content: "";
+	height: 12px !important;
+	width: 12px !important;
+	box-shadow: rgb(245 108 43) 0px 0px 1px 3px !important;
+	border-radius: 50%;
+	outline: none;
+}
+
+.bXxycX {
+	box-sizing: border-box;
+	padding: 0px;
+	transition: all 250ms ease 0s;
+	border: none;
+	margin: 5px;
+	background-color: transparent;
+	font-size: 1.3em;
+	content: "";
+	height: 12px !important;
+	width: 12px !important;
+	box-shadow: rgb(241 106 42) 0px 0px 1px 2px !important;
+	border-radius: 50%;
+	outline: none;
+}
+
+.b-best__info p {
+	font: 300 13px "Open Sans", sans-serif;
+	margin: 0 0 40px 0;
+	line-height: 1.9;
+	color: #000 !important;
+	font-size: 16px !important;
+}
+
+.b-best {
+	padding: 50px 0 80px 0;
+	border-bottom: 1px solid #eee;
+	width: 100%;
+	display: block;
+	background: #f0f0f0 !important;
+	margin-bottom: 40px !important;
+}
+
+.b-what {
+	padding: 85px 0;
+	text-align: center;
+	width: 100% !important;
+}
+
+.b-what h2.s-title,
+.b-what h3.s-titleBg {
+	width: 290px !important;
 }

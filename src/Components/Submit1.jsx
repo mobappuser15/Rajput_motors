@@ -501,7 +501,7 @@ const Submit1 = () => {
 	};
 
 	return (
-		<div>
+		<div style={{ margingTop: "40px" }}>
 			{/* header section */}
 			<div class='m-submit1' data-scrolling-animations='true'>
 				<div id='page-preloader'>

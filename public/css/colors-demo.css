@@ -270,7 +270,7 @@ body,
 .b-detail__main-aside form textarea,
 .b-article__main-add input[type="text"],
 .b-article__main-add textarea {
-	background-color: #fff;
+	/* background-color: #fff; */
 	fill: #fff;
 }
 

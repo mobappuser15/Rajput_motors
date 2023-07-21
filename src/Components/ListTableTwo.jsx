@@ -3,10 +3,68 @@ import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./detail.css";
 import Details from "./Details";
+import PrizeRange from "./PrizeRange";
+import "./prizerange.css";
+
+import ReactDOM from "react-dom/client";
+import {
+	ReactiveBase,
+	RangeSlider,
+	SelectedFilters,
+	ResultList,
+	ReactiveList,
+} from "@appbaseio/reactivesearch";
 
 const ListTableTwo = () => {
 	const [stockdata, setStockdata] = useState([]);
 	const [selectedProduct, setSelectedProduct] = useState(null);
+	const [openprice, setOpenprice] = useState(false);
+	const [openyear, setOpenyear] = useState(false);
+	const [opendriven, setOpendriven] = useState(false);
+	const [openmanuf, setOpenmanuf] = useState(false);
+	const [openbodytype, setOpenbodytype] = useState(false);
+	const [openfueltype, setOpenfueltype] = useState(false);
+	const [openTransmission, setOpenTransmission] = useState(false);
+
+	const [selectedValue, setSelectedValue] = useState(null);
+	const [searchResults, setSearchResults] = useState([]);
+	const [demo, setDemo] = useState([]);
+
+	const [data, setData] = useState([]);
+	const [model, setModel] = useState([]);
+	const [source, setSource] = useState([]);
+	const [varient, setVarient] = useState([]);
+	const [vyear, setVechileYear] = useState([]);
+	const [fueldata, setFuelData] = useState([]);
+	const [transmission, setTransmission] = useState([]);
+	const [selectbodytype, setselectbodytype] = useState([]);
+	const [kmsDriven, setkmsDriven] = useState([]);
+	const [selectedItem, setSelectedItem] = useState("");
+	const [resourcedata, setResoucedata] = useState("");
+	const [selecttype, setSelecttype] = useState("");
+	const [selectmodel, setSelectmodel] = useState("");
+	const [selectfuel, setSelectFuel] = useState("");
+	const [selecttransmission, setSelecttransmission] = useState([]);
+	const [selectextirecolor, setSelectextirecolor] = useState("");
+	const [selectmfy, setSelectmfy] = useState("");
+	const [selectverient, setSelectverient] = useState("");
+	const [codemodel, setcodemodel] = useState("");
+	const [codemake, setcodemake] = useState("");
+	const [codevarient, setvarientdata] = useState([]);
+	const [minRange, setMinRange] = useState("");
+	const [maxRange, setMaxRange] = useState("");
+	const [selectedMake, setSelectedMake] = useState([]);
+	const [selectedModel, setSelectedModel] = useState("");
+	const [selectedVariant, setSelectedVariant] = useState("");
+	const [showdata, setShowdata] = useState(false);
+
+	const [result, setResult] = useState("");
+	const [makedatarequest, setMake] = useState([]);
+	const [inputvalue, setInputvalue] = useState("");
+	const [typedata, setDatatype] = useState([]);
+	const [vmonth, setVechileMonth] = useState([]);
+	const [extirecolor, setExtirearColor] = useState([]);
+	const [selectmfm, setSelectmfm] = useState("");
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -24,10 +82,10 @@ const ListTableTwo = () => {
 				countryCode: "IN",
 				companyId: "SUSHIL",
 				budgetFrom: 0,
-				budgetTo: 2000000,
-				vehBrandCode: "ALL",
-				vehModelCode: "ALL",
-				vehFuel: "ALL",
+				budgetTo: 0,
+				vehBrandCode: "",
+				vehModelCode: "",
+				vehFuel: "",
 				loginCompanyID: "ORBIT",
 				loginUserId: "SULTAN",
 				loginIpAddress: "192.168.10.32",
@@ -63,6 +121,283 @@ const ListTableTwo = () => {
 		setSelectedProduct(product);
 		// navigate("/details");
 	};
+	const Amountdata = [
+		{
+			id: 1,
+			img: "0 - 100000 L",
+		},
+		{
+			id: 2,
+			img: "100000 - 500000 L",
+		},
+		{
+			id: 3,
+			img: "500000 - 10,00000 L",
+		},
+		{
+			id: 4,
+			img: "10,00000 - 15,00000 L",
+		},
+
+		{
+			id: 5,
+			img: "15,00000 - 20,00000 L",
+		},
+
+		{
+			id: 6,
+			img: " 20,00000 - 25,00000 L",
+		},
+
+		{
+			id: 7,
+			img: "25,00000 -30,00000 L",
+		},
+
+		{
+			id: 8,
+			img: "30,00000 - 40,00000 L",
+		},
+		{
+			id: 9,
+			img: "40,00000 - 50,00000 L",
+		},
+
+		{
+			id: 10,
+			img: "50,00000 - 60,00000 L",
+		},
+
+		{
+			id: 11,
+			img: "60,00000 - 70,00000 L",
+		},
+		{
+			id: 12,
+			img: "70,00000 - 1,0000000 Cr",
+		},
+		{
+			id: 13,
+			img: "1,0000000 - 5,00000000 Cr",
+		},
+	];
+
+	// make list
+	useEffect(() => {
+		const url =
+			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "SUSHIL",
+			calledBy: "MAKE",
+			loginUserId: "RAVI",
+			loginIpAddress: "180.151.78.50",
+		};
+
+		fetch(url, {
+			method: "POST",
+			headers: headers,
+			body: JSON.stringify(data),
+		})
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw new Error(
+						`Request failed with status code: ${response.status}`
+					);
+				}
+			})
+			.then((jsonData) => {
+				const generalList = jsonData?.generalMasterList[0].generalList;
+				setData(generalList);
+				console.log(generalList, "checkmakelist");
+				console.log(jsonData, "jsondata");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
+	// model list
+
+	useEffect(() => {
+		const url =
+			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "SUSHIL",
+			calledBy: "MODEL",
+			vehMake: codemodel,
+
+			loginUserId: "RAVI",
+			loginIpAddress: "180.151.78.50",
+		};
+
+		fetch(url, {
+			method: "POST",
+			headers: headers,
+			body: JSON.stringify(data),
+		})
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw new Error(
+						`Request failed with status code: ${response.status}`
+					);
+				}
+			})
+			.then((jsonData) => {
+				const generalList = jsonData?.generalMasterList[0].generalList;
+				setModel(generalList);
+				console.log(generalList, "MODELLIST");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, [codemodel]);
+
+	// fuel list
+	useEffect(() => {
+		const url =
+			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "SUSHIL",
+			calledBy: "FUEL",
+			loginUserId: "RAVI",
+			loginIpAddress: "180.151.78.50",
+		};
+
+		fetch(url, {
+			method: "POST",
+			headers: headers,
+			body: JSON.stringify(data),
+		})
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw new Error(
+						`Request failed with status code: ${response.status}`
+					);
+				}
+			})
+			.then((jsonData) => {
+				const generalList = jsonData?.generalMasterList[0].generalList;
+				setFuelData(generalList);
+				console.log(generalList, "fuel list data");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
+
+	const handleSelectChange = (event) => {
+		setSelectedItem(event.target.value);
+		setcodemodel(event.target.value);
+		// // console.log(event.target.value, "check console");
+	};
+
+	const handleSelectChange4 = (event) => {
+		setSelectFuel(event.target.value);
+		console.log(event.target.value, "fuleeeeeeeeee");
+	};
+
+	const handleSelectChange9 = (event) => {
+		setSelectverient(event.target.value);
+		console.log(event.target.value, "price range");
+	};
+
+	const handleSelectChange3 = (event) => {
+		setSelectmodel(event.target.value);
+		// setcodemodel(event.target.value);
+		setcodemake(event.target.value);
+		// // // console.log(setcodemake, "setcodemake");
+
+		// // console.log(event.target.value, "check con");
+	};
+
+	const fetchData = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "SUSHIL",
+			budgetFrom: 100000,
+			budgetTo: 0,
+			vehBrandCode: selectedItem,
+			vehModelCode: selectmodel,
+			vehVariantDesc: selectverient,
+			vehFuel: selectfuel,
+			loginCompanyID: "ORBIT",
+			loginUserId: "SULTAN",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+				setShowdata(responseData?.UsedCarVehStockDetail);
+				console.log("responseData stck search", responseData);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const handleSaveData = (e) => {
+		e.preventDefault();
+		fetchData();
+		// setSearchResults();
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const reloadPage = () => {
+		window.location.reload();
+	};
 
 	return (
 		<div>
@@ -96,9 +431,9 @@ const ListTableTwo = () => {
 
 				<div className='b-breadCumbs s-shadow'>
 					<div className='container wow zoomInUp' data-wow-delay='0.5s'>
-						<a href='home.html' className='b-breadCumbs__page'>
+						<Link to='/' className='b-breadCumbs__page'>
 							Home
-						</a>
+						</Link>
 						<span className='fa fa-angle-right'></span>
 						<a href='listTableTwo.html' className='b-breadCumbs__page m-active'>
 							Search Results
@@ -112,7 +447,7 @@ const ListTableTwo = () => {
 							<div
 								className='col-lg-3 col-md-12 col-sm-4 col-xs-12'
 								style={{ margingTop: "-60px" }}>
-								<aside className=''>
+								<aside className='lef_pic'>
 									<div
 										className=''
 										style={{ margingTop: "-80px" }}
@@ -137,61 +472,160 @@ const ListTableTwo = () => {
 							{/* Cars Data Details */}
 
 							<div className='col-lg-9 col-sm-8 col-md-12 col-xs-12'>
-								<div className='row m-border' id='cardrow'>
-									<div
-										className='col-lg-12 col-md-12 col-xs-12 wow zoomInUp'
-										data-wow-delay='0.5s'
-										id='cardrow'>
-										<Row
-											xs={12}
-											md={3}
-											id='cardrow'
-											style={{ margingTop: "20px" }}>
-											{stockdata.map((item) => {
-												const frontImage = item?.modelImages.find(
-													(image) => image?.imageName === "Front"
-												);
-												if (frontImage) {
-													return (
-														<div className='' key={frontImage.uri} id='cardrow'>
-															<Col>
-																<div
-																	onClick={() =>
-																		singleProducthandle(item.uniqueSerial)
-																	}
-																	className=' card2 b-auto__main-item '>
-																	{/* {console.log(item.modelImages, "data image url")} */}
-																	<img
-																		style={{
-																			aspectRatio: "2/2",
-																			width: "100%",
-																			// border: "3px solid gray",
-																			// borderRadius: "20px",
-																		}}
-																		className=' img-responsive center-block'
-																		src={frontImage.uri}
-																		alt='nissan'
-																	/>
+								<div className=' drup_mn2'>
+									<ul id='cardrow2'>
+										<li>
+											<select
+												id='selectdata3'
+												class=''
+												onClick={handleSaveData}
+												value={selectedItem}
+												onChange={handleSelectChange}>
+												<option value=''>Brand</option>
+												{data.map((item, index) => (
+													<option key={index} value={item.code}>
+														{item.description}
+													</option>
+												))}
+											</select>
+										</li>
+										<li>
+											<select
+												onClick={handleSaveData}
+												id='selectdata3'
+												class=''
+												value={selectmodel}
+												onChange={handleSelectChange3}>
+												<option value=''> Model </option>
+												{model.map((item, index) => (
+													<option key={index} value={item.code}>
+														{item.description}
+													</option>
+												))}
+											</select>
+										</li>
+										<li>
+											<select
+												onClick={handleSaveData}
+												id='selectdata3'
+												class=''
+												value={selectfuel}
+												onChange={handleSelectChange4}>
+												<option value=''> Fuel-type </option>
+												{fueldata.map((item, index) => (
+													<option key={index} value={item.code}>
+														{item.description}
+													</option>
+												))}
+											</select>
+										</li>
+										<li>
+											<select
+												id='selectdata3'
+												onClick={handleSaveData}
+												class=''
+												value={selectverient}
+												onChange={handleSelectChange9}>
+												<option value=''> Budget </option>
+												{Amountdata.map((item, id) => (
+													<option key={id} value={item.id}>
+														{item.img}
+													</option>
+												))}
+											</select>
+										</li>
+										<button onClick={reloadPage}>Reset</button>
+									</ul>
+									<ReactiveBase
+										app='good-books-ds'
+										url='https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io'>
+										<div className='row'>
+											<div className='col'>
+												<RangeSlider
+													dataField='ratings_count'
+													componentId='BookSensor'
+													range={
+														({
+															start: 100000,
+															end: 20000000,
+														},
+														{
+															start: 200000,
+															end: 5000000,
+														})
+													}
+													rangeLabels={{ id: 1, start: "1Lacs", end: "20crs" }}
+												/>
+											</div>
+										</div>
+									</ReactiveBase>
+								</div>
+								{showdata === false ? (
+									<>
+										<div className='row m-border' id=''>
+											<div
+												className='col-lg-12 col-md-12 col-xs-12 wow zoomInUp'
+												data-wow-delay='0.5s'
+												id=''>
+												<Row
+													xs={12}
+													md={3}
+													id=''
+													style={{ margingTop: "20px" }}>
+													{stockdata.map((item) => {
+														const frontImage = item?.modelImages.find(
+															(image) => image?.imageName === "Front"
+														);
+														if (frontImage) {
+															return (
+																<div className='' key={frontImage.uri} id=''>
+																	<Col>
+																		<div
+																			onClick={() =>
+																				singleProducthandle(item.uniqueSerial)
+																			}
+																			className=' card2 b-auto__main-item '>
+																			{/* {console.log(item.modelImages, "data image url")} */}
+																			<img
+																				style={{
+																					aspectRatio: "2/2",
+																					width: "100%",
+																					// border: "3px solid gray",
+																					// borderRadius: "20px",
+																				}}
+																				className=' img-responsive center-block'
+																				src={frontImage.uri}
+																				alt='nissan'
+																			/>
 
-																	<div
-																		className=' d-flex b-items__cars-one-info-title'
-																		style={{
-																			fontSize: "16px",
-																			marginLeft: "20px",
-																			marginTop: "10px",
-																		}}>
-																		{" "}
-																		<div>{item.vehManufactureYear} </div>
-																		<div style={{ marginLeft: "5px" }}>
-																			{" "}
-																			{item.vehBrandCode}
-																		</div>{" "}
-																		<div style={{ marginLeft: "5px" }}>
-																			{item.vehModelCode}{" "}
-																		</div>
-																	</div>
+																			<div
+																				className=' d-flex b-items__cars-one-info-title'
+																				style={{
+																					fontSize: "16px",
+																					marginLeft: "20px",
+																					marginTop: "10px",
+																				}}>
+																				{" "}
+																				<div>{item.vehManufactureYear} </div>
+																				<div style={{ marginLeft: "5px" }}>
+																					{" "}
+																					{item.vehBrandCode}
+																				</div>{" "}
+																				<div style={{ marginLeft: "5px" }}>
+																					{item.vehModelCode}{" "}
+																				</div>
+																			</div>
 
-																	<div
+																			<div class='rate_ts_mn'>
+																				<ul>
+																					<li>{item.vehOdometer} KMS</li>
+																					<li>{item.exteriorColor}</li>
+																					<li>{item.vehFuelCode}</li>
+																					<li>{item.transmissionDesc}</li>
+																				</ul>
+																			</div>
+
+																			{/* <div
 																		id='textitem'
 																		className='d-flex'
 																		style={{
@@ -221,7 +655,125 @@ const ListTableTwo = () => {
 																				{item.transmissionDesc}
 																			</div>
 																		</ul>
+																	</div> */}
+
+																			<span
+																				style={{
+																					marginLeft: "19px",
+																				}}
+																				className='d-flex ml-6'>
+																				<i className=''></i>{" "}
+																				<div
+																					className='b-items__cars-one-info-title'
+																					style={{ fontSize: "18px" }}>
+																					Rs {item.vehSellPriceRecommended}
+																				</div>
+																			</span>
+																		</div>
+																	</Col>
+																</div>
+															);
+														}
+														return null;
+													})}
+												</Row>
+											</div>
+										</div>
+									</>
+								) : (
+									<>
+										<div className='row m-border' id=''>
+											<div
+												className='col-lg-12 col-md-12 col-xs-12 wow zoomInUp'
+												data-wow-delay='0.5s'
+												id=''>
+												<Row
+													xs={12}
+													md={3}
+													id=''
+													style={{ margingTop: "20px" }}>
+													{demo.map((item) => (
+														<div className='' key={item.uniqueSerial} id=''>
+															<Col>
+																<div
+																	onClick={() =>
+																		singleProducthandle(item.uniqueSerial)
+																	}
+																	className=' card2 b-auto__main-item '>
+																	{/* {console.log(item.modelImages, "data image url")} */}
+																	<img
+																		style={{
+																			aspectRatio: "2/2",
+																			width: "100%",
+																			// border: "3px solid gray",
+																			// borderRadius: "20px",
+																		}}
+																		className=' img-responsive center-block'
+																		src={
+																			item?.modelImages.length > 0 &&
+																			item?.modelImages[0].uri
+																		}
+																		alt='nissan'
+																	/>
+
+																	<div
+																		className=' d-flex b-items__cars-one-info-title'
+																		style={{
+																			fontSize: "16px",
+																			marginLeft: "20px",
+																			marginTop: "10px",
+																		}}>
+																		{" "}
+																		<div>{item.vehManufactureYear} </div>
+																		<div style={{ marginLeft: "5px" }}>
+																			{" "}
+																			{item.vehBrandCode}
+																		</div>{" "}
+																		<div style={{ marginLeft: "5px" }}>
+																			{item.vehModelCode}{" "}
+																		</div>
 																	</div>
+
+																	<div class='rate_ts_mn'>
+																		<ul>
+																			<li>{item.vehOdometer} KMS</li>
+																			<li>{item.exteriorColor}</li>
+																			<li>{item.vehFuelCode}</li>
+																			<li>{item.transmissionDesc}</li>
+																		</ul>
+																	</div>
+
+																	{/* <div
+																		id='textitem'
+																		className='d-flex'
+																		style={{
+																			marginTop: "-4px",
+																		}}>
+																		<ul
+																			className='d-flex'
+																			style={{ fontSize: "" }}>
+																			<div className='b'>
+																				{item.vehOdometer} kms
+																			</div>
+
+																			<div
+																				className=''
+																				style={{ marginLeft: "15px" }}>
+																				{item.exteriorColor}
+																			</div>
+																			<div
+																				className=''
+																				style={{ marginLeft: "15px" }}>
+																				{item.vehFuelCode}
+																			</div>
+
+																			<div
+																				className=''
+																				style={{ marginLeft: "15px" }}>
+																				{item.transmissionDesc}
+																			</div>
+																		</ul>
+																	</div> */}
 
 																	<span
 																		style={{
@@ -238,49 +790,14 @@ const ListTableTwo = () => {
 																</div>
 															</Col>
 														</div>
-													);
-												}
-												return null;
-											})}
-										</Row>
-
-										<div
-											className=' fa fa-arrow-right fa-3x visible-xs'
-											style={{ marginTop: "90px" }}></div>
-									</div>
-								</div>
+													))}
+												</Row>
+											</div>
+										</div>
+									</>
+								)}
 							</div>
 						</div>
-
-						{/* pagination section */}
-						{/* <div className='b-items__pagination'>
-							<div
-								className='b-items__pagination-main wow zoomInUp'
-								data-wow-delay='0.5s'>
-								<a
-									data-toggle='modal'
-									data-target='#myModal'
-									href='#'
-									className='m-left'>
-									<span className='fa fa-angle-left'></span>
-								</a>
-								<span className='m-active'>
-									<a href='#'>1</a>
-								</span>
-								<span>
-									<a href='#'>2</a>
-								</span>
-								<span>
-									<a href='#'>3</a>
-								</span>
-								<span>
-									<a href='#'>4</a>
-								</span>
-								<a href='#' className='m-right'>
-									<span className='fa fa-angle-right'></span>
-								</a>
-							</div>
-						</div> */}
 					</div>
 				</div>
 			</div>
@@ -343,8 +860,12 @@ const ListTableTwo = () => {
 										been our motive.
 									</p>
 								</article>
-								<a href='about.html' className='btn m-btn'>
-									Read More<span className='fa fa-angle-right'></span>
+								<a href='/detailsdata' className='btn m-btn'>
+									Read More
+									<span
+										style={{ paddingLeft: "7px !important" }}
+										id='arrowiconbtn'
+										className='fa fa-angle-right'></span>
 								</a>
 							</aside>
 						</div>

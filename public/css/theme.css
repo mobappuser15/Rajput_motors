@@ -61,6 +61,7 @@ body {
 }
 
 .s-shadow.b-breadCumbs {
+	width: 100% !important;
 	box-shadow: 0px 30px 50px -24px rgba(0, 0, 0, 0.1);
 	z-index: 1000;
 }

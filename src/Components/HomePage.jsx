@@ -235,11 +235,11 @@ export default function HomePage() {
 				brandCode: "UC",
 				countryCode: "IN",
 				companyId: "SUSHIL",
-				// budgetFrom: 0,
-				// budgetTo: 2000000,
-				vehBrandCode: "ALL",
-				vehModelCode: "ALL",
-				vehFuel: "ALL",
+				budgetFrom: 0,
+				budgetTo: 0,
+				vehBrandCode: "",
+				vehModelCode: "",
+				vehFuel: "",
 				loginCompanyID: "ORBIT",
 				loginUserId: "SULTAN",
 				loginIpAddress: "192.168.10.32",
@@ -294,11 +294,11 @@ export default function HomePage() {
 			brandCode: "UC",
 			countryCode: "IN",
 			companyId: "SUSHIL",
-			budgetFrom: parseInt(minRange) || 0,
-			budgetTo: parseInt(maxRange) || 200000000,
+			budgetFrom: minRange,
+			budgetTo: maxRange,
 			vehBrandCode: selectedItem,
 			vehModelCode: selectmodel,
-			vehFuel: "ALL",
+			vehFuel: "",
 			loginCompanyID: "ORBIT",
 			loginUserId: "SULTAN",
 			loginIpAddress: "192.168.10.32",
@@ -316,7 +316,7 @@ export default function HomePage() {
 				setSearchResults(responseData?.UsedCarVehStockDetail);
 				setDemo(responseData?.UsedCarVehStockDetail);
 				setShowdata(responseData?.UsedCarVehStockDetail);
-				// console.log("responseData", responseData);
+				console.log("responseData", responseData);
 			} else {
 				throw new Error(`Request failed with status code: ${response.status}`);
 			}
@@ -344,13 +344,8 @@ export default function HomePage() {
 
 	return (
 		<>
-			{/* <div className=''>
-				<Navbar />{" "}
-			</div>{" "} */}
-			{/* <Navbar /> */}
-			<div className='position-fixed'>
-				<Navbar />
-			</div>
+			<ScrollTop />
+
 			{detailspage === false ? (
 				<>
 					<div>
@@ -367,7 +362,7 @@ export default function HomePage() {
 							{/* Loader end */}
 
 							{/* slider  */}
-							<section className='b-slider'>
+							<section className='b-slider hidden-xs'>
 								<div
 									id='carouselExampleFade'
 									className='carousel slide carousel-fade'
@@ -375,7 +370,7 @@ export default function HomePage() {
 									<div className='carousel-inner'>
 										<div className='carousel-item active'>
 											<img
-												style={{ marginTop: "60px" }}
+												style={{ marginTop: "53px" }}
 												src='media/main-slider/sushil-cars.jpg'
 												className='d-block w-100'
 												alt='...'
@@ -393,7 +388,7 @@ export default function HomePage() {
 									<div className='carousel-inner'>
 										<div className='carousel-item active'>
 											<img
-												style={{ marginTop: "60px" }}
+												style={{ marginTop: "69px" }}
 												src='media/main-slider/sushil-cars.jpg'
 												className='d-block w-100'
 												alt='...'
@@ -410,7 +405,7 @@ export default function HomePage() {
 										<div
 											className='b-search__main'
 											style={{
-												marginTop: "-20px",
+												marginTop: "20px",
 												borderRadius: "30px",
 												backgroundColor: "white",
 											}}>
@@ -527,26 +522,26 @@ export default function HomePage() {
 									{/* vechile Stock home data on sale section */}
 
 									<section
-										className='b-homeAuto'
+										className='b-homeAuto  hidden-xs  '
 										style={{ marginTop: "-38px" }}>
 										<div className='container-fluid'>
 											<div className='col-xs-12   visible-xs-horizental-scroll'>
 												<div className='b-homeAuto__latest'>
 													<h5
-														className='s-titleBg wow zoomInLeft'
+														className='s-titleBg '
 														style={{ fontFamily: "Segoe UI" }}>
 														GIVING OUR CUSTOMERS BEST DEALS
 													</h5>
 													<br />
 
 													<h2
-														className='s-title wow zoomInLeft'
+														className='s-title'
 														// '0.9s'
 														style={{ fontFamily: "Segoe UI" }}>
 														LATEST VEHICLES ON SALE
 													</h2>
 
-													<div className='' id='cardrow'>
+													<div className='container ' id='cardrow'>
 														<Row xs={12} md={4} id='cardrow'>
 															{demo
 																?.filter(
@@ -562,7 +557,7 @@ export default function HomePage() {
 																				onClick={() =>
 																					singleProducthandle(item.uniqueSerial)
 																				}
-																				className=' card2 b-auto__main-item '>
+																				className=' card2 b-auto__main-item hidden-xs '>
 																				<img
 																					style={{
 																						aspectRatio: "2/2",
@@ -639,14 +634,275 @@ export default function HomePage() {
 																					</div>
 																				</span>
 																			</div>
+																			{/* phone View */}
+
+																			<div
+																				style={{ borderRadius: "20px" }}
+																				onClick={() =>
+																					singleProducthandle(item.uniqueSerial)
+																				}
+																				className='  visible-xs'>
+																				<div className=''>
+																					<div className=''>
+																						<img
+																							style={{
+																								marginLeft: "10px",
+																								height: "165px",
+																								aspectRatio: " 2 / 2",
+																								width: "70%",
+																								borderRadius: "10px",
+																							}}
+																							className=' img-responsive center-block '
+																							src={
+																								item?.modelImages.length > 0 &&
+																								item?.modelImages[0].uri
+																							}
+																							alt='nissan'
+																						/>
+																					</div>
+																					<div className=''>
+																						<div
+																							className=' d-flex b-items__cars-one-info-title'
+																							style={{
+																								fontSize: "16px",
+																								marginLeft: "20px",
+																								marginTop: "5px",
+																							}}>
+																							{" "}
+																							<div>
+																								{item.vehManufactureYear}{" "}
+																							</div>
+																							<div
+																								style={{ marginLeft: "5px" }}>
+																								{" "}
+																								{item.vehBrandCode}
+																							</div>{" "}
+																							<div
+																								style={{ marginLeft: "5px" }}>
+																								{item.vehModelCode}{" "}
+																							</div>
+																						</div>
+																						<br />
+
+																						<div
+																							className='d-flex'
+																							style={{
+																								marginTop: "-20px",
+																							}}>
+																							<ul className='d-flex'>
+																								<div className='b'>
+																									{item.vehOdometer}
+																								</div>
+
+																								<div
+																									className=''
+																									style={{
+																										marginLeft: "15px",
+																									}}>
+																									{item.exteriorColor}
+																								</div>
+																								<div
+																									className=''
+																									style={{
+																										marginLeft: "15px",
+																									}}>
+																									{item.vehFuelCode}
+																								</div>
+
+																								<div
+																									className=''
+																									style={{
+																										marginLeft: "15px",
+																									}}>
+																									{item.transmissionDesc}
+																								</div>
+																							</ul>
+																						</div>
+
+																						<span
+																							style={{
+																								marginLeft: "20px",
+																								marginTop: "-5px",
+																							}}
+																							className='d-flex ml-6'>
+																							<i className=''></i>{" "}
+																							<div
+																								className='b-items__cars-one-info-title'
+																								style={{ fontSize: "15px" }}>
+																								Rs{" "}
+																								{item.vehSellPriceRecommended}
+																							</div>
+																						</span>
+																					</div>
+																				</div>
+																			</div>
 																		</Col>
 																	</div>
 																))}
 														</Row>
-														<span className=' fa fa-arrow-right  visible-xs'></span>
 
 														{/* testing details */}
 													</div>
+												</div>
+											</div>
+										</div>
+										<div className='clearfix'></div>
+									</section>
+									{/* phone view */}
+									<section
+										className='b-homeAuto   visible-xs'
+										style={{ marginTop: "-38px" }}>
+										<div className='container'>
+											<div className=''>
+												<div className='b-homeAuto__latest'>
+													<h5
+														className='s-titleBg '
+														style={{ fontFamily: "Segoe UI" }}>
+														GIVING OUR CUSTOMERS BEST DEALS
+													</h5>
+													<br />
+
+													<h2
+														className='s-title'
+														// '0.9s'
+														style={{ fontFamily: "Segoe UI" }}>
+														LATEST VEHICLES ON SALE
+													</h2>
+
+													<div className='row' id='cardrow'>
+														{/* testing details */}
+														{demo
+															?.filter(
+																(item) =>
+																	item.programCode ===
+																	"SHORT_LIST_WEBSITE_HOME_PAGE"
+															)
+
+															.map((item) => (
+																<div
+																	className=''
+																	style={{
+																		width: "70%",
+																		borderRadius: "15px",
+																		marginLeft: "15px",
+																		// backgroundColor: "red",
+																		height: "70%",
+																		padding: "2px",
+																		border: "1px solid black",
+																	}}>
+																	<div key={item.uniqueSerial}>
+																		<div>
+																			{/* phone View */}
+
+																			<div
+																				style={{ borderRadius: "20px" }}
+																				onClick={() =>
+																					singleProducthandle(item.uniqueSerial)
+																				}
+																				className='  visible-xs'>
+																				<div className=''>
+																					<div className=''>
+																						<img
+																							style={{
+																								marginLeft: "1px",
+
+																								aspectRatio: " 3/4",
+																								width: "100%",
+																								maxHeight: "230px",
+																								objectFit: "cover",
+																								borderRadius: "10px",
+																							}}
+																							className=' img-responsive center-block '
+																							src={
+																								item?.modelImages.length > 0 &&
+																								item?.modelImages[0].uri
+																							}
+																							alt='nissan'
+																						/>
+																					</div>
+																					<div className=''>
+																						<div
+																							className=' d-flex b-items__cars-one-info-title'
+																							style={{
+																								fontSize: "16px",
+																								marginLeft: "5px",
+																								marginTop: "5px",
+																							}}>
+																							{" "}
+																							<div>
+																								{item.vehManufactureYear}{" "}
+																							</div>
+																							<div
+																								style={{ marginLeft: "5px" }}>
+																								{" "}
+																								{item.vehBrandCode}
+																							</div>{" "}
+																							<div
+																								style={{ marginLeft: "5px" }}>
+																								{item.vehModelCode}{" "}
+																							</div>
+																						</div>
+																						<br />
+
+																						<div
+																							className='d-flex'
+																							style={{
+																								marginTop: "-20px",
+																								marginLeft: "-16px",
+																							}}>
+																							<ul className='d-flex'>
+																								<div className='b'>
+																									{item.vehOdometer}
+																								</div>
+
+																								<div
+																									className=''
+																									style={{
+																										marginLeft: "5px",
+																									}}>
+																									{item.exteriorColor}
+																								</div>
+																								<div
+																									className=''
+																									style={{
+																										marginLeft: "5px",
+																									}}>
+																									{item.vehFuelCode}
+																								</div>
+
+																								<div
+																									className=''
+																									style={{
+																										marginLeft: "5px",
+																									}}>
+																									{item.transmissionDesc}
+																								</div>
+																							</ul>
+																						</div>
+
+																						<span
+																							style={{
+																								marginLeft: "10px",
+																								marginTop: "-5px",
+																							}}
+																							className='d-flex ml-6'>
+																							<i className=''></i>{" "}
+																							<div
+																								className='b-items__cars-one-info-title'
+																								style={{ fontSize: "15px" }}>
+																								Rs{" "}
+																								{item.vehSellPriceRecommended}
+																							</div>
+																						</span>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															))}
+													</div>
+													<br />
 												</div>
 											</div>
 										</div>
@@ -679,6 +935,10 @@ export default function HomePage() {
 														<Row xs={12} md={4} id='cardrow'>
 															{demo?.map((item) => (
 																<div key={item.uniqueSerial} id='cardrow'>
+																	{console.log(
+																		demo,
+																		"check data serach demooo"
+																	)}
 																	<Col>
 																		<div
 																			onClick={() =>
@@ -772,7 +1032,7 @@ export default function HomePage() {
 								</>
 							)}
 							{/* Exclusive offers slider */}
-							<section className='b-featured'>
+							<section className='b-featured hidden-xs'>
 								<div className='container-fluid'>
 									<h2 className='s-title '>Exclusive Offers</h2>
 									<div className='carousel-wrapper'>
@@ -882,6 +1142,203 @@ export default function HomePage() {
 													</div>
 												))}
 										</Carousel>
+									</div>
+
+									{/* slide checking */}
+								</div>
+							</section>
+
+							{/* phone View Show */}
+							<section className='b-featured visible-xs'>
+								<div className='container-fluid'>
+									<h2 className='s-title '>Exclusive Offers </h2>
+
+									<div
+										id='carouselExampleIndicators'
+										class='carousel slide'
+										data-ride='carousel'>
+										<ol class='carousel-indicators'>
+											<li
+												data-target='#carouselExampleIndicators'
+												data-slide-to='0'
+												class='active'></li>
+											<li
+												data-target='#carouselExampleIndicators'
+												data-slide-to='1'></li>
+											<li
+												data-target='#carouselExampleIndicators'
+												data-slide-to='2'></li>
+										</ol>
+										<div class='carousel-inner'>
+											<div class='carousel-item active'>
+												<div className='row' id='cardrow'>
+													{/* testing details */}
+													{stockdata
+														?.filter(
+															(item) =>
+																item.programCode ===
+																"SHORT_LIST_WEBSITE_EXCLUSIVE_OFFERS"
+														)
+
+														.map((item) => (
+															<div
+																className=''
+																style={{
+																	width: "70%",
+																	borderRadius: "15px",
+																	marginLeft: "15px",
+																	// backgroundColor: "red",
+																	height: "70%",
+																	padding: "2px",
+																	border: "1px solid black",
+																}}>
+																<div key={item.uniqueSerial}>
+																	<div>
+																		{/* phone View */}
+
+																		<div
+																			style={{ borderRadius: "20px" }}
+																			onClick={() =>
+																				singleProducthandle(item.uniqueSerial)
+																			}
+																			className='  visible-xs'>
+																			<div className=''>
+																				<div className=''>
+																					<img
+																						style={{
+																							marginLeft: "1px",
+
+																							aspectRatio: " 3/4",
+																							width: "100%",
+																							maxHeight: "230px",
+																							objectFit: "cover",
+																							borderRadius: "10px",
+																						}}
+																						className=' img-responsive center-block '
+																						src={
+																							item?.modelImages.length > 0 &&
+																							item?.modelImages[0].uri
+																						}
+																						alt='nissan'
+																					/>
+																				</div>
+																				<div className=''>
+																					<div
+																						className=' d-flex b-items__cars-one-info-title'
+																						style={{
+																							fontSize: "16px",
+																							marginLeft: "5px",
+																							marginTop: "5px",
+																							color: "white",
+																						}}>
+																						{" "}
+																						<div>
+																							{item.vehManufactureYear}{" "}
+																						</div>
+																						<div style={{ marginLeft: "5px" }}>
+																							{" "}
+																							{item.vehBrandCode}
+																						</div>{" "}
+																						<div style={{ marginLeft: "5px" }}>
+																							{item.vehModelCode}{" "}
+																						</div>
+																					</div>
+																					<br />
+
+																					<div
+																						className='d-flex'
+																						style={{
+																							marginTop: "-20px",
+																							marginLeft: "-16px",
+																							color: "white",
+																						}}>
+																						<ul className='d-flex'>
+																							<div className='b'>
+																								{item.vehOdometer}
+																							</div>
+
+																							<div
+																								className=''
+																								style={{
+																									marginLeft: "5px",
+																								}}>
+																								{item.exteriorColor}
+																							</div>
+																							<div
+																								className=''
+																								style={{
+																									marginLeft: "5px",
+																								}}>
+																								{item.vehFuelCode}
+																							</div>
+
+																							<div
+																								className=''
+																								style={{
+																									marginLeft: "5px",
+																								}}>
+																								{item.transmissionDesc}
+																							</div>
+																						</ul>
+																					</div>
+
+																					<span
+																						style={{
+																							marginLeft: "10px",
+																							marginTop: "-5px",
+																						}}
+																						className='d-flex ml-6'>
+																						<i className=''></i>{" "}
+																						<div
+																							className='b-items__cars-one-info-title'
+																							style={{ fontSize: "15px" }}>
+																							Rs {item.vehSellPriceRecommended}
+																						</div>
+																					</span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														))}
+												</div>
+											</div>
+											<div class='carousel-item'>
+												<img
+													class='d-block w-100'
+													src='...'
+													alt='Second slide'
+												/>
+											</div>
+											<div class='carousel-item'>
+												<img
+													class='d-block w-100'
+													src='...'
+													alt='Third slide'
+												/>
+											</div>
+										</div>
+										<a
+											class='carousel-control-prev'
+											href='#carouselExampleIndicators'
+											role='button'
+											data-slide='prev'>
+											<span
+												class='carousel-control-prev-icon'
+												aria-hidden='true'></span>
+											<span class='sr-only'>Previous</span>
+										</a>
+										<a
+											class='carousel-control-next'
+											href='#carouselExampleIndicators'
+											role='button'
+											data-slide='next'>
+											<span
+												class='carousel-control-next-icon'
+												aria-hidden='true'></span>
+											<span class='sr-only'>Next</span>
+										</a>
 									</div>
 
 									{/* slide checking */}
@@ -1012,42 +1469,27 @@ WELCOME TO SUSHIL CARS  section */}
 															className='getng_t_text wow  '
 															style={{
 																visibility: "visible",
+
 																animationDelay: "0s",
 															}}>
-															<p
-																className='hidden-xs'
-																style={{
-																	fontSize: "65px",
-																	fontWight: "700",
-																	lineHeight: "45px",
-																	fontVariantCaps: "all-petite-caps",
-																	fontFamily:
-																		"'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif'",
-																}}>
-																Switch to the fast lane. <br /> Go mobile
+															<p className=''>
+																Switch to the fast lane. Go mobile Switch to the
+																fast lane. Go mobile
 															</p>
 
-															<p
-																className='visible-xs'
-																style={{
-																	fontSize: "40px",
-																	fontWight: "700",
-																	lineHeight: "45px",
-																	fontVariantCaps: "all-petite-caps",
-																	fontFamily:
-																		"'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif'",
-																}}>
-																Switch to the fast lane. <br /> Go mobile
-															</p>
-															<p>
+															<p className=''></p>
+
+															<span>
 																Download our app and let your mobile assistence
 																do all the hard work
-															</p>
+															</span>
 														</div>
+
 														<div
-															className='getng_btns wow  '
+															className='getng_btns wow hidden-xs  '
 															style={{
 																visibility: "visible",
+
 																animationDelay: "0.3s",
 															}}>
 															<a target='_blank' className='apkbtn'>
@@ -1058,12 +1500,46 @@ WELCOME TO SUSHIL CARS  section */}
 																	style={{ display: "inline-block" }}
 																/>
 															</a>
+
 															<a target='_blank' className='apkbtn'>
 																<img
 																	className='lazy'
 																	alt='apk btn 2'
 																	src='assets/app-logo/apple-app-store-logo.png'
 																	style={{ display: "inline-block" }}
+																/>
+															</a>
+														</div>
+
+														<div
+															className='getng_btns wow  visible-xs  row'
+															style={{
+																visibility: "visible",
+
+																animationDelay: "0.3s",
+															}}>
+															<a target='_blank' className='apkbtn '>
+																<img
+																	className='lazy'
+																	alt='apk btn 1'
+																	src='assets/app-logo/google-play-logo.png'
+																	style={{ display: "inline-block" }}
+																/>
+															</a>
+
+															<a
+																style={{
+																	marginLeft: "180px",
+
+																	marginTop: "-30px",
+																}}
+																target='_blank'
+																className='apkbtn'>
+																<img
+																	style={{ marginTop: "-96px" }}
+																	className='lazy'
+																	alt='apk btn 2'
+																	src='assets/app-logo/apple-app-store-logo.png'
 																/>
 															</a>
 														</div>
@@ -1295,7 +1771,6 @@ WELCOME TO SUSHIL CARS  section */}
 					)}
 				</>
 			)}
-			<ScrollTop />
 		</>
 	);
 }

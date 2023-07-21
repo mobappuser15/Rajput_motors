@@ -8,10 +8,15 @@ import Details from "./Details";
 import Collapse from "react-bootstrap/Collapse";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Typography, Slider, makeStyles } from "@material-ui/core";
+import Slider from "react-slider";
+import "./prizerange.css";
+
+import { Typography, makeStyles, TablePagination } from "@material-ui/core";
+
+const MIN = 50000;
+const MAX = 6000000;
 
 const StockCars = () => {
-	// const classes = useStyles();
 	const [openprice, setOpenprice] = useState(false);
 	const [openyear, setOpenyear] = useState(false);
 	const [opendriven, setOpendriven] = useState(false);
@@ -33,17 +38,16 @@ const StockCars = () => {
 	const [vyear, setVechileYear] = useState([]);
 	const [fueldata, setFuelData] = useState([]);
 	const [transmission, setTransmission] = useState([]);
-	// const [priceAmount, setpriceAmount] = useState([]);
 	const [selectbodytype, setselectbodytype] = useState([]);
 	const [kmsDriven, setkmsDriven] = useState([]);
-	const [selectedItem, setSelectedItem] = useState([]);
+	const [selectedItem, setSelectedItem] = useState("");
 	const [resourcedata, setResoucedata] = useState("");
 	const [selecttype, setSelecttype] = useState("");
 	const [selectmodel, setSelectmodel] = useState("");
-	const [selectfuel, setSelectFuel] = useState([]);
+	const [selectfuel, setSelectFuel] = useState("");
 	const [selecttransmission, setSelecttransmission] = useState([]);
 	const [selectextirecolor, setSelectextirecolor] = useState("");
-	const [selectmfy, setSelectmfy] = useState([]);
+	const [selectmfy, setSelectmfy] = useState("");
 	const [selectverient, setSelectverient] = useState("");
 	const [codemodel, setcodemodel] = useState("");
 	const [codemake, setcodemake] = useState("");
@@ -54,7 +58,6 @@ const StockCars = () => {
 	const [selectedModel, setSelectedModel] = useState("");
 	const [selectedVariant, setSelectedVariant] = useState("");
 	const [showdata, setShowdata] = useState(false);
-	const [selectedItems, setSelectedItems] = useState([]);
 
 	const [result, setResult] = useState("");
 	const [makedatarequest, setMake] = useState([]);
@@ -63,6 +66,20 @@ const StockCars = () => {
 	const [vmonth, setVechileMonth] = useState([]);
 	const [extirecolor, setExtirearColor] = useState([]);
 	const [selectmfm, setSelectmfm] = useState("");
+
+	const [page, setPage] = React.useState(2);
+	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+	const [prizevalue, setprizevalue] = useState([MIN, MAX]);
+	console.log(prizevalue, "prizevalue");
+
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
+
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
 
 	// All Stock Show
 	useEffect(() => {
@@ -80,11 +97,11 @@ const StockCars = () => {
 				brandCode: "UC",
 				countryCode: "IN",
 				companyId: "SUSHIL",
-				// budgetFrom: 0,
-				// budgetTo: 2000000,
-				vehBrandCode: "ALL",
-				vehModelCode: "ALL",
-				vehFuel: "ALL",
+				budgetFrom: 0,
+				budgetTo: 0,
+				vehBrandCode: "",
+				vehModelCode: "",
+				vehFuel: "",
 				loginCompanyID: "ORBIT",
 				loginUserId: "SULTAN",
 				loginIpAddress: "192.168.10.32",
@@ -101,6 +118,7 @@ const StockCars = () => {
 					const responseData = await response.json();
 
 					setStockdata(responseData?.UsedCarVehStockDetail);
+					console.log(stockdata, "data stcok");
 				} else {
 					throw new Error(
 						`Request failed with status code: ${response.status}`
@@ -536,7 +554,7 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setFuelData(generalList);
-				// // console.log(generalList, "fuel list data");
+				console.log(generalList, "fuel list data");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -639,6 +657,11 @@ const StockCars = () => {
 		// // console.log(event.target.value, "check console");
 	};
 
+	const handleSelectChange4 = (event) => {
+		setSelectFuel(event.target.value);
+		console.log(event.target.value, "fuleeeeeeeeee");
+	};
+
 	const handleSelectChange2 = (event) => {
 		setSelecttype(event.target.value);
 	};
@@ -650,9 +673,7 @@ const StockCars = () => {
 
 		// // console.log(event.target.value, "check con");
 	};
-	const handleSelectChange4 = (event) => {
-		setSelectFuel(event.target.value);
-	};
+
 	const handleSelectChange5 = (event) => {
 		setSelecttransmission(event.target.value);
 	};
@@ -667,6 +688,7 @@ const StockCars = () => {
 	};
 	const handleSelectChange9 = (event) => {
 		setSelectverient(event.target.value);
+		console.log(event.target.value, "price range");
 	};
 
 	const handleSelectBodyType = (event) => {
@@ -676,6 +698,7 @@ const StockCars = () => {
 	const handleSelectKmsType = (event) => {
 		setkmsDriven(event.target.value);
 	};
+
 	const navigate = useNavigate();
 
 	const fetchData = async () => {
@@ -692,11 +715,12 @@ const StockCars = () => {
 			brandCode: "UC",
 			countryCode: "IN",
 			companyId: "SUSHIL",
-			budgetFrom: parseInt(minRange) || 0,
-			budgetTo: parseInt(maxRange) || 200000000,
+			budgetFrom: prizevalue[0],
+			budgetTo: prizevalue[1],
 			vehBrandCode: selectedItem,
 			vehModelCode: selectmodel,
-			vehFuel: "ALL",
+			vehVariantDesc: selectverient,
+			vehFuel: selectfuel,
 			loginCompanyID: "ORBIT",
 			loginUserId: "SULTAN",
 			loginIpAddress: "192.168.10.32",
@@ -714,7 +738,7 @@ const StockCars = () => {
 				setSearchResults(responseData?.UsedCarVehStockDetail);
 				setDemo(responseData?.UsedCarVehStockDetail);
 				setShowdata(responseData?.UsedCarVehStockDetail);
-				console.log("responseData", responseData);
+				console.log("responseData stck search", responseData);
 			} else {
 				throw new Error(`Request failed with status code: ${response.status}`);
 			}
@@ -767,13 +791,13 @@ const StockCars = () => {
 				</section>
 
 				<div className='b-breadCumbs s-shadow'>
-					<div className='container wow zoomInUp' data-wow-delay='0.5s'>
-						<a href='home.html' className='b-breadCumbs__page'>
+					<div className='container ' data-wow-delay='0.5s'>
+						<Link to='/' className='b-breadCumbs__page'>
 							Home
-						</a>
+						</Link>
 						<span className='fa fa-angle-right'></span>
 						<a href='listTableTwo.html' className='b-breadCumbs__page m-active'>
-							Search Results
+							Search Results data
 						</a>
 					</div>
 				</div>
@@ -781,10 +805,88 @@ const StockCars = () => {
 				{/* filter section */}
 
 				{/* body details cars */}
-				<div className='row'>
+				<div className='row '>
+					<div className=' drup_mn1 visible-xs '>
+						{/* <div className='prizetext'>
+							<span className='d-flex ' style={{ color: "blue" }}>
+								Rs{prizevalue[0]}- RS{prizevalue[1]}
+							</span>
+						</div>
+						<Slider
+							onClick={handleSaveData}
+							className={"prizeslider"}
+							onChange={setprizevalue}
+							value={prizevalue}
+							min={MIN}
+							max={MAX}
+						/> */}
+						<ul id='cardrow'>
+							<li>
+								<select
+									id='selectdata2'
+									onClick={handleSaveData}
+									class=''
+									value={selectedItem}
+									onChange={handleSelectChange}>
+									<option value=''>Brand</option>
+									{data.map((item, index) => (
+										<option key={index} value={item.code}>
+											{item.description}
+										</option>
+									))}
+								</select>
+							</li>
+							<li>
+								<select
+									onClick={handleSaveData}
+									id='selectdata2'
+									class=''
+									value={selectmodel}
+									onChange={handleSelectChange3}>
+									<option value=''> Model </option>
+									{model.map((item, index) => (
+										<option key={index} value={item.code}>
+											{item.description}
+										</option>
+									))}
+								</select>
+							</li>
+
+							{/* <li>
+								<select
+									id='selectdata2'
+									onClick={handleSaveData}
+									class=''
+									value={selectverient}
+									onChange={handleSelectChange9}>
+									<option value=''> Budget </option>
+									{Amountdata.map((item, id) => (
+										<option key={id} value={item.id}>
+											{item.img}
+										</option>
+									))}
+								</select>
+							</li> */}
+							<li>
+								<select
+									id='selectdata2'
+									class=''
+									value={selectfuel}
+									onChange={handleSelectChange4}>
+									<option value=''> Fuel-type</option>
+									{fueldata.map((item, index) => (
+										<option key={index} value={item.code}>
+											{item.description}
+										</option>
+									))}
+								</select>
+							</li>
+						</ul>
+					</div>
+
 					<form
 						id='viewform'
-						class='s-submit clearfix'
+						class='s-submit clearfix hidden-xs'
 						onSubmit={handleSaveData}
 						style={{
 							backgroundColor: "black",
@@ -793,41 +895,57 @@ const StockCars = () => {
 						}}>
 						<div class='row'>
 							<div class='col-xs-12 col-md-12 col-lg-3 col-xl-3'>
-								<div className='row ' style={{ marginLeft: "20px" }}>
-									<div className='col-5'>
-										<button
-											style={{
-												color: "black",
-												// marginTop: "20px",
-												marginLeft: "150px",
-												backgroundColor: "orange",
-											}}
-											onClick={reloadPage}
-											// type='submit'
-											className='btn-lg btn-warning'>
-											Reset
-										</button>
-									</div>
-									<div className='col-5'>
-										<button
-											style={{
-												color: "black",
-												// marginTop: "20px",
-												marginLeft: "50px",
-												backgroundColor: "orange",
-											}}
-											type='submit'
-											className='btn-lg btn-warning'>
-											Filter
-										</button>
+								<div
+									id='fliterbutton'
+									className='d-flex'
+									style={{ alignItems: "center" }}>
+									<button
+										style={{
+											color: "black",
+											// marginTop: "20px",
+
+											backgroundColor: "orangered",
+										}}
+										onClick={reloadPage}
+										// type='submit'
+										className='btn-sm '>
+										Reset
+									</button>
+
+									<button
+										className='btn-sm '
+										style={{
+											color: "black",
+
+											marginLeft: "20px",
+
+											backgroundColor: "orangered",
+										}}
+										type='submit'>
+										Filter
+									</button>
+								</div>
+								<div className='prizetext'>
+									<div className='d-flex textprize' style={{ color: "white" }}>
+										<span>{prizevalue[0]}RS</span> -
+										<span> {prizevalue[1]}RS</span>
 									</div>
 								</div>
+								<Slider
+									onClick={handleSaveData}
+									className={"prizeslider"}
+									onChange={setprizevalue}
+									value={prizevalue}
+									min={MIN}
+									max={MAX}
+								/>
 
 								<br />
 								<br />
 								<div class='col-xs-12 col-md-12 col-lg-12 col-xl-12'>
 									<div class=''>
 										<select
+											onClick={handleSaveData}
 											id='selectdata'
 											class=''
 											value={selectedItem}
@@ -839,7 +957,7 @@ const StockCars = () => {
 												</option>
 											))}
 										</select>
-										<span class='fa fa-caret-down'></span>
+										<span class='fa fa-caret'></span>
 									</div>
 								</div>
 
@@ -850,6 +968,7 @@ const StockCars = () => {
 										<select
 											id='selectdata'
 											class=''
+											onClick={handleSaveData}
 											value={selectmodel}
 											onChange={handleSelectChange3}>
 											<option value=''> Model </option>
@@ -859,30 +978,11 @@ const StockCars = () => {
 												</option>
 											))}
 										</select>
-										<span class='fa fa-caret-down'></span>
-									</div>
-								</div>
-								<div
-									class='col-xs-12 col-md-12 col-lg-12 col-xl-12'
-									data-wow-delay='0.5s'>
-									<div class=''>
-										<select
-											id='selectdata'
-											class=''
-											value={selectverient}
-											onChange={handleSelectChange9}>
-											<option value=''> Variant </option>
-											{varient.map((item, index) => (
-												<option key={index} value={item.code}>
-													{item.description}
-												</option>
-											))}
-										</select>
-										<span class='fa fa-caret-down'></span>
+										<span class='fa fa-caret-d'></span>
 									</div>
 								</div>
 
-								<div
+								{/* <div
 									class='col-xs-12 col-md-12 col-lg-12 col-xl-12'
 									data-wow-delay='0.5s'>
 									<div class=''>
@@ -898,29 +998,9 @@ const StockCars = () => {
 												</option>
 											))}
 										</select>
-										<span class='fa fa-caret-down'></span>
+										<span class='fa fa-caret-d'></span>
 									</div>
-								</div>
-
-								<div
-									class='col-xs-12 col-md-12 col-lg-12 col-xl-12'
-									data-wow-delay='0.5s'>
-									<div class=''>
-										<select
-											id='selectdata'
-											class=''
-											value={selectmfy}
-											onChange={handleSelectChange7}>
-											<option value=''> Old Years </option>
-											{vyear.map((item, index) => (
-												<option key={index} value={item.code}>
-													{item.description}
-												</option>
-											))}
-										</select>
-										<span class='fa fa-caret-down'></span>
-									</div>
-								</div>
+								</div> */}
 
 								<div
 									data-wow-delay='0.5s'
@@ -938,7 +1018,7 @@ const StockCars = () => {
 												</option>
 											))}
 										</select>
-										<span class='fa fa-caret-down'></span>
+										<span class='fa fa-caret-'></span>
 									</div>
 								</div>
 
@@ -952,8 +1032,7 @@ const StockCars = () => {
 					{showdata === false ? (
 						<>
 							{/* normal Stock */}
-
-							<div className='col-xs-12 col-md-12  col-lg-9 col-xl-9'>
+							<div className='col-xs-12 col-md-12  col-lg-9 col-xl-9 hidden-xs'>
 								<div className='b-items'>
 									<div className='container'>
 										<div className='b-auto__main'></div>
@@ -1057,51 +1136,266 @@ const StockCars = () => {
 									</div>
 								</div>
 							</div>
+
+							<div className='col-xs-12 col-md-12  col-lg-9 col-xl-9 visible-xs '>
+								<div className='b-items'>
+									<div className='container'>
+										<div className='b-auto__main'></div>
+										<Row xs={12} md={3} id=''>
+											{stockdata?.map((item) => {
+												const frontImage = item?.modelImages.find(
+													(image) => image?.imageName === "Front"
+												);
+												if (frontImage) {
+													return (
+														<div key={frontImage.uri}>
+															<Col>
+																<div
+																	onClick={() =>
+																		singleProducthandle(item.uniqueSerial)
+																	}
+																	className=' card2 b-auto__main-item '>
+																	{/* {console.log(item.modelImages, "data image url")} */}
+																	<img
+																		style={{
+																			aspectRatio: "2/2",
+																			width: "100%",
+																			// border: "3px solid gray",
+																			// borderRadius: "20px",
+																		}}
+																		className=' img-responsive center-block'
+																		src={frontImage.uri}
+																		alt='nissan'
+																	/>
+
+																	<div
+																		className=' d-flex b-items__cars-one-info-title'
+																		style={{
+																			fontSize: "16px",
+																			marginLeft: "20px",
+																			marginTop: "10px",
+																		}}>
+																		{" "}
+																		<div>{item.vehManufactureYear} </div>
+																		<div style={{ marginLeft: "5px" }}>
+																			{" "}
+																			{item.vehBrandCode}
+																		</div>{" "}
+																		<div style={{ marginLeft: "5px" }}>
+																			{item.vehModelCode}{" "}
+																		</div>
+																	</div>
+
+																	{/* <div
+																		id='textitem'
+																		className='d-flex'
+																		style={{
+																			marginTop: "-4px",
+																		}}>
+																		<ul
+																			className='d-flex'
+																			style={{ fontSize: "" }}>
+																			<div className='b'>
+																				{item.vehOdometer} kms
+																			</div>
+
+																			<div
+																				className=''
+																				style={{ marginLeft: "15px" }}>
+																				{item.exteriorColor}
+																			</div>
+																			<div
+																				className=''
+																				style={{ marginLeft: "15px" }}>
+																				{item.vehFuelCode}
+																			</div>
+
+																			<div
+																				className=''
+																				style={{ marginLeft: "15px" }}>
+																				{item.transmissionDesc}
+																			</div>
+																		</ul>
+																	</div> */}
+																	<div class='rate_ts_mn'>
+																		<ul>
+																			<li>{item.vehOdometer} KMS</li>
+																			<li>{item.exteriorColor}</li>
+																			<li>{item.vehFuelCode}</li>
+																			<li>{item.transmissionDesc}</li>
+																		</ul>
+																	</div>
+																	<span
+																		style={{
+																			marginLeft: "19px",
+																		}}
+																		className='d-flex ml-6'>
+																		<i className=''></i>{" "}
+																		<div
+																			className='b-items__cars-one-info-title'
+																			style={{ fontSize: "18px" }}>
+																			Rs {item.vehSellPriceRecommended}
+																		</div>
+																	</span>
+																</div>
+															</Col>
+														</div>
+													);
+												}
+												return null;
+											})}
+										</Row>
+									</div>
+								</div>
+							</div>
+
+							{/* phone View */}
 						</>
 					) : (
 						/* Search Data   */
-
-						<div className=' col-xs-12 col-md-12  col-lg-9 col-xl-9'>
-							<div className='b-items'>
-								<div className='container'>
-									<div className='b-auto__main'></div>
-									<Row xs={12} md={3} id='cardrow'>
-										<div
-											className=' fa fa-angle-right fa-2x visible-xs'
-											style={{
-												marginLeft: "-70px",
-												marginTop: "100px",
-											}}></div>
-										{demo?.map((item) => (
-											<div key={item.uniqueSerial}>
-												<Col>
-													<div
-														onClick={() =>
-															singleProducthandle(item.uniqueSerial)
-														}
-														className='card2 b-auto__main-item '>
-														<div className=''>
+						<>
+							{/* web view */}
+							<div className=' col-xs-12 col-md-12  col-lg-9 col-xl-9 hidden-xs'>
+								<div className='b-items'>
+									<div className='container'>
+										<div className='b-auto__main'></div>
+										<Row xs={12} md={3} id='cardrow'>
+											<div
+												className=' fa fa-angle-right fa-2x visible-xs'
+												style={{
+													marginLeft: "-70px",
+													marginTop: "100px",
+												}}></div>
+											{demo?.map((item) => (
+												<div key={item.uniqueSerial}>
+													{console.log(demo, "check demo search data")}
+													<Col>
+														<div
+															onClick={() =>
+																singleProducthandle(item.uniqueSerial)
+															}
+															className='card2 b-auto__main-item '>
 															<div className=''>
-																<img
+																<div className=''>
+																	<img
+																		style={{
+																			aspectRatio: "2/2",
+																			width: "100%",
+																		}}
+																		// id='pic_hit1'
+																		className=''
+																		src={
+																			item?.modelImages.length > 0 &&
+																			item?.modelImages[0].uri
+																		}
+																		alt='jeep'
+																	/>
+																</div>
+
+																<div
+																	className=' d-flex b-items__cars-one-info-title'
 																	style={{
-																		aspectRatio: "2/2",
-																		width: "100%",
+																		fontSize: "16px",
+																		marginLeft: "20px",
+																	}}>
+																	{" "}
+																	<div>{item.vehManufactureYear} </div>
+																	<div style={{ marginLeft: "5px" }}>
+																		{" "}
+																		{item.vehBrandCode}
+																	</div>{" "}
+																	<div style={{ marginLeft: "5px" }}>
+																		{item.vehModelCode}{" "}
+																	</div>
+																</div>
+
+																<div
+																	id='textitem'
+																	className='d-flex'
+																	style={{
+																		marginTop: "-4px",
+																	}}>
+																	<ul
+																		className='d-flex'
+																		style={{ fontSize: "" }}>
+																		<div className='b'>
+																			{item.vehOdometer} kms
+																		</div>
+
+																		<div
+																			className=''
+																			style={{ marginLeft: "15px" }}>
+																			{item.exteriorColor}
+																		</div>
+																		<div
+																			className=''
+																			style={{ marginLeft: "15px" }}>
+																			{item.vehFuelCode}
+																		</div>
+
+																		<div
+																			className=''
+																			style={{ marginLeft: "15px" }}>
+																			{item.transmissionDesc}
+																		</div>
+																	</ul>
+																</div>
+
+																<span
+																	style={{
+																		marginLeft: "19px",
 																	}}
-																	// id='pic_hit1'
-																	className=''
-																	src={
-																		item?.modelImages.length > 0 &&
-																		item?.modelImages[0].uri
-																	}
-																	alt='jeep'
-																/>
+																	className='d-flex ml-6'>
+																	<i className=''></i>{" "}
+																	<div
+																		className='b-items__cars-one-info-title'
+																		style={{ fontSize: "18px" }}>
+																		Rs {item.vehSellPriceRecommended}
+																	</div>
+																</span>
 															</div>
+														</div>
+													</Col>
+												</div>
+											))}
+										</Row>
+									</div>
+								</div>
+							</div>
+							{/* phone View */}
+
+							<div className='col-xs-12 col-md-12  col-lg-9 col-xl-9 visible-xs '>
+								<div className='b-items'>
+									<div className='container'>
+										<div className='b-auto__main'></div>
+										<Row xs={12} md={3} id=''>
+											{demo?.map((item) => (
+												<div key={item.uniqueSerial}>
+													<Col>
+														<div
+															onClick={() =>
+																singleProducthandle(item.uniqueSerial)
+															}
+															className=' card2 b-auto__main-item '>
+															<img
+																style={{
+																	aspectRatio: "2/2",
+																	width: "100%",
+																}}
+																className=' img-responsive center-block'
+																src={
+																	item?.modelImages.length > 0 &&
+																	item?.modelImages[0].uri
+																}
+																alt='nissan'
+															/>
 
 															<div
 																className=' d-flex b-items__cars-one-info-title'
 																style={{
 																	fontSize: "16px",
 																	marginLeft: "20px",
+																	marginTop: "10px",
 																}}>
 																{" "}
 																<div>{item.vehManufactureYear} </div>
@@ -1114,36 +1408,14 @@ const StockCars = () => {
 																</div>
 															</div>
 
-															<div
-																id='textitem'
-																className='d-flex'
-																style={{
-																	marginTop: "-4px",
-																}}>
-																<ul className='d-flex' style={{ fontSize: "" }}>
-																	<div className='b'>
-																		{item.vehOdometer} kms
-																	</div>
-
-																	<div
-																		className=''
-																		style={{ marginLeft: "15px" }}>
-																		{item.exteriorColor}
-																	</div>
-																	<div
-																		className=''
-																		style={{ marginLeft: "15px" }}>
-																		{item.vehFuelCode}
-																	</div>
-
-																	<div
-																		className=''
-																		style={{ marginLeft: "15px" }}>
-																		{item.transmissionDesc}
-																	</div>
+															<div class='rate_ts_mn'>
+																<ul>
+																	<li>{item.vehOdometer} KMS</li>
+																	<li>{item.exteriorColor}</li>
+																	<li>{item.vehFuelCode}</li>
+																	<li>{item.transmissionDesc}</li>
 																</ul>
 															</div>
-
 															<span
 																style={{
 																	marginLeft: "19px",
@@ -1157,14 +1429,14 @@ const StockCars = () => {
 																</div>
 															</span>
 														</div>
-													</div>
-												</Col>
-											</div>
-										))}
-									</Row>
+													</Col>
+												</div>
+											))}
+										</Row>
+									</div>
 								</div>
 							</div>
-						</div>
+						</>
 					)}
 				</div>
 			</div>
