@@ -462,7 +462,7 @@ export default function HomePage() {
 															</div>
 
 															<div
-																className='ccol-xs-12 col-md-3 col-lg-3'
+																className='col-xs-12 col-md-3 col-lg-3'
 																id='searchdata'>
 																<input
 																	id='input_data'
@@ -913,7 +913,7 @@ export default function HomePage() {
 								<>
 									{/* Search Stock data on sale section */}
 									<section
-										className='b-homeAuto'
+										className='b-homeAuto hidden-xs'
 										style={{ marginTop: "-38px" }}>
 										<div className='container-fluid'>
 											<div className='col-xs-12   visible-xs-horizental-scroll'>
@@ -933,97 +933,285 @@ export default function HomePage() {
 
 													<div className='  b-auto__main' id='cardrow'>
 														<Row xs={12} md={4} id='cardrow'>
-															{demo?.map((item) => (
-																<div key={item.uniqueSerial} id='cardrow'>
-																	{console.log(
-																		demo,
-																		"check data serach demooo"
-																	)}
-																	<Col>
-																		<div
-																			onClick={() =>
-																				singleProducthandle(item.uniqueSerial)
-																			}
-																			className=' card2 b-auto__main-item '>
-																			<img
-																				style={{ width: "100%" }}
-																				className='  img-responsive center-block'
-																				src={
-																					item?.modelImages.length > 0 &&
-																					item?.modelImages[0].uri
-																				}
-																				alt='nissan'
-																			/>
-
-																			<div
-																				className=' d-flex b-items__cars-one-info-title'
-																				style={{
-																					fontSize: "16px",
-																					marginLeft: "20px",
-																				}}>
-																				{" "}
-																				<div>{item.vehManufactureYear} </div>
-																				<div style={{ marginLeft: "5px" }}>
-																					{" "}
-																					{item.vehBrandCode}
-																				</div>{" "}
-																				<div style={{ marginLeft: "5px" }}>
-																					{item.vehModelCode}{" "}
-																				</div>
-																			</div>
-
-																			<div
-																				id='textitem'
-																				className='d-flex'
-																				style={{
-																					marginTop: "-4px",
-																				}}>
-																				<ul
-																					className='d-flex'
-																					style={{ fontSize: "" }}>
-																					<div className='b'>
-																						{item.vehOdometer} kms
-																					</div>
-
-																					<div
-																						className=''
-																						style={{ marginLeft: "20px" }}>
-																						{item.exteriorColor}
-																					</div>
-																					<div
-																						className=''
-																						style={{ marginLeft: "20px" }}>
-																						{item.vehFuelCode}
-																					</div>
-
-																					<div
-																						className=''
-																						style={{ marginLeft: "20px" }}>
-																						{item.transmissionDesc}
-																					</div>
-																				</ul>
-																			</div>
-
-																			<span
-																				style={{
-																					marginLeft: "20px",
-																				}}
-																				className='d-flex ml-6'>
-																				<i className=''></i>{" "}
-																				<div
-																					className='b-items__cars-one-info-title'
-																					style={{ fontSize: "18px" }}>
-																					Rs {item.vehSellPriceRecommended}
-																				</div>
-																			</span>
-																		</div>
-																	</Col>
+															{console.log(demo, "demo stcok")}
+															{demo.length === 0 ? (
+																<div className='notdatafound'>
+																	<p>vehicle Not Available</p>
+																	<img
+																		src='https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?size=626&ext=jpg'
+																		alt='imph'
+																	/>
 																</div>
-															))}
+															) : (
+																<>
+																	{demo?.map((item) => (
+																		<div key={item.uniqueSerial} id='cardrow'>
+																			{console.log(
+																				demo,
+																				"check data serach demooo"
+																			)}
+																			<Col>
+																				<div
+																					onClick={() =>
+																						singleProducthandle(
+																							item.uniqueSerial
+																						)
+																					}
+																					className=' card2 b-auto__main-item '>
+																					<img
+																						style={{ width: "100%" }}
+																						className='  img-responsive center-block'
+																						src={
+																							item?.modelImages.length > 0 &&
+																							item?.modelImages[0].uri
+																						}
+																						alt='nissan'
+																					/>
+
+																					<div
+																						className=' d-flex b-items__cars-one-info-title'
+																						style={{
+																							fontSize: "16px",
+																							marginLeft: "20px",
+																						}}>
+																						{" "}
+																						<div>
+																							{item.vehManufactureYear}{" "}
+																						</div>
+																						<div style={{ marginLeft: "5px" }}>
+																							{" "}
+																							{item.vehBrandCode}
+																						</div>{" "}
+																						<div style={{ marginLeft: "5px" }}>
+																							{item.vehModelCode}{" "}
+																						</div>
+																					</div>
+
+																					<div
+																						id='textitem'
+																						className='d-flex'
+																						style={{
+																							marginTop: "-4px",
+																						}}>
+																						<ul
+																							className='d-flex'
+																							style={{ fontSize: "" }}>
+																							<div className='b'>
+																								{item.vehOdometer} kms
+																							</div>
+
+																							<div
+																								className=''
+																								style={{ marginLeft: "20px" }}>
+																								{item.exteriorColor}
+																							</div>
+																							<div
+																								className=''
+																								style={{ marginLeft: "20px" }}>
+																								{item.vehFuelCode}
+																							</div>
+
+																							<div
+																								className=''
+																								style={{ marginLeft: "20px" }}>
+																								{item.transmissionDesc}
+																							</div>
+																						</ul>
+																					</div>
+
+																					<span
+																						style={{
+																							marginLeft: "20px",
+																						}}
+																						className='d-flex ml-6'>
+																						<i className=''></i>{" "}
+																						<div
+																							className='b-items__cars-one-info-title'
+																							style={{ fontSize: "18px" }}>
+																							Rs {item.vehSellPriceRecommended}
+																						</div>
+																					</span>
+																				</div>
+																			</Col>
+																		</div>
+																	))}
+																</>
+															)}
 														</Row>
 
 														{/* testing details */}
 													</div>
+												</div>
+											</div>
+										</div>
+										<div className='clearfix'></div>
+									</section>
+
+									{/* phone View */}
+
+									<section
+										className='b-homeAuto   visible-xs'
+										style={{ marginTop: "-38px" }}>
+										<div className='container'>
+											<div className=''>
+												<div className='b-homeAuto__latest'>
+													<h5
+														className='s-titleBg '
+														style={{ fontFamily: "Segoe UI" }}>
+														GIVING OUR CUSTOMERS BEST DEALS
+													</h5>
+													<br />
+
+													<h2
+														className='s-title'
+														// '0.9s'
+														style={{ fontFamily: "Segoe UI" }}>
+														LATEST VEHICLES ON SALE
+													</h2>
+
+													<div className='row' id='cardrow'>
+														{/* testing details */}
+
+														{demo.length === 0 ? (
+															<div className='notdatafound'>
+																<p>vehicle Not Available</p>
+																<img
+																	src='https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?size=626&ext=jpg'
+																	alt='imph'
+																/>
+															</div>
+														) : (
+															<>
+																{demo?.map((item) => (
+																	<div
+																		className=''
+																		style={{
+																			width: "70%",
+																			borderRadius: "15px",
+																			marginLeft: "15px",
+																			// backgroundColor: "red",
+																			height: "70%",
+																			padding: "2px",
+																			border: "1px solid black",
+																		}}>
+																		<div key={item.uniqueSerial}>
+																			<div>
+																				{/* phone View */}
+
+																				<div
+																					style={{ borderRadius: "20px" }}
+																					onClick={() =>
+																						singleProducthandle(
+																							item.uniqueSerial
+																						)
+																					}
+																					className='  visible-xs'>
+																					<div className=''>
+																						<div className=''>
+																							<img
+																								style={{
+																									marginLeft: "1px",
+
+																									aspectRatio: " 3/4",
+																									width: "100%",
+																									maxHeight: "230px",
+																									objectFit: "cover",
+																									borderRadius: "10px",
+																								}}
+																								className=' img-responsive center-block '
+																								src={
+																									item?.modelImages.length >
+																										0 &&
+																									item?.modelImages[0].uri
+																								}
+																								alt='nissan'
+																							/>
+																						</div>
+																						<div className=''>
+																							<div
+																								className=' d-flex b-items__cars-one-info-title'
+																								style={{
+																									fontSize: "16px",
+																									marginLeft: "5px",
+																									marginTop: "5px",
+																								}}>
+																								{" "}
+																								<div>
+																									{item.vehManufactureYear}{" "}
+																								</div>
+																								<div
+																									style={{ marginLeft: "5px" }}>
+																									{" "}
+																									{item.vehBrandCode}
+																								</div>{" "}
+																								<div
+																									style={{ marginLeft: "5px" }}>
+																									{item.vehModelCode}{" "}
+																								</div>
+																							</div>
+																							<br />
+
+																							<div
+																								className='d-flex'
+																								style={{
+																									marginTop: "-20px",
+																									marginLeft: "-16px",
+																								}}>
+																								<ul className='d-flex'>
+																									<div className='b'>
+																										{item.vehOdometer}
+																									</div>
+
+																									<div
+																										className=''
+																										style={{
+																											marginLeft: "5px",
+																										}}>
+																										{item.exteriorColor}
+																									</div>
+																									<div
+																										className=''
+																										style={{
+																											marginLeft: "5px",
+																										}}>
+																										{item.vehFuelCode}
+																									</div>
+
+																									<div
+																										className=''
+																										style={{
+																											marginLeft: "5px",
+																										}}>
+																										{item.transmissionDesc}
+																									</div>
+																								</ul>
+																							</div>
+
+																							<span
+																								style={{
+																									marginLeft: "10px",
+																									marginTop: "-5px",
+																								}}
+																								className='d-flex ml-6'>
+																								<i className=''></i>{" "}
+																								<div
+																									className='b-items__cars-one-info-title'
+																									style={{ fontSize: "15px" }}>
+																									Rs{" "}
+																									{item.vehSellPriceRecommended}
+																								</div>
+																							</span>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																))}
+															</>
+														)}
+													</div>
+													<br />
 												</div>
 											</div>
 										</div>
@@ -1157,18 +1345,7 @@ export default function HomePage() {
 										id='carouselExampleIndicators'
 										class='carousel slide'
 										data-ride='carousel'>
-										<ol class='carousel-indicators'>
-											<li
-												data-target='#carouselExampleIndicators'
-												data-slide-to='0'
-												class='active'></li>
-											<li
-												data-target='#carouselExampleIndicators'
-												data-slide-to='1'></li>
-											<li
-												data-target='#carouselExampleIndicators'
-												data-slide-to='2'></li>
-										</ol>
+										<ol class=''></ol>
 										<div class='carousel-inner'>
 											<div class='carousel-item active'>
 												<div className='row' id='cardrow'>
@@ -1291,7 +1468,10 @@ export default function HomePage() {
 																						<i className=''></i>{" "}
 																						<div
 																							className='b-items__cars-one-info-title'
-																							style={{ fontSize: "15px" }}>
+																							style={{
+																								fontSize: "15px",
+																								color: "white",
+																							}}>
 																							Rs {item.vehSellPriceRecommended}
 																						</div>
 																					</span>
@@ -1319,26 +1499,6 @@ export default function HomePage() {
 												/>
 											</div>
 										</div>
-										<a
-											class='carousel-control-prev'
-											href='#carouselExampleIndicators'
-											role='button'
-											data-slide='prev'>
-											<span
-												class='carousel-control-prev-icon'
-												aria-hidden='true'></span>
-											<span class='sr-only'>Previous</span>
-										</a>
-										<a
-											class='carousel-control-next'
-											href='#carouselExampleIndicators'
-											role='button'
-											data-slide='next'>
-											<span
-												class='carousel-control-next-icon'
-												aria-hidden='true'></span>
-											<span class='sr-only'>Next</span>
-										</a>
 									</div>
 
 									{/* slide checking */}

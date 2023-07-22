@@ -518,9 +518,9 @@ const Submit1 = () => {
 
 				<div class='b-breadCumbs s-shadow'>
 					<div class='container wow ' data-wow-delay='0.5s'>
-						<a href='home.html' class='b-breadCumbs__page'>
+						<Link to='/' className='b-breadCumbs__page'>
 							Home
-						</a>
+						</Link>
 						<span class='fa fa-angle-right'></span>
 						<a href='submit1.html' class='b-breadCumbs__page m-active'>
 							{" "}

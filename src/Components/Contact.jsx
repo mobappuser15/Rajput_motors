@@ -4,169 +4,10 @@ import { Link } from "react-router-dom";
 const Contact = () => {
 	return (
 		<div>
-			{/* <nav className="nav_b   navbar-inverse ">
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-2 col-xs-3">
-              <div
-                className="b-nav__logo wow slideInLeft"
-                data-wow-delay="0.3s"
-                // style={{ marginLeft: "-220px" }}
-              >
-                <img src="images/logo/logo-1.png" />
-              </div>
-            </div>
-            <div className="col-sm-2 visible-xs">
-              <div className="b-topBarsocial-wrapper none">
-                <div className="b-topbar-social">
-                  <a href="#">
-                    <span className="fa fa-facebook-square"></span>
-                  </a>
-
-                  <a href="#">
-                    <span className="fa fa-instagram"></span>
-                  </a>
-                  <a href="#">
-                    <span className="fa fa-youtube-square"></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-8">
-              <div
-                className="b-nav__list wow slideInRight"
-                data-wow-delay="0.3s"
-              >
-                <div className="navbar-header">
-                  <button
-                    type="button"
-                    className="navbar-toggle"
-                    style={{ marginLeft: "220px" }}
-                    data-toggle="collapse"
-                    data-target="#nav"
-                  >
-                    <span className="sr-only">Toggle navigation</span>
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
-                  </button>
-                </div>
-                <div
-                  className="collapse navbar-collapse navbar-main-slide"
-                  id="nav"
-                >
-                  <ul className="navbar-nav-menu">
-                    <li>
-                      <Link to="/" variant="body2">
-                        Home
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/about">ABOUT US</Link>
-                    </li>
-                    <li>
-                      <Link to="/salecar">SELL A CAR</Link>
-                    </li>
-                    <li>
-                      <Link to="/buycar">BUY CAR</Link>
-                    </li>
-                    <li>
-                      <Link to="/gallery">GALLERY</Link>
-                    </li>
-                    <li>
-                      <Link to="contact">CONTACT US</Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-2 hidden-xs">
-              <div className="b-topBarsocial-wrapper">
-                <div className="b-topbar-social">
-                  <a href="https://www.facebook.com/profile.php?id=100077481055938">
-                    <span className="fa fa-facebook-square"></span>
-                  </a>
-
-                  <a href="https://www.instagram.com/sushilcarbazzar/">
-                    <span className="fa fa-instagram"></span>
-                  </a>
-                  <a href="https://www.youtube.com/@sushilcarbazzar5502">
-                    <span className="fa fa-youtube-square"></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav> */}
-
 			<div className='m-contacts' data-scrolling-animations='true'>
 				<div id='page-preloader'>
 					<span className='spinner'></span>
 				</div>
-
-				{/* <nav className="nav_b  navbar navbar-inverse navbar-fixed-top">
-    <div className="container">
-        <div className="row">
-            <div className="col-sm-2 col-xs-3">
-                <div className="b-nav__logo wow slideInLeft" data-wow-delay="0.3s">
-                  
-                    <img src="images/logo/logo-1.png">
-                </div>
-            </div>
-            <div className="col-sm-2 visible-xs">
-                <div className="b-topBarsocial-wrapper none">
-                    <div className="b-topbar-social">
-                        <a href="#"><span className="fa fa-facebook-square"></span></a>
-                       
-                        <a href="#"><span className="fa fa-instagram"></span></a>
-                        <a href="#"><span className="fa fa-youtube-square"></span></a>
-                    </div>
-                </div>
-            </div>                
-            <div className="col-sm-8">
-                <div className="b-nav__list wow slideInRight" data-wow-delay="0.3s">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#nav">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div className="collapse navbar-collapse navbar-main-slide" id="nav">
-                        <ul className="navbar-nav-menu">
-                             <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle='dropdown' href="home.html">Home <span className="fa fa-caret-down"></span></a>
-                                <ul className="dropdown-menu h-nav">
-                                    <li><a href="home.html">Home Page 1</a></li>
-                                    <li><a href="home-2.html">Home Page 2</a></li>
-                                </ul>
-                            </li> -->
-                             <li><a href="index.html">HOME</a></li>
-                            <li><a href="about.html">ABOUT US</a></li>
-                            <li><a href="submit1.html">SELL A CAR</a></li>
-                            <li><a href="listTableTwo.html">BUY CAR</a></li>
-                             <li><a href="gallery.html">GALLERY</a></li>
-                            <li><a href="contacts.html">CONTACT US</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div className="col-sm-2 hidden-xs">
-                <div className="b-topBarsocial-wrapper">
-                    <div className="b-topbar-social">
-                        <a href="https://www.facebook.com/profile.php?id=100077481055938"><span className="fa fa-facebook-square"></span></a>
-                   
-                        <a href="https://www.instagram.com/sushilcarbazzar/"><span className="fa fa-instagram"></span></a>
-                        <a href="https://www.youtube.com/@sushilcarbazzar5502"><span className="fa fa-youtube-square"></span></a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</nav> */}
 
 				<section className='b-pageHeader'>
 					<div className='container'>
@@ -185,13 +26,13 @@ const Contact = () => {
 					className='b-breadCumbs s-shadow wow zoomInUp'
 					data-wow-delay='0.5s'>
 					<div className='container'>
-						<a href='home.html' className='b-breadCumbs__page'>
+						<Link to='/' className='b-breadCumbs__page'>
 							Home
-						</a>
+						</Link>
 						<span className='fa fa-angle-right'></span>
-						<a href='contacts.html' className='b-breadCumbs__page m-active'>
+						<Link href='contacts.html' className='b-breadCumbs__page m-active'>
 							Contact Us
-						</a>
+						</Link>
 					</div>
 				</div>
 
@@ -240,9 +81,9 @@ const Contact = () => {
 														PHONE
 													</div>
 													<div className='col-lg-9 col-md-8 col-xs-12'>
-														<em style={{ color: "black" }}>
+														<p style={{ color: "black" }}>
 															+91 92509 22333 / +91 98114 36332
-														</em>
+														</p>
 													</div>
 												</div>
 											</div>
@@ -254,9 +95,9 @@ const Contact = () => {
 														EMAIL
 													</div>
 													<div className='col-lg-9 col-md-8 col-xs-12'>
-														<em style={{ color: "black" }}>
+														<p style={{ color: "black" }}>
 															sushilcarbazar@gmail.com
-														</em>
+														</p>
 													</div>
 												</div>
 											</div>

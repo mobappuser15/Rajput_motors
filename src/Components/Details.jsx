@@ -236,9 +236,9 @@ function Details({ selectedProduct }) {
 					className='b-breadCumbs s-shadow wow '
 					data-wow-delay='0.5s'>
 					<div className='container'>
-						<a href='home.html' className='b-breadCumbs__page'>
+						<Link to='/' className='b-breadCumbs__page'>
 							Home
-						</a>
+						</Link>
 						<span className='fa fa-angle-right'></span>
 						<a href='listings.html' className='b-breadCumbs__page'>
 							Vehicle Details Page

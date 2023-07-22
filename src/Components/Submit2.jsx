@@ -248,9 +248,9 @@ const Submit2 = () => {
 
 				<div className='b-breadCumbs s-shadow'>
 					<div className='container wow' data-wow-delay='0.5s'>
-						<a href='home.html' className='b-breadCumbs__page'>
+						<Link to='/' className='b-breadCumbs__page'>
 							Home
-						</a>
+						</Link>
 						<span className='fa fa-angle-right'></span>
 						<a href='submit1.html' className='b-breadCumbs__page m-active'>
 							Submit a Vehicle

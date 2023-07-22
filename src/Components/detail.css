@@ -581,7 +581,7 @@ button:active {
 	}
 	.drup_mn1 {
 		width: 100%;
-		padding: 0 0 0 20px;
+		padding: 0 0 0 0px;
 		margin-top: 15px;
 	}
 	.drup_mn1 ul {
@@ -722,4 +722,32 @@ button:active {
 		right: 33px;
 		position: absolute;
 	}
+	.notdatafound img {
+		width: 60% !important;
+	}
+	.notdatafound p {
+		text-align: center;
+		margin-top: 10px;
+		font-size: 16px !important;
+	}
+}
+
+@media screen and (max-width: 370px) {
+}
+
+.notdatafound {
+	color: black;
+	margin-left: 0px;
+	width: 100%;
+	text-align: center;
+}
+
+.notdatafound p {
+	text-align: center;
+	margin-top: 10px;
+	font-size: 21px;
+}
+
+.notdatafound img {
+	width: 29%;
 }

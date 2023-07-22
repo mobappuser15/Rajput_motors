@@ -52,8 +52,8 @@ export default function App({ isLoggedIn }) {
 
 								// style={{ marginLeft: "-220px" }}
 							>
-								<img className="hidden-xs"  style={{ marginLeft: "60px" }} onClick={reloadPage} src='images/logo/logo-1.png' />
-								<img className="visible-xs"   onClick={reloadPage} src='images/logo/logo-1.png' />
+								<Link to="/"><img className="hidden-xs"  style={{ marginLeft: "60px" }}  src='images/logo/logo-1.png' /></Link>
+								<Link to="/"><img className="visible-xs"    src='images/logo/logo-1.png' /></Link>
 								
 							</div>
 						</div>

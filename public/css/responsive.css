@@ -50,8 +50,7 @@
 		margin-bottom: 4px;
 		border-radius: 12px !important;
 		border: 2px solid #999;
-		min-height: 560px !important;
-		height: 500px !important;
+		min-height: initial;
 		object-fit: cover !important;
 	}
 }
@@ -922,8 +921,6 @@
 		float: none;
 		display: inline-block;
 	}
-	.b-pageHeader {
-	}
 	.b-blog__posts-one-body-main-link a span.fa {
 		font-size: 17px;
 		margin-right: 8px;
@@ -1499,6 +1496,19 @@ img {
 		padding-left: 15px;
 		border-left: 4px solid #f76d2b;
 		font-size: 16px;
+	}
+	#wid_siz {
+		margin: 0px !important;
+	}
+	.m-price {
+		margin-left: 0 !important;
+		font-size: 20px;
+		text-align: center !important;
+		margin-top: 10px !important;
+	}
+	.s-title {
+		margin: 0 0 20px 0;
+		padding: 0 15px;
 	}
 }
 
