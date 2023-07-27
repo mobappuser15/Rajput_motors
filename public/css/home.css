@@ -155,7 +155,7 @@ a.m-langLink {
 
 .b-nav__logo {
 	float: left;
-	padding: 8px 0 0 5px;
+	padding: 0px 0 4px 5px;
 	text-transform: uppercase;
 }
 
@@ -187,9 +187,13 @@ a.m-langLink {
 }
 
 .b-nav__list ul {
-	margin-top: 44px;
+	margin-top: 47px;
 	padding-left: 0;
 	margin-bottom: 0;
+}
+
+.b-topbar-social {
+	margin-top: 4px;
 }
 
 .b-nav__list ul li {
@@ -491,6 +495,8 @@ a.m-langLink {
 	-ms-appearance: none;
 	appearance: none !important;
 	cursor: pointer;
+	color: #7a7979 !important;
+	font-weight: bold;
 }
 
 .b-search__main-form select + span.fa {
@@ -879,6 +885,7 @@ a.m-langLink {
 	left: 0;
 	margin: auto;
 	right: 0;
+	text-align: center !important;
 }
 
 .b-welcome__services-img.m-auto span.fa {
@@ -1046,7 +1053,7 @@ a.m-langLink {
 .b-asks__first-circle span {
 	vertical-align: middle;
 	font-size: 32px;
-	margin-top: 15px;
+	margin-top: 17px;
 	line-height: 1;
 }
 
@@ -1094,6 +1101,8 @@ a.m-langLink {
 	left: 0;
 	right: 0;
 	margin: auto;
+	text-align: center !important;
+	line-height: 24px !important;
 }
 
 .b-asks__first.m-second .b-asks__first-circle {
@@ -1236,7 +1245,7 @@ a.m-langLink {
 }
 
 .b-auto__main-item {
-	padding-bottom: 25px;
+	padding-bottom: 15px;
 	border-bottom: 1px solid #b4b4b4;
 	position: relative;
 	margin-bottom: 50px;
@@ -1350,6 +1359,7 @@ a.m-langLink {
 	left: 0;
 	margin: auto;
 	right: 0;
+	text-align: center !important;
 }
 
 .b-count__item h2 {

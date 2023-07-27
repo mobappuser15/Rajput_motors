@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ScrollTop from "./ScrollTop";
 
 const CarLoan = () => {
 	return (
 		<>
+			<ScrollTop />
 			<div
 				className='m-detail'
 				data-scrolling-animations='true'
@@ -170,9 +172,6 @@ const CarLoan = () => {
 										been our motive.
 									</p>
 								</article>
-								<a href='about.html' className='btn m-btn'>
-									Read More<span className='fa fa-angle-right'></span>
-								</a>
 							</aside>
 						</div>
 						<div className='col-md-3 col-xs-6'>

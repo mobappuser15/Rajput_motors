@@ -38,6 +38,16 @@ body {
 	font-weight: 600;
 }
 
+#cardrow4 {
+	align-items: stretch;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+	width: "200%";
+}
+
 .App {
 	/* font-family: cursive; */
 	display: flex;
@@ -146,6 +156,8 @@ h3 {
 	border-radius: 5px;
 	font: 400 14px "Outfit", sans-serif;
 	background-color: #f2f3f5;
+	color: #7a7979 !important;
+	font-weight: bold;
 }
 
 /*--thank you pop starts here--*/
@@ -331,10 +343,11 @@ button:active {
 }
 
 #selectdata {
-	width: 28rem !important;
+	width: 100% !important;
 	font-size: 15px;
 	border-radius: 4px;
 	padding: 0px 3px;
+	margin-bottom: 15px;
 }
 
 .iMqSPA {
@@ -379,6 +392,8 @@ button:active {
 	margin-top: 60px;
 	padding-top: 20px;
 	border-radius: 5px;
+	padding-left: 4px;
+	padding-right: 4px;
 }
 
 /* card cars detals in home page */
@@ -462,7 +477,6 @@ button:active {
 }
 
 #fliterbutton {
-	margin-left: 20px !important;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -730,24 +744,24 @@ button:active {
 		margin-top: 10px;
 		font-size: 16px !important;
 	}
+	.b-detail {
+		padding: 0px 0 0px 0 !important;
+	}
 }
 
 @media screen and (max-width: 370px) {
-}
-
-.notdatafound {
-	color: black;
-	margin-left: 0px;
-	width: 100%;
-	text-align: center;
-}
-
-.notdatafound p {
-	text-align: center;
-	margin-top: 10px;
-	font-size: 21px;
-}
-
-.notdatafound img {
-	width: 29%;
+	.notdatafound {
+		color: black;
+		margin-left: 0px;
+		width: 100%;
+		text-align: center;
+	}
+	.notdatafound p {
+		text-align: center;
+		margin-top: 10px;
+		font-size: 21px;
+	}
+	.notdatafound img {
+		width: 29%;
+	}
 }

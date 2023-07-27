@@ -32,6 +32,7 @@ import AddVechil from "./Pages/AddVechil";
 import StoreVechileTable from "./Pages/StoreVechileTable";
 import AdminDash from "./Pages/AdminDash";
 import { Header, Container } from "react-bootstrap";
+import ReactLoading from "react-loading";
 
 export default function App({ isLoggedIn }) {
 	const reloadPage = () => {
@@ -42,7 +43,7 @@ export default function App({ isLoggedIn }) {
 	return (
 		<div className=''>
 			{" "}
-			<ScrollTop />{" "}
+			<ScrollTop />
 			<nav className='nav_b  b navbar-inverse fixed-top    '>
 				
 					<div className='row'>
@@ -94,16 +95,19 @@ export default function App({ isLoggedIn }) {
 										<span className='icon-bar'></span>
 									</button>
 								</div>
-								<div className='collapse navbar-collapse' id='nav'>
-									<ul className='navbar-nav-menu' onClick={reloadPage}>
+								<div className='collapse navbar-collapse' id='nav' >
+									<ul className='navbar-nav-menu'    >
 										<li>
 											<Link to='/' variant='body2'>
 												Home
+
 											</Link>
+											
 										</li>
 
 										<li>
 											<Link to='/salecar'>SELL CAR</Link>
+											
 										</li>
 										<li>
 											<Link to='/detailsdata'>BUY CAR</Link>
@@ -140,7 +144,7 @@ export default function App({ isLoggedIn }) {
 										<span className='fa fa-youtube-square'></span>
 									</a>
 									<a href='#' style={{ marginTop: "10px" }}>
-										<span className=''>
+										<span className='no_top1'>
 											<i class='fa-sharp fa-solid fa-phone'></i> +91 92509 22333
 										</span>
 									</a>
@@ -154,6 +158,7 @@ export default function App({ isLoggedIn }) {
 				
 			</nav>
 			
+			
 			<Routes>
 				<Route exact path='/yyuu' element={<Signup />} exact />
 				<Route exact path='/admin' element={<AdminDash />} exact />
@@ -163,6 +168,8 @@ export default function App({ isLoggedIn }) {
 					element={isLoggedIn ? <DashBoard /> : <Navigate to='/homepage' />}
 					exact
 				/>
+				
+				
 				<Route exact path='/' element={<HomePage />} exact />
 				<Route path='/insurence' element={<Insurance />} />{" "}
 				<Route path='/about' element={<About />} />{" "}

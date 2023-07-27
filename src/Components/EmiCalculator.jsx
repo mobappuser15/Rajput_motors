@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import "./style.css";
+import ScrollTop from "./ScrollTop";
 
 import {
 	Table,
@@ -105,14 +106,15 @@ const EmiCalculator = () => {
 	};
 	return (
 		<>
+			<ScrollTop />
 			<section className='b-pageHeader'>
 				<div className='container'>
-					<h1 className='wow zoomInLeft' data-wow-delay='0.5s'>
+					<h1 className='wow ' data-wow-delay='0.5s'>
 						Easy EMI
 					</h1>
 				</div>
 			</section>
-			<div className='b-breadCumbs s-shadow wow zoomInUp' data-wow-delay='0.5s'>
+			<div className='b-breadCumbs s-shadow ' data-wow-delay='0.5s'>
 				<div className='container'>
 					<Link to='/' className='b-breadCumbs__page'>
 						Home
@@ -130,14 +132,12 @@ const EmiCalculator = () => {
 						<div className='b-detail__main'>
 							<div className='row '>
 								<div className='col-md-10 col-xs-12'>
-									<h1
-										className='car-emi-title wow zoomInUp'
-										data-wow-delay='0.5s'>
+									<h1 className='car-emi-title ' data-wow-delay='0.5s'>
 										Car EMI Calculator
 									</h1>
 									<p
 										style={{ fontSize: "14px" }}
-										className=' wow zoomInUp'
+										className=' '
 										data-wow-delay='0.5s'>
 										The Car Loan EMI Calculator, is the best way to calculate
 										your Equated Monthly Instalments for the loan amount you
@@ -327,11 +327,11 @@ const EmiCalculator = () => {
 
 			<section className='b-brands s-shadow'>
 				<div className='container'>
-					<h5 className='s-titleBg wow zoomInUp' data-wow-delay='0.5s'>
+					<h5 className='s-titleBg ' data-wow-delay='0.5s'>
 						FIND OUT MORE
 					</h5>
 					<br />
-					<h2 className='s-title wow zoomInUp' data-wow-delay='0.5s'>
+					<h2 className='s-title ' data-wow-delay='0.5s'>
 						BRANDS WE OFFER
 					</h2>
 					<div className=''>
@@ -365,22 +365,13 @@ const EmiCalculator = () => {
 					<div className='row'>
 						<div className='col-md-9 col-md-offset-3 col-xs-6 col-xs-offset-6'>
 							<ul className='b-features__items'>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
+								<li className='' data-wow-delay='0.3s' data-wow-offset='100'>
 									Low Prices, No Haggling
 								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
+								<li className='' data-wow-delay='0.3s' data-wow-offset='100'>
 									Largest Car Dealership
 								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
+								<li className='' data-wow-delay='0.3s' data-wow-offset='100'>
 									Multipoint Safety Check
 								</li>
 							</ul>
@@ -393,9 +384,7 @@ const EmiCalculator = () => {
 				<div className='container'>
 					<div className='row'>
 						<div className='col-md-3 col-xs-6'>
-							<aside
-								className='b-info__aside wow zoomInLeft'
-								data-wow-delay='0.3s'>
+							<aside className='b-info__aside wow ' data-wow-delay='0.3s'>
 								<article className='b-info__aside-article'>
 									<h3>OPENING HOURS</h3>
 									<div className='b-info__aside-article-item'>
@@ -416,17 +405,12 @@ const EmiCalculator = () => {
 										been our motive.
 									</p>
 								</article>
-								<a href='about.html' className='btn m-btn'>
-									Read More<span className='fa fa-angle-right'></span>
-								</a>
 							</aside>
 						</div>
 						<div className='col-md-3 col-xs-6'>
 							<div className='b-info__latest'>
 								<h3>LATEST AUTOS</h3>
-								<div
-									className='b-info__latest-article wow zoomInUp'
-									data-wow-delay='0.3s'>
+								<div className='b-info__latest-article ' data-wow-delay='0.3s'>
 									<div className='b-info__latest-article-photo m-audi'></div>
 									<div className='b-info__latest-article-info'>
 										<h6>
@@ -437,9 +421,7 @@ const EmiCalculator = () => {
 										</p>
 									</div>
 								</div>
-								<div
-									className='b-info__latest-article wow zoomInUp'
-									data-wow-delay='0.3s'>
+								<div className='b-info__latest-article ' data-wow-delay='0.3s'>
 									<div className='b-info__latest-article-photo m-audiSpyder'></div>
 									<div className='b-info__latest-article-info'>
 										<h6>
@@ -450,9 +432,7 @@ const EmiCalculator = () => {
 										</p>
 									</div>
 								</div>
-								<div
-									className='b-info__latest-article wow zoomInUp'
-									data-wow-delay='0.3s'>
+								<div className='b-info__latest-article ' data-wow-delay='0.3s'>
 									<div className='b-info__latest-article-photo m-aston'></div>
 									<div className='b-info__latest-article-info'>
 										<h6>
@@ -467,9 +447,7 @@ const EmiCalculator = () => {
 						</div>
 
 						<div className='col-md-3 col-xs-6'>
-							<address
-								className='b-info__contacts wow zoomInUp'
-								data-wow-delay='0.3s'>
+							<address className='b-info__contacts ' data-wow-delay='0.3s'>
 								<p>contact us</p>
 								<div className='b-info__contacts-item'>
 									<span className='fa fa-map-marker'></span>

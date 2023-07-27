@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import styled from "./Item";
+import ScrollTop from "./ScrollTop";
 
 const Submit2 = () => {
 	const [statelist, setStateList] = useState([]);
@@ -156,6 +157,10 @@ const Submit2 = () => {
 		}
 	};
 
+	const reloadPage = () => {
+		window.location.reload();
+		toast.success("Page  Loading ! ");
+	};
 	const Props = localStorage.getItem("data");
 	// localStorage.removeItem("data");
 	const PropsData = JSON.parse(Props);
@@ -232,23 +237,18 @@ const Submit2 = () => {
 	return (
 		<div>
 			{/* header section */}
+			<ScrollTop />
 
 			<div className='m-submit1' data-scrolling-animations='true'>
-				<div id='page-preloader'>
-					<span className='spinner'></span>
-				</div>
-
 				<section className='b-pageHeader'>
 					<div className='container'>
-						<h1 className='wow zoomInLeft' data-wow-delay='0.3s'>
-							Submit Your Vehicle
-						</h1>
+						<h1 className=' '>Submit Your Vehicle</h1>
 					</div>
 				</section>
 
 				<div className='b-breadCumbs s-shadow'>
-					<div className='container wow' data-wow-delay='0.5s'>
-						<Link to='/' className='b-breadCumbs__page'>
+					<div className='container '>
+						<Link to='/' className='b-breadCumbs__page' onClick={reloadPage}>
 							Home
 						</Link>
 						<span className='fa fa-angle-right'></span>
@@ -264,9 +264,7 @@ const Submit2 = () => {
 					<div className='row'>
 						<div className='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
 							<aside className='b-submit__aside'>
-								<div
-									className='b-submit__aside-step m-active wow'
-									data-wow-delay='0.3s'>
+								<div className='b-submit__aside-step m-active '>
 									<h3>Step 1</h3>
 									<div className='b-submit__aside-step-inner m-active clearfix'>
 										<div className='b-submit__aside-step-inner-icon'>
@@ -280,9 +278,7 @@ const Submit2 = () => {
 									</div>
 								</div>
 
-								<div
-									className='b-submit__aside-step m-active wow'
-									data-wow-delay='0.3s'>
+								<div className='b-submit__aside-step m-active '>
 									<h3>Step 2</h3>
 									<div className='b-submit__aside-step-inner m-active clearfix'>
 										<div className='b-submit__aside-step-inner-icon'>
@@ -300,9 +296,7 @@ const Submit2 = () => {
 						<div className='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
 							<div className='b-submit__main'>
 								<form className='s-submit'>
-									<div
-										className='b-submit__main-contacts wow sum_pding'
-										data-wow-delay='0.3s'>
+									<div className='b-submit__main-contacts  sum_pding'>
 										<header className='s-headerSubmit s-lineDownLeft'>
 											<h2>Contact Details</h2>
 										</header>
@@ -351,9 +345,7 @@ const Submit2 = () => {
 												</div>
 											</div>
 											<div className='col-md-6 col-xs-12'>
-												<div
-													className='b-submit__main-element wow'
-													data-wow-delay='0.5s'>
+												<div className='b-submit__main-element '>
 													<label style={{ color: "black" }}>
 														State <span>*</span>
 													</label>
@@ -376,9 +368,7 @@ const Submit2 = () => {
 										</div>
 										<div className='row'>
 											<div className='col-md-6 col-xs-12'>
-												<div
-													className='b-submit__main-element wow'
-													data-wow-delay='0.5s'>
+												<div className='b-submit__main-element '>
 													<label style={{ color: "black" }}>
 														City <span>*</span>
 													</label>
@@ -399,9 +389,7 @@ const Submit2 = () => {
 												</div>
 											</div>
 											<div className='col-md-6 col-xs-12'>
-												<div
-													className='b-submit__main-element wow'
-													data-wow-delay='0.5s'>
+												<div className='b-submit__main-element '>
 													<form>
 														<span
 															className='d-flex'
@@ -471,8 +459,7 @@ const Submit2 = () => {
 														marginTop: "30px",
 													}}
 													type='submit'
-													className='btn m-btn pull-right wow btn-danger'
-													data-wow-delay='0.3s'>
+													className='btn m-btn pull-right  btn-danger'>
 													Click to &amp; Back
 													<span
 														id='arrowiconbtn'
@@ -488,8 +475,7 @@ const Submit2 = () => {
 												onClick={handleSubmit}
 												data-toggle='modal'
 												href='#ignismyModal'
-												className='btn m-btn pull-right wow btn-danger'
-												data-wow-delay='0.3s'>
+												className='btn m-btn pull-right  btn-danger'>
 												Click to &amp; Raise Request
 												<span id='arrowiconbtn' className='fa fa-check'></span>
 											</button>
@@ -626,9 +612,7 @@ const Submit2 = () => {
 				<div className='container'>
 					<div className='row'>
 						<div className='col-md-3 col-xs-6'>
-							<aside
-								className='b-info__aside wow zoomInLeft'
-								data-wow-delay='0.3s'>
+							<aside className='b-info__aside  zoomInLeft'>
 								<article className='b-info__aside-article'>
 									<h3>OPENING HOURS</h3>
 									<div className='b-info__aside-article-item'>
@@ -649,19 +633,12 @@ const Submit2 = () => {
 										been our motive.
 									</p>
 								</article>
-								<Link to='/about' className='btn m-btn'>
-									Read More
-									<span
-										style={{ paddingLeft: "7px !important" }}
-										id='arrowiconbtn'
-										className='fa fa-angle-right'></span>
-								</Link>
 							</aside>
 						</div>
 						<div className='col-md-3 col-xs-6'></div>
 
 						<div className='col-md-5 col-xs-6'>
-							<address className='b-info__contacts wow' data-wow-delay='0.3s'>
+							<address className='b-info__contacts '>
 								<p>contact us</p>
 								<div className='b-info__contacts-item'>
 									<span className='fa fa-map-marker'></span>

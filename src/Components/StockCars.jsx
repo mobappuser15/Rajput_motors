@@ -11,6 +11,8 @@ import Form from "react-bootstrap/Form";
 import Slider from "react-slider";
 import "./prizerange.css";
 import ScrollTop from "./ScrollTop";
+import ReactLoading from "react-loading";
+import Pagination from "./Pagination";
 
 import { Typography, makeStyles, TablePagination } from "@material-ui/core";
 
@@ -70,6 +72,24 @@ const StockCars = () => {
 	const [detailspage, setdetailspage] = useState(false);
 
 	const [prizevalue, setprizevalue] = useState([MIN, MAX]);
+
+	const [currentpage, setCurrentPage] = useState(1);
+	const itemsperpage = 9;
+	const totalItems = stockdata.length;
+	const totalPage = Math.ceil(totalItems / itemsperpage);
+	console.log(totalPage, "totalPage");
+
+	const onPageChange = (page) => {
+		setCurrentPage(page);
+		console.log(page, "page");
+	};
+
+	const Startindex = (currentpage - 1) * itemsperpage;
+	const EndIndex = Startindex + itemsperpage;
+	const currentData = stockdata.slice(Startindex, EndIndex);
+	console.log(currentData, "currentData");
+	// console.log(currentData, "currentData");
+	// console.log(currentData, "currentData");
 
 	// All Stock Show
 	useEffect(() => {
@@ -131,26 +151,6 @@ const StockCars = () => {
 		// navigate("/details");
 		setdetailspage(product);
 	};
-
-	const bodyType = [
-		{
-			id: 1,
-			img: "Hatchback",
-		},
-		{
-			id: 2,
-			img: "Sedan",
-		},
-		{
-			id: 3,
-			img: "SUV/MUV",
-		},
-
-		{
-			id: 4,
-			img: "Convertible",
-		},
-	];
 
 	// make list
 	useEffect(() => {
@@ -712,9 +712,13 @@ const StockCars = () => {
 									<div className='prizetext'>
 										<div className='textprize' style={{ color: "white" }}>
 											<span>{prizevalue[0]}</span>
-											<span className='rsarr'>RS</span> -
-											<span> {prizevalue[1]}</span>
-											<span className='rsarr'>RS</span>
+											<span className='rsarr'>
+												<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+											</span>{" "}
+											-<span> {prizevalue[1]}</span>
+											<span className='rsarr'>
+												<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+											</span>
 										</div>
 									</div>
 
@@ -776,6 +780,15 @@ const StockCars = () => {
 											))}
 										</select>
 									</li>
+
+									<i
+										style={{
+											margingTop: "10px",
+											marginLeft: "10px",
+										}}
+										onClick={reloadPage}
+										class='fa fa-refresh fa-1x'
+										aria-hidden='true'></i>
 								</ul>
 							</div>
 
@@ -794,9 +807,13 @@ const StockCars = () => {
 											<div className='prizetext'>
 												<div className='textprize' style={{ color: "white" }}>
 													<span>{prizevalue[0]}</span>
-													<span className='rsarr'>RS</span> -
-													<span> {prizevalue[1]}</span>
-													<span className='rsarr'>RS</span>
+													<span className='rsarr'>
+														<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+													</span>{" "}
+													-<span> {prizevalue[1]}</span>
+													<span className='rsarr'>
+														<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+													</span>
 												</div>
 											</div>
 
@@ -875,8 +892,6 @@ const StockCars = () => {
 
 										<br />
 										<br />
-										<br />
-										<br />
 
 										<div
 											id='fliterbutton'
@@ -896,19 +911,6 @@ const StockCars = () => {
 											</button>
 											<br />
 											<br />
-
-											{/* <button
-										className='btn-sm '
-										style={{
-											color: "black",
-
-											marginLeft: "20px",
-
-											backgroundColor: "orangered",
-										}}
-										type='submit'>
-										Filter
-									</button> */}
 										</div>
 									</div>
 								</div>
@@ -922,140 +924,108 @@ const StockCars = () => {
 											<div className='container'>
 												<div className='b-auto__main'></div>
 												<Row xs={12} md={3} id=''>
-													{stockdata?.map((item) => {
-														const frontImage = item?.modelImages.find(
-															(image) => image?.imageName === "Front"
-														);
-														if (frontImage) {
-															return (
-																<div key={frontImage.uri}>
-																	<Col>
-																		<div
-																			onClick={() =>
-																				singleProducthandle(item.uniqueSerial)
-																			}
-																			className=' card2 b-auto__main-item '>
-																			{/* {console.log(item.modelImages, "data image url")} */}
-																			<img
-																				style={{
-																					aspectRatio: "2/2",
-																					width: "100%",
-																					// border: "3px solid gray",
-																					// borderRadius: "20px",
-																				}}
-																				className=' img-responsive center-block'
-																				src={frontImage.uri}
-																				alt='nissan'
-																			/>
-
-																			<div
-																				className=' d-flex b-items__cars-one-info-title'
-																				style={{
-																					fontSize: "16px",
-																					marginLeft: "20px",
-																					marginTop: "10px",
-																				}}>
-																				{" "}
-																				<div>{item.vehManufactureYear} </div>
-																				<div style={{ marginLeft: "5px" }}>
-																					{" "}
-																					{item.vehBrandCode}
-																				</div>{" "}
-																				<div style={{ marginLeft: "5px" }}>
-																					{item.vehModelCode}{" "}
-																				</div>
-																			</div>
-
-																			<div class='rate_ts_mn'>
-																				<ul>
-																					<li>{item.vehOdometer} KMS</li>
-																					<li>{item.exteriorColor}</li>
-																					<li>{item.vehFuelCode}</li>
-																					<li>{item.transmissionDesc}</li>
-																				</ul>
-																			</div>
-																			<span
-																				style={{
-																					marginLeft: "19px",
-																				}}
-																				className='d-flex ml-6'>
-																				<i className=''></i>{" "}
+													{currentData.length === 0 ? (
+														<>
+															<div
+																className='loader'
+																style={{
+																	marginLeft: "300px",
+																	marginTop: "200px",
+																}}>
+																<ReactLoading
+																	type='spin'
+																	color='#f76d2b'
+																	height={200}
+																	width={100}
+																/>
+															</div>
+														</>
+													) : (
+														<>
+															{currentData?.map((item) => {
+																const frontImage = item?.modelImages.find(
+																	(image) => image?.imageName === "Front"
+																);
+																if (frontImage) {
+																	return (
+																		<div key={frontImage.uri}>
+																			<Col>
 																				<div
-																					className='b-items__cars-one-info-title'
-																					style={{ fontSize: "18px" }}>
-																					Rs {item.vehSellPriceRecommended}
-																				</div>
-																			</span>
-
-																			{/* <div
-																				className=' d-flex b-items__cars-one-info-title'
-																				style={{
-																					fontSize: "16px",
-																					marginLeft: "20px",
-																					marginTop: "10px",
-																				}}>
-																				{" "}
-																				<div>{item.vehManufactureYear} </div>
-																				<div style={{ marginLeft: "5px" }}>
-																					{" "}
-																					{item.vehBrandCode}
-																				</div>{" "}
-																				<div style={{ marginLeft: "5px" }}>
-																					{item.vehModelCode}{" "}
-																				</div>
-																			</div>
-
-																			<div
-																				id='textitem'
-																				className='d-flex'
-																				style={{
-																					marginTop: "-4px",
-																				}}>
-																				<ul
-																					className='d-flex'
-																					style={{ fontSize: "" }}>
-																					<div className='b'>
-																						{item.vehOdometer} kms
-																					</div>
+																					onClick={() =>
+																						singleProducthandle(
+																							item.uniqueSerial
+																						)
+																					}
+																					className=' card2 b-auto__main-item '>
+																					{/* {console.log(item.modelImages, "data image url")} */}
+																					<img
+																						style={{
+																							aspectRatio: "2/2",
+																							width: "100%",
+																							// border: "3px solid gray",
+																							// borderRadius: "20px",
+																						}}
+																						className=' img-responsive center-block'
+																						src={frontImage.uri}
+																						alt='nissan'
+																					/>
 
 																					<div
-																						className=''
-																						style={{ marginLeft: "15px" }}>
-																						{item.exteriorColor}
-																					</div>
-																					<div
-																						className=''
-																						style={{ marginLeft: "15px" }}>
-																						{item.vehFuelCode}
+																						className=' d-flex b-items__cars-one-info-title'
+																						style={{
+																							fontSize: "16px",
+																							marginLeft: "20px",
+																							marginTop: "10px",
+																						}}>
+																						{" "}
+																						<div>
+																							{item.vehManufactureYear}{" "}
+																						</div>
+																						<div style={{ marginLeft: "5px" }}>
+																							{" "}
+																							{item.vehBrandCode}
+																						</div>{" "}
+																						<div style={{ marginLeft: "5px" }}>
+																							{item.vehModelCode}{" "}
+																						</div>
 																					</div>
 
-																					<div
-																						className=''
-																						style={{ marginLeft: "15px" }}>
-																						{item.transmissionDesc}
+																					<div class='rate_ts_mn'>
+																						<ul>
+																							<li>{item.vehOdometer} KMS</li>
+																							<li>{item.exteriorColor}</li>
+																							<li>{item.vehFuelCode}</li>
+																							<li>{item.transmissionDesc}</li>
+																						</ul>
 																					</div>
-																				</ul>
-																			</div>
-
-																			<span
-																				style={{
-																					marginLeft: "19px",
-																				}}
-																				className='d-flex ml-6'>
-																				<i className=''></i>{" "}
-																				<div
-																					className='b-items__cars-one-info-title'
-																					style={{ fontSize: "18px" }}>
-																					Rs {item.vehSellPriceRecommended}
+																					<span
+																						style={{
+																							marginLeft: "19px",
+																						}}
+																						className='d-flex ml-6'>
+																						<i className=''></i>{" "}
+																						<div
+																							className='b-items__cars-one-info-title'
+																							style={{ fontSize: "18px" }}>
+																							Rs {item.vehSellPriceRecommended}
+																						</div>
+																					</span>
 																				</div>
-																			</span> */}
+																			</Col>
 																		</div>
-																	</Col>
-																</div>
-															);
-														}
-													})}
+																	);
+																}
+															})}
+														</>
+													)}
 												</Row>
+												<div className='row' style={{}} id='cardrow'>
+													<Pagination
+														onPageChange={onPageChange}
+														currentpage={currentpage}
+														totalPage={totalPage}
+													/>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -1139,44 +1109,14 @@ const StockCars = () => {
 																							</div>
 																						</div>
 
-																						<div
-																							id='textitem'
-																							className='d-flex'
-																							style={{
-																								marginTop: "-4px",
-																							}}>
-																							<ul
-																								className='d-flex'
-																								style={{ fontSize: "" }}>
-																								<div className='b'>
-																									{item.vehOdometer} kms
-																								</div>
-
-																								<div
-																									className=''
-																									style={{
-																										marginLeft: "15px",
-																									}}>
-																									{item.exteriorColor}
-																								</div>
-																								<div
-																									className=''
-																									style={{
-																										marginLeft: "15px",
-																									}}>
-																									{item.vehFuelCode}
-																								</div>
-
-																								<div
-																									className=''
-																									style={{
-																										marginLeft: "15px",
-																									}}>
-																									{item.transmissionDesc}
-																								</div>
+																						<div class='rate_ts_mn'>
+																							<ul>
+																								<li>{item.vehOdometer} KMS</li>
+																								<li>{item.exteriorColor}</li>
+																								<li>{item.vehFuelCode}</li>
+																								<li>{item.transmissionDesc}</li>
 																							</ul>
 																						</div>
-
 																						<span
 																							style={{
 																								marginLeft: "19px",
@@ -1266,13 +1206,6 @@ const StockCars = () => {
 												satisfaction has been our motive.
 											</p>
 										</article>
-										<Link to='/about' className='btn m-btn'>
-											Read More
-											<span
-												style={{ paddingLeft: "7px !important" }}
-												id='arrowiconbtn'
-												className='fa fa-angle-right'></span>
-										</Link>
 									</aside>
 								</div>
 

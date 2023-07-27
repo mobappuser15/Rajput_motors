@@ -9,6 +9,8 @@ import Item from "./Item";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./detail.css";
 import ScrollTop from "./ScrollTop";
+import toast from "react-hot-toast";
+import ReactLoading from "react-loading";
 
 import Details from "./Details";
 import { styled } from "@mui/material/styles";
@@ -259,7 +261,9 @@ export default function HomePage() {
 					setDemo(responseData?.UsedCarVehStockDetail);
 				} else {
 					throw new Error(
-						`Request failed with status code: ${response.status}`
+						`Request failed with status code: ${response.status}`(
+							<ReactLoading />
+						)
 					);
 				}
 			} catch (error) {
@@ -333,7 +337,15 @@ export default function HomePage() {
 	};
 
 	const reloadPage = () => {
-		window.location.reload();
+		window.location.reload(false);
+		toast.success("meaage");
+		return (
+			<div>
+				<p>page loading</p>
+			</div>
+		);
+		console.log("datta chekc");
+		// window.prompt("message");
 	};
 
 	useEffect(() => {
@@ -343,7 +355,7 @@ export default function HomePage() {
 	}, []);
 
 	return (
-		<>
+		<div className=''>
 			<ScrollTop />
 
 			{detailspage === false ? (
@@ -354,10 +366,6 @@ export default function HomePage() {
 							data-scrolling-animations='true'
 							data-equal-height='.b-auto__main-item'>
 							{/* Loader */}
-
-							<div id='page-preloader'>
-								<span className='spinner'></span>
-							</div>
 
 							{/* Loader end */}
 
@@ -388,7 +396,7 @@ export default function HomePage() {
 									<div className='carousel-inner'>
 										<div className='carousel-item active'>
 											<img
-												style={{ marginTop: "69px" }}
+												style={{ marginTop: "68px" }}
 												src='media/main-slider/sushil-cars.jpg'
 												className='d-block w-100'
 												alt='...'
@@ -409,7 +417,7 @@ export default function HomePage() {
 												borderRadius: "30px",
 												backgroundColor: "white",
 											}}>
-											<h4>Search Your Dream Car</h4>
+											<h4 onClick={reloadPage}>Search Your Dream Car</h4>
 											<form
 												id='form1'
 												className='b-search__main-form'
@@ -543,130 +551,67 @@ export default function HomePage() {
 
 													<div className='' id='cardrow'>
 														<Row xs={12} md={4} id='cardrow'>
-															{demo
-																?.filter(
-																	(item) =>
-																		item.programCode ===
-																		"SHORT_LIST_WEBSITE_HOME_PAGE"
-																)
+															{demo.length === 0 ? (
+																<>
+																	<div
+																		className='loader hidden-xs'
+																		style={{ marginLeft: "600px" }}>
+																		<ReactLoading
+																			type='spin'
+																			color='#f76d2b'
+																			height={200}
+																			width={100}
+																		/>
+																	</div>
 
-																.map((item) => (
-																	<div key={item.uniqueSerial} id='cardrow'>
-																		<Col>
-																			<div
-																				onClick={() =>
-																					singleProducthandle(item.uniqueSerial)
-																				}
-																				className=' card2 b-auto__main-item hidden-xs '>
-																				<img
-																					style={{
-																						aspectRatio: "2/2",
-																						width: "100%",
-																					}}
-																					className=' img-responsive center-block'
-																					src={
-																						item?.modelImages.length > 0 &&
-																						item?.modelImages[0].uri
-																					}
-																					alt='nissan'
-																				/>
+																	<div className='loader visible-xs'>
+																		<ReactLoading
+																			style={{ marginLeft: "-300px" }}
+																			type='spin'
+																			color='#f76d2b'
+																			height={200}
+																			width={50}
+																		/>
+																	</div>
+																</>
+															) : (
+																<>
+																	{demo
+																		?.filter(
+																			(item) =>
+																				item.programCode ===
+																				"SHORT_LIST_WEBSITE_HOME_PAGE"
+																		)
 
-																				<div
-																					className=' d-flex b-items__cars-one-info-title'
-																					style={{
-																						fontSize: "16px",
-																						marginLeft: "20px",
-																						marginTop: "10px",
-																					}}>
-																					{" "}
-																					<div>{item.vehManufactureYear} </div>
-																					<div style={{ marginLeft: "5px" }}>
-																						{" "}
-																						{item.vehBrandCode}
-																					</div>{" "}
-																					<div style={{ marginLeft: "5px" }}>
-																						{item.vehModelCode}{" "}
-																					</div>
-																				</div>
-
-																				<div
-																					id='textitem'
-																					className='d-flex'
-																					style={{
-																						marginTop: "-4px",
-																					}}>
-																					<ul
-																						className='d-flex'
-																						style={{ fontSize: "" }}>
-																						<div className='b'>
-																							{item.vehOdometer} kms
-																						</div>
-
-																						<div
-																							className=''
-																							style={{ marginLeft: "15px" }}>
-																							{item.exteriorColor}
-																						</div>
-																						<div
-																							className=''
-																							style={{ marginLeft: "15px" }}>
-																							{item.vehFuelCode}
-																						</div>
-
-																						<div
-																							className=''
-																							style={{ marginLeft: "15px" }}>
-																							{item.transmissionDesc}
-																						</div>
-																					</ul>
-																				</div>
-
-																				<span
-																					style={{
-																						marginLeft: "20px",
-																					}}
-																					className='d-flex ml-6'>
-																					<i className=''></i>{" "}
+																		.map((item) => (
+																			<div key={item.uniqueSerial} id='cardrow'>
+																				<Col>
 																					<div
-																						className='b-items__cars-one-info-title'
-																						style={{ fontSize: "21px" }}>
-																						Rs {item.vehSellPriceRecommended}
-																					</div>
-																				</span>
-																			</div>
-																			{/* phone View */}
-
-																			<div
-																				style={{ borderRadius: "20px" }}
-																				onClick={() =>
-																					singleProducthandle(item.uniqueSerial)
-																				}
-																				className='  visible-xs'>
-																				<div className=''>
-																					<div className=''>
+																						onClick={() =>
+																							singleProducthandle(
+																								item.uniqueSerial
+																							)
+																						}
+																						className=' card2 b-auto__main-item hidden-xs '>
 																						<img
 																							style={{
-																								marginLeft: "10px",
-																								height: "165px",
-																								aspectRatio: " 2 / 2",
-																								width: "70%",
-																								borderRadius: "10px",
+																								aspectRatio: "2/2",
+																								width: "100%",
 																							}}
-																							className=' img-responsive center-block '
+																							className=' img-responsive center-block'
 																							src={
 																								item?.modelImages.length > 0 &&
 																								item?.modelImages[0].uri
 																							}
 																							alt='nissan'
 																						/>
-																					</div>
-																					<div className=''>
+
 																						<div
 																							className=' d-flex b-items__cars-one-info-title'
 																							style={{
 																								fontSize: "16px",
 																								marginLeft: "20px",
-																								marginTop: "5px",
+																								marginTop: "10px",
 																							}}>
 																							{" "}
 																							<div>
@@ -682,16 +627,18 @@ export default function HomePage() {
 																								{item.vehModelCode}{" "}
 																							</div>
 																						</div>
-																						<br />
 
 																						<div
+																							id='textitem'
 																							className='d-flex'
 																							style={{
-																								marginTop: "-20px",
+																								marginTop: "-4px",
 																							}}>
-																							<ul className='d-flex'>
+																							<ul
+																								className='d-flex'
+																								style={{ fontSize: "" }}>
 																								<div className='b'>
-																									{item.vehOdometer}
+																									{item.vehOdometer} kms
 																								</div>
 
 																								<div
@@ -722,23 +669,135 @@ export default function HomePage() {
 																						<span
 																							style={{
 																								marginLeft: "20px",
-																								marginTop: "-5px",
 																							}}
 																							className='d-flex ml-6'>
 																							<i className=''></i>{" "}
 																							<div
 																								className='b-items__cars-one-info-title'
-																								style={{ fontSize: "15px" }}>
-																								Rs{" "}
+																								style={{ fontSize: "21px" }}>
+																								<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
 																								{item.vehSellPriceRecommended}
 																							</div>
 																						</span>
 																					</div>
-																				</div>
+																					{/* phone View */}
+
+																					<div
+																						style={{ borderRadius: "20px" }}
+																						onClick={() =>
+																							singleProducthandle(
+																								item.uniqueSerial
+																							)
+																						}
+																						className='  visible-xs'>
+																						<div className=''>
+																							<div className=''>
+																								<img
+																									style={{
+																										marginLeft: "10px",
+																										height: "165px",
+																										aspectRatio: " 2 / 2",
+																										width: "70%",
+																										borderRadius: "10px",
+																									}}
+																									className=' img-responsive center-block '
+																									src={
+																										item?.modelImages.length >
+																											0 &&
+																										item?.modelImages[0].uri
+																									}
+																									alt='nissan'
+																								/>
+																							</div>
+																							<div className=''>
+																								<div
+																									className=' d-flex b-items__cars-one-info-title'
+																									style={{
+																										fontSize: "16px",
+																										marginLeft: "20px",
+																										marginTop: "5px",
+																									}}>
+																									{" "}
+																									<div>
+																										{item.vehManufactureYear}{" "}
+																									</div>
+																									<div
+																										style={{
+																											marginLeft: "5px",
+																										}}>
+																										{" "}
+																										{item.vehBrandCode}
+																									</div>{" "}
+																									<div
+																										style={{
+																											marginLeft: "5px",
+																										}}>
+																										{item.vehModelCode}{" "}
+																									</div>
+																								</div>
+																								<br />
+
+																								<div
+																									className='d-flex'
+																									style={{
+																										marginTop: "-20px",
+																									}}>
+																									<ul className='d-flex'>
+																										<div className='b'>
+																											{item.vehOdometer}
+																										</div>
+
+																										<div
+																											className=''
+																											style={{
+																												marginLeft: "15px",
+																											}}>
+																											{item.exteriorColor}
+																										</div>
+																										<div
+																											className=''
+																											style={{
+																												marginLeft: "15px",
+																											}}>
+																											{item.vehFuelCode}
+																										</div>
+
+																										<div
+																											className=''
+																											style={{
+																												marginLeft: "15px",
+																											}}>
+																											{item.transmissionDesc}
+																										</div>
+																									</ul>
+																								</div>
+
+																								<span
+																									style={{
+																										marginLeft: "20px",
+																										marginTop: "-5px",
+																									}}
+																									className='d-flex ml-6'>
+																									<i className=''></i>{" "}
+																									<div
+																										className='b-items__cars-one-info-title'
+																										style={{
+																											fontSize: "15px",
+																										}}>
+																										Rs{" "}
+																										{
+																											item.vehSellPriceRecommended
+																										}
+																									</div>
+																								</span>
+																							</div>
+																						</div>
+																					</div>
+																				</Col>
 																			</div>
-																		</Col>
-																	</div>
-																))}
+																		))}
+																</>
+															)}
 														</Row>
 
 														{/* testing details */}
@@ -919,14 +978,14 @@ export default function HomePage() {
 											<div className='col-xs-12   visible-xs-horizental-scroll'>
 												<div className='b-homeAuto__latest'>
 													<h5
-														className='s-titleBg wow zoomInLeft'
+														className='s-titleBg  '
 														style={{ fontFamily: "Segoe UI" }}>
 														GIVING OUR CUSTOMERS BEST DEALS
 													</h5>
 													<br />
 
 													<h2
-														className='s-title wow zoomInLeft'
+														className='s-title  '
 														style={{ fontFamily: "Segoe UI" }}>
 														LATEST VEHICLES ON SALE Search
 													</h2>
@@ -1219,6 +1278,7 @@ export default function HomePage() {
 									</section>
 								</>
 							)}
+
 							{/* Exclusive offers slider */}
 							<section className='b-featured hidden-xs'>
 								<div className='container-fluid'>
@@ -1516,12 +1576,10 @@ WELCOME TO SUSHIL CARS  section */}
 										<div className='col-md-3 col-lg-3 col-xs-12'>
 											<div className='row'>
 												<div className='col-xs-12 m-padding'>
-													<div className='b-welcome__services-auto wow '>
+													<div className='b-welcome__services-auto  '>
 														<div className='b-welcome__services-img m-auto'>
 															<Link to='/carloans'>
-																<span
-																	style={{ marginLeft: "25px" }}
-																	className='fa fa-cab'></span>
+																<span className='fa fa-cab'></span>
 															</Link>
 														</div>
 
@@ -1529,16 +1587,14 @@ WELCOME TO SUSHIL CARS  section */}
 													</div>
 												</div>
 												<div className='col-xs-12 text-right visible-md visible-lg'>
-													<div className='m-circle wow slideInRight'>
+													<div className='m-circle  slideInRight'>
 														<span className='b-welcome__services-circle'></span>
 													</div>
 												</div>
 												<div className='col-xs-12 m-padding'>
-													<div className='b-welcome__services-buying wow '>
+													<div className='b-welcome__services-buying  '>
 														<div className='b-welcome__services-img m-buying'>
-															<span
-																style={{ marginLeft: "25px" }}
-																className='fa fa-book'></span>
+															<span className='fa fa-book'></span>
 														</div>
 														<h3>Customer Requirements</h3>
 													</div>
@@ -1546,7 +1602,7 @@ WELCOME TO SUSHIL CARS  section */}
 											</div>
 										</div>
 										<div className='col-md-6 col-lg-6 col-xs-12'>
-											<div className='b-welcome__text wow '>
+											<div className='b-welcome__text  '>
 												<h2>INDIA'S LEADING CAR DEALER</h2>
 												<h3>WELCOME TO SUSHIL CARS</h3>
 												<p>
@@ -1582,9 +1638,7 @@ WELCOME TO SUSHIL CARS  section */}
 													<div className='b-welcome__services-trade wow '>
 														<div className='b-welcome__services-img m-trade'>
 															<Link to='/insurence'>
-																<span
-																	style={{ marginLeft: "20px" }}
-																	className='fa fa-shield'></span>
+																<span className='fa fa-shield'></span>
 															</Link>
 														</div>
 														<h3>insurance</h3>
@@ -1601,9 +1655,7 @@ WELCOME TO SUSHIL CARS  section */}
 													<div className='b-welcome__services-trade wow '>
 														<div className='b-welcome__services-img m-trade'>
 															<Link to='/emical'>
-																<span
-																	style={{ marginLeft: "28px" }}
-																	className='fa fa-calculator'></span>
+																<span className='fa fa-calculator'></span>
 															</Link>
 														</div>
 														<h3> Emi calculator</h3>
@@ -1728,9 +1780,7 @@ WELCOME TO SUSHIL CARS  section */}
 												</div>
 												<div className='b-asks__first-arrow'>
 													<Link to='/detailsdata'>
-														<span
-															style={{ padding: "7px" }}
-															className='fa fa-angle-right'></span>
+														<span className='fa fa-angle-right'></span>
 													</Link>
 												</div>
 											</div>
@@ -1751,9 +1801,7 @@ WELCOME TO SUSHIL CARS  section */}
 												</div>
 												<div className='b-asks__first-arrow'>
 													<Link to='/salecar'>
-														<span
-															style={{ padding: "7px" }}
-															className='fa fa-angle-right'></span>
+														<span className='fa fa-angle-right'></span>
 													</Link>
 												</div>
 											</div>
@@ -1772,9 +1820,7 @@ WELCOME TO SUSHIL CARS  section */}
 													<div className='b-count__item'>
 														<div className='b-count__item-circle'>
 															<Link to='/detailsdata'>
-																<span
-																	style={{ marginLeft: "40px" }}
-																	className='fa fa-car'></span>
+																<span className='fa fa-car'></span>
 															</Link>
 														</div>
 														<div className='chart' data-percent='5000'>
@@ -1786,9 +1832,7 @@ WELCOME TO SUSHIL CARS  section */}
 												<div className='col-sm-4 col-xs-6'>
 													<div className='b-count__item'>
 														<div className='b-count__item-circle'>
-															<span
-																style={{ marginLeft: "40px" }}
-																className='fa fa-users'></span>
+															<span className='fa fa-users'></span>
 														</div>
 														<div className='chart' data-percent='3100'>
 															<h2 className='percent'>3100</h2>
@@ -1799,9 +1843,7 @@ WELCOME TO SUSHIL CARS  section */}
 												<div className='col-sm-4 col-xs-6'>
 													<div className='b-count__item'>
 														<div className='b-count__item-circle'>
-															<span
-																style={{ marginLeft: "40px" }}
-																className='fa fa-building-o'></span>
+															<span className='fa fa-building-o'></span>
 														</div>
 														<div className='chart' data-percent='500'>
 															<h2 className='percent'>2</h2>
@@ -1870,13 +1912,6 @@ WELCOME TO SUSHIL CARS  section */}
 														motive
 													</p>
 												</article>
-												<Link to='/about' className='btn m-btn'>
-													Read More
-													<span
-														style={{ paddingLeft: "7px !important" }}
-														id='arrowiconbtn'
-														className='fa fa-angle-right'></span>
-												</Link>
 											</aside>
 										</div>
 
@@ -1931,6 +1966,6 @@ WELCOME TO SUSHIL CARS  section */}
 					)}
 				</>
 			)}
-		</>
+		</div>
 	);
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import Submit4 from "./Submit4";
 import { Link, useNavigate } from "react-router-dom";
 import Searchdata from "./Searchdata";
+import ScrollTop from "./ScrollTop";
 
 const Submit1 = () => {
 	const [num1, setNum1] = useState(1);
@@ -14,7 +15,6 @@ const Submit1 = () => {
 	const [inputvalue, setInputvalue] = useState("");
 	const [selectedValue, setSelectedValue] = useState(null);
 	const [searchResults, setSearchResults] = useState([]);
-
 	const [data, setData] = useState([]);
 	const [model, setModel] = useState([]);
 	const [source, setSource] = useState([]);
@@ -39,6 +39,17 @@ const Submit1 = () => {
 	const [codemodel, setcodemodel] = useState("");
 	const [codemake, setcodemake] = useState("");
 	const [codevarient, setvarientdata] = useState([]);
+	const [errors, setErrors] = useState({
+		selectedItem: false,
+		selectverient: false,
+		selectmfy: false,
+		selectfuel: false,
+		selecttransmission: false,
+		selectmodel: false,
+		selectextirecolor: false,
+		selecttype: false,
+		selectmfm: false,
+	});
 
 	// make list
 	useEffect(() => {
@@ -441,8 +452,26 @@ const Submit1 = () => {
 	}, [codemodel, codemake]);
 
 	const handleSelectChange = (event) => {
-		setSelectedItem(event.target.value);
-		setcodemodel(event.target.value);
+		// setSelectedItem(event.target.value);
+		// setcodemodel(event.target.value);
+
+		const { name, value } = event.target;
+
+		// Update the field value
+		switch (name) {
+			case "selectedItem":
+				setSelectedItem(value);
+				break;
+			// case "selectverient":
+			// 	setSelectVerient(value);
+			// 	break;
+			// Add cases for other fields here
+			default:
+				break;
+		}
+
+		// Clear the error message when the user starts typing in the field
+		setErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
 		// // console.log(event.target.value, "check console");
 	};
 	// const handleSelectChange1 = (event) => {
@@ -482,42 +511,79 @@ const Submit1 = () => {
 
 	const handleSaveData = (e) => {
 		e.preventDefault();
+		const isValid = isFormValid();
 
-		const AllData = {
-			mfdMonth: selectmfm,
-			source: resourcedata,
-			brand: selectedItem,
-			model: selectmodel,
-			exteriorColor: selectextirecolor,
-			variantCode: selectverient,
-			regnFormat: selecttransmission,
-			regn1: selecttype,
-			mfdYear: selectmfy,
-			fuel: selectfuel,
-		};
-		console.log(source, vmonth, data, "alldata");
-		localStorage.setItem("data", JSON.stringify(AllData));
-		navigate("/submit2");
+		if (isValid) {
+			// Proceed to next step or perform other actions when the form is valid
+			const AllData = {
+				mfdMonth: selectmfm,
+				source: resourcedata,
+				brand: selectedItem,
+				model: selectmodel,
+				exteriorColor: selectextirecolor,
+				variantCode: selectverient,
+				regnFormat: selecttransmission,
+				regn1: selecttype,
+				mfdYear: selectmfy,
+				fuel: selectfuel,
+			};
+			console.log(AllData);
+			localStorage.setItem("data", JSON.stringify(AllData));
+			// Navigate to the next step
+			// navigate('/submit2');
+			console.log("Form is valid. Proceed to the next step.");
+		} else {
+			// Show validation error message or prevent the form from proceeding
+			console.log("Please fill all required fields.");
+			// alert("Please fill all required fields.");
+		}
 	};
+
+	function isFormValid() {
+		// Perform validation checks for all the required fields
+		// Return true if all required fields are filled, otherwise false
+		const isValid =
+			selectedItem.trim() !== "" &&
+			// selectverient.trim() !== "" &&
+			// // Add validation checks for other required fields here
+			// // For example:
+			// selectmfy.trim() !== "" &&
+			// selectfuel.trim() !== "" &&
+			// selecttransmission.trim() !== "" &&
+			// selectmodel.trim() !== "" &&
+			// selectextirecolor.trim() !== "" &&
+			// selecttype.trim() !== "" &&
+			// selectmfm.trim() !== "";
+
+			// Update the error state for each field
+			setErrors({
+				selectedItem: selectedItem.trim() === "",
+				// selectverient: selectverient.trim() === "",
+				// selectmfy: selectmfy.trim() === "",
+				// selectfuel: selectfuel.trim() === "",
+				// selecttransmission: selecttransmission.trim() === "",
+				// selectmodel: selectmodel.trim() === "",
+				// selectextirecolor: selectextirecolor.trim() === "",
+				// selecttype: selecttype.trim() === "",
+				// selectmfm: selectmfm.trim() === "",
+			});
+
+		return isValid;
+	}
 
 	return (
 		<div style={{ margingTop: "40px" }}>
+			<ScrollTop />
 			{/* header section */}
 			<div class='m-submit1' data-scrolling-animations='true'>
-				<div id='page-preloader'>
-					<span class='spinner'></span>
-				</div>
-
 				<section class='b-pageHeader'>
 					<div class='container'>
-						<h1 class='' data-wow-delay='0.3s'>
-							Submit Your Vehicle
-						</h1>
+						<h1 class=''>Submit Your Vehicle</h1>
 					</div>
 				</section>
 
 				<div class='b-breadCumbs s-shadow'>
-					<div class='container wow ' data-wow-delay='0.5s'>
+					<div class='container  '>
 						<Link to='/' className='b-breadCumbs__page'>
 							Home
 						</Link>
@@ -537,9 +603,7 @@ const Submit1 = () => {
 					<div class='row'>
 						<div class='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
 							<aside class='b-submit__aside'>
-								<div
-									class='b-submit__aside-step m-active wow '
-									data-wow-delay='0.5s'>
+								<div class='b-submit__aside-step m-active  '>
 									<h3>Step 1</h3>
 									<div class='b-submit__aside-step-inner m-active clearfix'>
 										<div class='b-submit__aside-step-inner-icon'>
@@ -552,7 +616,7 @@ const Submit1 = () => {
 										</div>
 									</div>
 								</div>
-								<div class='b-submit__aside-step wow ' data-wow-delay='0.5s'>
+								<div class='b-submit__aside-step  '>
 									<h3>Step 2</h3>
 									<div class='b-submit__aside-step-inner clearfix'>
 										<div class='b-submit__aside-step-inner-icon'>
@@ -569,9 +633,7 @@ const Submit1 = () => {
 
 						<div class='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
 							<div class='b-submit__main'>
-								<header
-									class='s-headerSubmit s-lineDownLeft wow '
-									data-wow-delay='0.5s'>
+								<header class='s-headerSubmit s-lineDownLeft  '>
 									<h2 class=''>Add Your Vehicle Details</h2>
 								</header>
 								{/*  form section */}
@@ -579,30 +641,7 @@ const Submit1 = () => {
 								<form class='s-submit clearfix' onSubmit={handleSaveData}>
 									<div class='row'>
 										<div class='col-md-6 col-xs-12'>
-											{/* <div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
-												<label style={{ color: "black" }}>
-													Source <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={resourcedata}
-														onChange={handleSelectChange1}>
-														<option value=''>Select an item</option>
-														{source.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div> */}
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Make <span>*</span>
 												</label>
@@ -619,11 +658,14 @@ const Submit1 = () => {
 														))}
 													</select>
 													<span class='fa fa-caret-down'></span>
+													{errors.selectedItem && (
+														<span style={{ color: "red" }}>
+															Please select an item.
+														</span>
+													)}
 												</div>
 											</div>
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Variant <span>*</span>
 												</label>
@@ -643,9 +685,7 @@ const Submit1 = () => {
 												</div>
 											</div>
 
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Year of MF. <span>*</span>
 												</label>
@@ -665,9 +705,7 @@ const Submit1 = () => {
 												</div>
 											</div>
 
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Fuel <span>*</span>
 												</label>
@@ -687,9 +725,7 @@ const Submit1 = () => {
 												</div>
 											</div>
 
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Transmission <span>*</span>
 												</label>
@@ -710,9 +746,7 @@ const Submit1 = () => {
 											</div>
 										</div>
 										<div class='col-md-6 col-xs-12'>
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Model <span>*</span>
 												</label>
@@ -731,9 +765,7 @@ const Submit1 = () => {
 													<span class='fa fa-caret-down'></span>
 												</div>
 											</div>
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Exterior Color <span>*</span>
 												</label>
@@ -752,9 +784,7 @@ const Submit1 = () => {
 													<span class='fa fa-caret-down'></span>
 												</div>
 											</div>
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Type <span>*</span>
 												</label>
@@ -774,9 +804,7 @@ const Submit1 = () => {
 												</div>
 											</div>
 
-											<div
-												class='b-submit__main-element wow '
-												data-wow-delay='0.5s'>
+											<div class='b-submit__main-element  '>
 												<label style={{ color: "black" }}>
 													Month of MF. <span>*</span>
 												</label>
@@ -799,14 +827,14 @@ const Submit1 = () => {
 
 											<button
 												id='procedbtn'
+												// onClick={isFormValid}
 												// to='/submit2'
 												type='submit'
-												class='btn m-btn  '
-												data-wow-delay='0.5s'>
+												class='btn m-btn  '>
 												Save &amp; PROCEED to next step
 												<span
 													id='arrowiconbtn'
-													class='fa fa-arrow-right'
+													class='fa fa-check'
 													aria-hidden='true'></span>
 											</button>
 										</div>
@@ -824,7 +852,7 @@ const Submit1 = () => {
 				<div class='container'>
 					<div class='row'>
 						<div class='col-md-3 col-xs-12'>
-							<aside class='b-info__aside wow zoomInLeft' data-wow-delay='0.3s'>
+							<aside class='b-info__aside  '>
 								<article class='b-info__aside-article'>
 									<h3>OPENING HOURS</h3>
 									<div class='b-info__aside-article-item'>
@@ -845,18 +873,11 @@ const Submit1 = () => {
 										been our motive.
 									</p>
 								</article>
-								<Link to='/about' className='btn m-btn'>
-									Read More
-									<span
-										style={{ paddingLeft: "7px !important" }}
-										id='arrowiconbtn'
-										className='fa fa-angle-right'></span>
-								</Link>
 							</aside>
 						</div>
 
 						<div class='col-md-5 col-xs-12'>
-							<address class='b-info__contacts wow ' data-wow-delay='0.3s'>
+							<address class='b-info__contacts  '>
 								<p>contact us</p>
 								<div class='b-info__contacts-item'>
 									<span class='fa fa-map-marker'></span>
