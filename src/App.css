@@ -1,11 +1,11 @@
 ::-webkit-scrollbar {
-	display: none;
+    display: none;
 }
 
 body {
-	-ms-overflow-style: none;
+    -ms-overflow-style: none;
 }
 
 body {
-	scrollbar-width: "none";
+    scrollbar-width: "none";
 }

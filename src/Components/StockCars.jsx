@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Slider from "react-slider";
 import "./prizerange.css";
-import ScrollTop from "./ScrollTop";
+import PageScrollTop from "./PageScrollTop";
 import ReactLoading from "react-loading";
 import Pagination from "./Pagination";
 
@@ -74,22 +74,17 @@ const StockCars = () => {
 	const [prizevalue, setprizevalue] = useState([MIN, MAX]);
 
 	const [currentpage, setCurrentPage] = useState(1);
-	const itemsperpage = 9;
-	const totalItems = stockdata.length;
+	const itemsperpage = 18;
+	const totalItems = demo.length;
 	const totalPage = Math.ceil(totalItems / itemsperpage);
-	console.log(totalPage, "totalPage");
 
 	const onPageChange = (page) => {
 		setCurrentPage(page);
-		console.log(page, "page");
 	};
 
 	const Startindex = (currentpage - 1) * itemsperpage;
 	const EndIndex = Startindex + itemsperpage;
 	const currentData = stockdata.slice(Startindex, EndIndex);
-	console.log(currentData, "currentData");
-	// console.log(currentData, "currentData");
-	// console.log(currentData, "currentData");
 
 	// All Stock Show
 	useEffect(() => {
@@ -128,7 +123,9 @@ const StockCars = () => {
 					const responseData = await response.json();
 
 					setStockdata(responseData?.UsedCarVehStockDetail);
-					console.log(stockdata, "data stcok");
+					setDemo(responseData?.UsedCarVehStockDetail);
+
+					setSearchResults(responseData?.UsedCarVehStockDetail);
 				} else {
 					throw new Error(
 						`Request failed with status code: ${response.status}`
@@ -189,8 +186,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setData(generalList);
-				console.log(generalList, "checkmakelist");
-				console.log(jsonData, "jsondata");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -236,7 +231,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setModel(generalList);
-				console.log(generalList, "MODELLIST");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -279,7 +273,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setDatatype(generalList);
-				console.log(generalList, "LEAD LIST");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -326,7 +319,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setVarient(generalList);
-				console.log(generalList, "varient list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -369,7 +361,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setVechileYear(generalList);
-				// // console.log(generalList, "year list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -412,7 +403,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setVechileMonth(generalList);
-				// // console.log(generalList, "month list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -455,7 +445,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setFuelData(generalList);
-				console.log(generalList, "fuel list data");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -498,7 +487,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setTransmission(generalList);
-				// // console.log(generalList, "transmission list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -545,7 +533,6 @@ const StockCars = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setExtirearColor(generalList);
-				// // console.log(generalList, "EXTERICR COLOR list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -555,12 +542,10 @@ const StockCars = () => {
 	const handleSelectChange = (event) => {
 		setSelectedItem(event.target.value);
 		setcodemodel(event.target.value);
-		// // console.log(event.target.value, "check console");
 	};
 
 	const handleSelectChange4 = (event) => {
 		setSelectFuel(event.target.value);
-		console.log(event.target.value, "fuleeeeeeeeee");
 	};
 
 	const handleSelectChange2 = (event) => {
@@ -568,11 +553,7 @@ const StockCars = () => {
 	};
 	const handleSelectChange3 = (event) => {
 		setSelectmodel(event.target.value);
-		// setcodemodel(event.target.value);
 		setcodemake(event.target.value);
-		// // // console.log(setcodemake, "setcodemake");
-
-		// // console.log(event.target.value, "check con");
 	};
 
 	const handleSelectChange5 = (event) => {
@@ -589,7 +570,6 @@ const StockCars = () => {
 	};
 	const handleSelectChange9 = (event) => {
 		setSelectverient(event.target.value);
-		console.log(event.target.value, "price range");
 	};
 
 	const handleSelectBodyType = (event) => {
@@ -637,9 +617,9 @@ const StockCars = () => {
 			if (response.ok) {
 				const responseData = await response.json();
 				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setStockdata(responseData?.UsedCarVehStockDetail);
 				setDemo(responseData?.UsedCarVehStockDetail);
 				setShowdata(responseData?.UsedCarVehStockDetail);
-				console.log("responseData stck search", responseData);
 			} else {
 				throw new Error(`Request failed with status code: ${response.status}`);
 			}
@@ -651,8 +631,7 @@ const StockCars = () => {
 	const handleSaveData = (e) => {
 		e.preventDefault();
 		fetchData();
-		// setSearchResults();
-		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+		searchResults.map((item) => console.log("uniqueserial"));
 	};
 
 	const reloadPage = () => {
@@ -661,7 +640,7 @@ const StockCars = () => {
 
 	return (
 		<>
-			<ScrollTop />
+			<PageScrollTop />
 			{detailspage === false ? (
 				<div>
 					{/* body stucture */}
@@ -675,31 +654,50 @@ const StockCars = () => {
 
 						<section className='b-pageHeader'>
 							<div className='container'>
-								<h1 className='wow zoomInLeft' data-wow-delay='0.5s'>
-									Auto Listings
-								</h1>
+								<h1 className=''>Auto Listings</h1>
 
 								{/* Add total counter stock number  */}
 
-								{/* <div
-							className='b-pageHeader__search wow zoomInRight'
-							data-wow-delay='0.5s'>
-							<h3>Your search returned 28 results</h3>
-						</div> */}
+								<div className='b-pageHeader__search  '>
+									{showdata === false ? (
+										<>
+											<span>Total Number of Cars {totalItems} </span>
+										</>
+									) : (
+										<>
+											<span>Total Number of Search Cars {demo.length} </span>
+										</>
+									)}
+								</div>
 							</div>
 						</section>
 
 						<div className='b-breadCumbs s-shadow'>
-							<div className='container ' data-wow-delay='0.5s'>
+							<div className='container '>
 								<Link to='/' className='b-breadCumbs__page'>
 									Home
 								</Link>
 								<span className='fa fa-angle-right'></span>
-								<a
-									href='listTableTwo.html'
-									className='b-breadCumbs__page m-active'>
-									Buy Car
-								</a>
+								<a className='b-breadCumbs__page m-active'>Buy Car</a>
+
+								<div
+									className='b-pageHeader__search visible-xs  '
+									style={{
+										marginTop: "-20px",
+										color: "white",
+										padding: "3px",
+										marginLeft: "187px",
+									}}>
+									{showdata === false ? (
+										<>
+											<span>Total Number of Cars {totalItems} </span>
+										</>
+									) : (
+										<>
+											<span>Total Number of Search Cars {demo.length} </span>
+										</>
+									)}
+								</div>
 							</div>
 						</div>
 
@@ -707,8 +705,53 @@ const StockCars = () => {
 
 						{/* body details cars */}
 						<div className='row' id='wid_siz'>
-							<div className=' drup_mn1 visible-xs '>
+							<div className='drup_mn1 visible-xs '>
 								<div className='prise_mn'>
+									<ul id='cardrow'>
+										<li>
+											<select
+												id='selectdata2'
+												class=''
+												value={selectedItem}
+												onChange={handleSelectChange}>
+												<option value=''>Brand</option>
+												{data.map((item, index) => (
+													<option key={index} value={item.code}>
+														{item.description}
+													</option>
+												))}
+											</select>
+										</li>
+										<li>
+											<select
+												id='selectdata2'
+												class=''
+												value={selectmodel}
+												onChange={handleSelectChange3}>
+												<option value=''> Model </option>
+												{model.map((item, index) => (
+													<option key={index} value={item.code}>
+														{item.description}
+													</option>
+												))}
+											</select>
+										</li>
+
+										<li>
+											<select
+												id='selectdata2'
+												class=''
+												value={selectfuel}
+												onChange={handleSelectChange4}>
+												<option value=''> Fuel-type</option>
+												{fueldata.map((item, index) => (
+													<option key={index} value={item.code}>
+														{item.description}
+													</option>
+												))}
+											</select>
+										</li>
+									</ul>
 									<div className='prizetext'>
 										<div className='textprize' style={{ color: "white" }}>
 											<span>{prizevalue[0]}</span>
@@ -731,65 +774,18 @@ const StockCars = () => {
 											max={MAX}
 										/>
 									</div>
+
+									<div
+										className='filterbutton visible-xs'
+										style={{ margin: "10px 20px 10px 60px" }}>
+										<button className=' btn-sm' onClick={handleSaveData}>
+											Search
+										</button>
+										<button className=' btn-sm' onClick={reloadPage}>
+											Reset
+										</button>
+									</div>
 								</div>
-
-								<ul id='cardrow'>
-									<li>
-										<select
-											id='selectdata2'
-											onClick={handleSaveData}
-											class=''
-											value={selectedItem}
-											onChange={handleSelectChange}>
-											<option value=''>Brand</option>
-											{data.map((item, index) => (
-												<option key={index} value={item.code}>
-													{item.description}
-												</option>
-											))}
-										</select>
-									</li>
-									<li>
-										<select
-											onClick={handleSaveData}
-											id='selectdata2'
-											class=''
-											value={selectmodel}
-											onChange={handleSelectChange3}>
-											<option value=''> Model </option>
-											{model.map((item, index) => (
-												<option key={index} value={item.code}>
-													{item.description}
-												</option>
-											))}
-										</select>
-									</li>
-
-									<li>
-										<select
-											id='selectdata2'
-											class=''
-											onClick={handleSaveData}
-											value={selectfuel}
-											onChange={handleSelectChange4}>
-											<option value=''> Fuel-type</option>
-											{fueldata.map((item, index) => (
-												<option key={index} value={item.code}>
-													{item.description}
-												</option>
-											))}
-										</select>
-									</li>
-
-									<i
-										style={{
-											margingTop: "10px",
-											marginLeft: "10px",
-										}}
-										onClick={reloadPage}
-										class='fa fa-refresh fa-1x'
-										aria-hidden='true'></i>
-								</ul>
 							</div>
 
 							<form
@@ -870,13 +866,12 @@ const StockCars = () => {
 											</div>
 										</div>
 
-										<div
-											data-wow-delay='0.5s'
-											className='col-xs-12 col-md-12 col-lg-12 col-xl-12'>
+										<div className='col-xs-12 col-md-12 col-lg-12 col-xl-12'>
 											<div class='s-relative'>
 												<select
 													id='selectdata'
 													class=''
+													onClick={handleSaveData}
 													value={selectfuel}
 													onChange={handleSelectChange4}>
 													<option value=''> Fuel-type</option>
@@ -900,12 +895,10 @@ const StockCars = () => {
 											<button
 												style={{
 													color: "black",
-													// marginTop: "20px",
 
 													backgroundColor: "#f76d2b",
 												}}
 												onClick={reloadPage}
-												// type='submit'
 												className='btn-sm btnn1 '>
 												Clear Filter
 											</button>
@@ -920,17 +913,30 @@ const StockCars = () => {
 								<>
 									{/* normal Stock */}
 									<div className='col-xs-12 col-md-12  col-lg-9 col-xl-9 '>
-										<div className='b-items'>
+										<div className='b-items itm_bg1'>
 											<div className='container'>
 												<div className='b-auto__main'></div>
 												<Row xs={12} md={3} id=''>
 													{currentData.length === 0 ? (
 														<>
 															<div
-																className='loader'
+																className='loader hidden-xs'
 																style={{
 																	marginLeft: "300px",
 																	marginTop: "200px",
+																}}>
+																<ReactLoading
+																	type='spin'
+																	color='#f76d2b'
+																	height={200}
+																	width={100}
+																/>
+															</div>
+															<div
+																className='loader visible-xs'
+																style={{
+																	marginTop: "41px",
+																	marginLeft: "115px",
 																}}>
 																<ReactLoading
 																	type='spin'
@@ -956,14 +962,11 @@ const StockCars = () => {
 																							item.uniqueSerial
 																						)
 																					}
-																					className=' card2 b-auto__main-item '>
-																					{/* {console.log(item.modelImages, "data image url")} */}
+																					className=' card2 cr_pic b-auto__main-item '>
 																					<img
 																						style={{
 																							aspectRatio: "2/2",
 																							width: "100%",
-																							// border: "3px solid gray",
-																							// borderRadius: "20px",
 																						}}
 																						className=' img-responsive center-block'
 																						src={frontImage.uri}
@@ -1029,10 +1032,6 @@ const StockCars = () => {
 											</div>
 										</div>
 									</div>
-
-									{/* Apply pagination */}
-
-									{/* phone View */}
 								</>
 							) : (
 								/* Search Data   */
@@ -1040,11 +1039,11 @@ const StockCars = () => {
 									<>
 										{/* web view */}
 										<div className=' col-xs-12 col-md-12  col-lg-9 col-xl-9 '>
-											<div className='b-items'>
+											<div className='b-items itm_bg1'>
 												<div className='container'>
 													<div className='b-auto__main'></div>
 													<Row xs={12} md={3} id=''>
-														{demo.length === 0 ? (
+														{currentData.length === 0 ? (
 															<div className='notdatafound'>
 																<p>vehicle Not Available</p>
 																<img
@@ -1054,12 +1053,12 @@ const StockCars = () => {
 															</div>
 														) : (
 															<>
-																{demo?.map((item) => (
+																{currentData?.map((item) => (
 																	<div key={item.uniqueSerial}>
-																		{console.log(
+																		{/* {console.log(
 																			demo,
 																			"check demo search data"
-																		)}
+																		)} */}
 
 																		<>
 																			<Col>
@@ -1069,7 +1068,7 @@ const StockCars = () => {
 																							item.uniqueSerial
 																						)
 																					}
-																					className='card2 b-auto__main-item '>
+																					className='card2 cr_pic b-auto__main-item '>
 																					<div className=''>
 																						<div className=''>
 																							<img
@@ -1078,7 +1077,7 @@ const StockCars = () => {
 																									width: "100%",
 																								}}
 																								// id='pic_hit1'
-																								className=''
+																								className='img-responsive center-block'
 																								src={
 																									item?.modelImages.length >
 																										0 &&
@@ -1139,6 +1138,12 @@ const StockCars = () => {
 															</>
 														)}
 													</Row>
+
+													<Pagination
+														onPageChange={onPageChange}
+														currentpage={currentpage}
+														totalPage={totalPage}
+													/>
 												</div>
 											</div>
 										</div>
@@ -1178,78 +1183,6 @@ const StockCars = () => {
 						</div>
 					</div>
 					{/* <!--b-features--> */}
-					<div className='b-info'>
-						<div className='container'>
-							<div className='row'>
-								<div className='col-md-3 col-xs-12'>
-									<aside
-										className='b-info__aside wow zoomInLeft'
-										data-wow-delay='0.3s'>
-										<article className='b-info__aside-article'>
-											<h3>OPENING HOURS</h3>
-											<div className='b-info__aside-article-item'>
-												<h6>Sales Department</h6>
-												<p>
-													Mon-Sat : 8:00am - 5:00pm
-													<br />
-													Sunday is closed
-												</p>
-											</div>
-										</article>
-										<article className='b-info__aside-article'>
-											<h3>About us</h3>
-											<p>
-												Established in the year 2002, Sushil Car Bazar is one of
-												the top & most trusted dealership for preowned luxury
-												car.In over 17 years of business history we have always
-												had a customer oriented approach & total customer
-												satisfaction has been our motive.
-											</p>
-										</article>
-									</aside>
-								</div>
-
-								<div className='col-md-5 col-xs-12'>
-									<address
-										className='b-info__contacts wow zoomInUp'
-										data-wow-delay='0.3s'>
-										<p>contact us</p>
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-map-marker'></span>
-											<ol>
-												Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12
-												Dividing Road Pincode 121006
-											</ol>
-										</div>
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-map-marker'></span>
-											<em>
-												<ol>Spaze Boulevard, Sector-47, Gurugram</ol>
-											</em>
-										</div>
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-phone'></span>
-											<ol>
-												+91 92509 22333
-												<br />
-												+91 98114 36332
-											</ol>
-										</div>
-
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-envelope'></span>
-											<em>
-												<ol>sushilcarbazar@gmail.com</ol>
-											</em>
-										</div>
-									</address>
-									<address className='b-info__map'>
-										<a href='contacts.html'>Open Location Map</a>
-									</address>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			) : (
 				<>

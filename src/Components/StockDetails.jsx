@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Item from "./Item";
@@ -10,21 +10,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Slider from "react-slider";
 import "./prizerange.css";
-import Pagination from "./Pagination";
 import ScrollTop from "./ScrollTop";
 import { Typography, makeStyles, TablePagination } from "@material-ui/core";
 
-const StockDetails = () => {
+const Stockdetails = () => {
 	const [stockdata, setStockdata] = useState([]);
-	const [showdata, setShowdata] = useState(false);
-	const [demo, setDemo] = useState([]);
-	const [selectedProduct, setSelectedProduct] = useState(null);
-	const [detailspage, setdetailspage] = useState(false);
-	const [currentpage, setCurrentPage] = useState(1);
-	const itemsperpage = 9;
-	const totalItems = stockdata.length;
-	const totalPage = Math.ceil(totalItems / itemsperpage);
-	console.log(totalPage, "totalPage");
 	useEffect(() => {
 		const fetchData = async () => {
 			const url =
@@ -61,7 +51,7 @@ const StockDetails = () => {
 					const responseData = await response.json();
 
 					setStockdata(responseData?.UsedCarVehStockDetail);
-					// console.log(responseData?.UsedCarVehStockDetail, "data stcok");
+					console.log(stockdata, "data stcok");
 				} else {
 					throw new Error(
 						`Request failed with status code: ${response.status}`
@@ -74,39 +64,17 @@ const StockDetails = () => {
 
 		fetchData();
 	}, []);
-	const onPageChange = (page) => {
-		setCurrentPage(page);
-		console.log(page, "page");
-	};
-
-	const Startindex = (currentpage - 1) * itemsperpage;
-	const EndIndex = Startindex + itemsperpage;
-	const   = stockdata.slice(Startindex, EndIndex);
-	console.log(currentData, "currentData");
-	// console.log(currentData, "currentData");
-	// console.log(currentData, "currentData");
-
-	const singleProducthandle = (uniqueSerial) => {
-		const product = stockdata.find(
-			(item) => item.uniqueSerial === uniqueSerial
-		);
-
-		setSelectedProduct(product);
-		// navigate("/details");
-		setdetailspage(product);
-	};
 	return (
 		<div>
 			{showdata === false ? (
 				<>
 					{/* normal Stock */}
-					<div className=' '>
+					<div className='col-xs-12 col-md-12  col-lg-9 col-xl-9 '>
 						<div className='b-items'>
 							<div className='container'>
 								<div className='b-auto__main'></div>
-								{console.log(stockdata.length, "stock detailss")}
 								<Row xs={12} md={3} id=''>
-									{currentData?.map((item) => {
+									{stockdata?.map((item) => {
 										const frontImage = item?.modelImages.find(
 											(image) => image?.imageName === "Front"
 										);
@@ -180,11 +148,6 @@ const StockDetails = () => {
 					</div>
 
 					{/* Apply pagination */}
-					<Pagination
-						onPageChange={onPageChange}
-						currentpage={currentpage}
-						totalPage={totalPage}
-					/>
 
 					{/* phone View */}
 				</>
@@ -293,4 +256,4 @@ const StockDetails = () => {
 	);
 };
 
-export default StockDetails;
+export default Stockdetails;

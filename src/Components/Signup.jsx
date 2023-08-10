@@ -5,12 +5,10 @@ import LogoCars from "./LogoCars";
 import Animation from "./Animation";
 import Admin from "./../Pages/Admin";
 import HomePage from "./HomePage";
-import { useNavigate } from "react-router-dom";
 function Signup({ loggedIn }) {
 	const [company, setCompany] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
 	const onSubmit = (e) => {
 		e.preventDefault();
 
@@ -53,25 +51,19 @@ function Signup({ loggedIn }) {
 			.then((response) => response.json())
 			.then((data) => {
 				toast(data.loginNotValidReason);
-
 				console.log("Response:", data);
-				console.log(data.accessToken, "accessToken");
-				// alert("success");
-				localStorage.setItem("token", data.accessToken);
-				// toast("Successfully Login");
-				navigate("/admin");
 
 				// Check if the login was successful
-				// if (data.success) {
-				// 	// Redirect the user based on their role
-				// 	if (loggedIn) {
-				// 		// Redirect to admin panel
-				// 		navigate("/admin");
-				// 	} else {
-				// 		// Redirect to user panel
-				// 		navigate("/homepage");
-				// 	}
-				// }
+				if (data.success) {
+					// Redirect the user based on their role
+					if (loggedIn) {
+						// Redirect to admin panel
+						window.location.href = "/admin";
+					} else {
+						// Redirect to user panel
+						window.location.href = "/homepage";
+					}
+				}
 			})
 			.catch((error) => {
 				console.error("Error:", error);
@@ -81,7 +73,6 @@ function Signup({ loggedIn }) {
 	};
 
 	return (
-		<div className="singupcontainer">
 		<div className='container1'>
 			<div className='row'>
 				<div className='col-7'>
@@ -93,6 +84,7 @@ function Signup({ loggedIn }) {
 					</div>
 				</div>
 				<div className='col-5'>
+					
 					<form className='form1' onSubmit={onSubmit}>
 						<div className='form_front1'>
 							<div className='form_details1'>
@@ -130,7 +122,7 @@ function Signup({ loggedIn }) {
 								placeholder='user name'
 							/>
 							<input
-								type='password'
+								type='text'
 								name='password'
 								onChange={(e) => setPassword(e.target.value)}
 								className='input1'
@@ -141,7 +133,6 @@ function Signup({ loggedIn }) {
 					</form>
 				</div>
 			</div>
-		</div>
 		</div>
 	);
 }

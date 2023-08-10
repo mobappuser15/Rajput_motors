@@ -444,7 +444,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setExtirearColor(generalList);
-				// // console.log(generalList, "EXTERICR COLOR list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -452,38 +451,15 @@ const Submit1 = () => {
 	}, [codemodel, codemake]);
 
 	const handleSelectChange = (event) => {
-		// setSelectedItem(event.target.value);
-		// setcodemodel(event.target.value);
-
-		const { name, value } = event.target;
-
-		// Update the field value
-		switch (name) {
-			case "selectedItem":
-				setSelectedItem(value);
-				break;
-			// case "selectverient":
-			// 	setSelectVerient(value);
-			// 	break;
-			// Add cases for other fields here
-			default:
-				break;
-		}
-
-		// Clear the error message when the user starts typing in the field
-		setErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
-		// // console.log(event.target.value, "check console");
+		setSelectedItem(event.target.value);
+		setcodemodel(event.target.value);
 	};
-	// const handleSelectChange1 = (event) => {
-	// 	setResoucedata(event.target.value);
-	// 	console.log(event.target.value, "source value");
-	// };
+
 	const handleSelectChange2 = (event) => {
 		setSelecttype(event.target.value);
 	};
 	const handleSelectChange3 = (event) => {
 		setSelectmodel(event.target.value);
-		// setcodemodel(event.target.value);
 		setcodemake(event.target.value);
 		// // // console.log(setcodemake, "setcodemake");
 
@@ -527,11 +503,11 @@ const Submit1 = () => {
 				mfdYear: selectmfy,
 				fuel: selectfuel,
 			};
-			console.log(AllData);
+
 			localStorage.setItem("data", JSON.stringify(AllData));
-			// Navigate to the next step
-			// navigate('/submit2');
-			console.log("Form is valid. Proceed to the next step.");
+			navigate("/submit2");
+
+			console.log(AllData, "Form is valid. Proceed to the next step.");
 		} else {
 			// Show validation error message or prevent the form from proceeding
 			console.log("Please fill all required fields.");
@@ -544,29 +520,29 @@ const Submit1 = () => {
 		// Return true if all required fields are filled, otherwise false
 		const isValid =
 			selectedItem.trim() !== "" &&
-			// selectverient.trim() !== "" &&
-			// // Add validation checks for other required fields here
-			// // For example:
-			// selectmfy.trim() !== "" &&
-			// selectfuel.trim() !== "" &&
-			// selecttransmission.trim() !== "" &&
-			// selectmodel.trim() !== "" &&
-			// selectextirecolor.trim() !== "" &&
+			selectverient.trim() !== "" &&
+			// Add validation checks for other required fields here
+			// For example:
+			selectmfy.trim() !== "" &&
+			selectfuel.trim() !== "" &&
+			selecttransmission.trim() !== "" &&
+			selectmodel.trim() !== "" &&
+			selectextirecolor.trim() !== "" &&
 			// selecttype.trim() !== "" &&
-			// selectmfm.trim() !== "";
+			selectmfm.trim() !== "";
 
-			// Update the error state for each field
-			setErrors({
-				selectedItem: selectedItem.trim() === "",
-				// selectverient: selectverient.trim() === "",
-				// selectmfy: selectmfy.trim() === "",
-				// selectfuel: selectfuel.trim() === "",
-				// selecttransmission: selecttransmission.trim() === "",
-				// selectmodel: selectmodel.trim() === "",
-				// selectextirecolor: selectextirecolor.trim() === "",
-				// selecttype: selecttype.trim() === "",
-				// selectmfm: selectmfm.trim() === "",
-			});
+		// Update the error state for each field
+		setErrors({
+			selectedItem: selectedItem.trim() === "",
+			selectverient: selectverient.trim() === "",
+			selectmfy: selectmfy.trim() === "",
+			selectfuel: selectfuel.trim() === "",
+			selecttransmission: selecttransmission.trim() === "",
+			selectmodel: selectmodel.trim() === "",
+			selectextirecolor: selectextirecolor.trim() === "",
+			// selecttype: selecttype.trim() === "",
+			selectmfm: selectmfm.trim() === "",
+		});
 
 		return isValid;
 	}
@@ -600,317 +576,314 @@ const Submit1 = () => {
 
 			<div class='b-submit'>
 				<div class='container'>
-					<div class='row'>
-						<div class='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
-							<aside class='b-submit__aside'>
-								<div class='b-submit__aside-step m-active  '>
-									<h3>Step 1</h3>
-									<div class='b-submit__aside-step-inner m-active clearfix'>
-										<div class='b-submit__aside-step-inner-icon'>
-											<span class='fa fa-car'></span>
-										</div>
-										<div class='b-submit__aside-step-inner-info'>
-											<h4>Add YOUR Vehicle</h4>
-											<p>Select your vehicle &amp; add info</p>
-											<div class='b-submit__aside-step-inner-info-triangle'></div>
+					<div class='form_clr'>
+						<div class='row'>
+							<div class='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
+								<aside class='b-submit__aside'>
+									<div class='b-submit__aside-step m-active  '>
+										<h3>Step 1</h3>
+										<div class='b-submit__aside-step-inner m-active clearfix'>
+											<div class='b-submit__aside-step-inner-icon'>
+												<span class='fa fa-car'></span>
+											</div>
+											<div class='b-submit__aside-step-inner-info'>
+												<h4>Add YOUR Vehicle</h4>
+												<p>Select your vehicle &amp; add info</p>
+												<div class='b-submit__aside-step-inner-info-triangle'></div>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class='b-submit__aside-step  '>
-									<h3>Step 2</h3>
-									<div class='b-submit__aside-step-inner clearfix'>
-										<div class='b-submit__aside-step-inner-icon'>
-											<span class='fa fa-user'></span>
-										</div>
-										<div class='b-submit__aside-step-inner-info'>
-											<h4>Contact details</h4>
-											<p>Choose vehicle specifications</p>
+									<div class='b-submit__aside-step  '>
+										<h3>Step 2</h3>
+										<div class='b-submit__aside-step-inner clearfix'>
+											<div class='b-submit__aside-step-inner-icon'>
+												<span class='fa fa-user'></span>
+											</div>
+											<div class='b-submit__aside-step-inner-info'>
+												<h4>Contact details</h4>
+												<p>Choose vehicle specifications</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							</aside>
-						</div>
-
-						<div class='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
-							<div class='b-submit__main'>
-								<header class='s-headerSubmit s-lineDownLeft  '>
-									<h2 class=''>Add Your Vehicle Details</h2>
-								</header>
-								{/*  form section */}
-
-								<form class='s-submit clearfix' onSubmit={handleSaveData}>
-									<div class='row'>
-										<div class='col-md-6 col-xs-12'>
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Make <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selectedItem}
-														onChange={handleSelectChange}>
-														<option value=''>Select item</option>
-														{data.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-													{errors.selectedItem && (
-														<span style={{ color: "red" }}>
-															Please select an item.
-														</span>
-													)}
-												</div>
-											</div>
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Variant <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selectverient}
-														onChange={handleSelectChange9}>
-														<option value=''>Select item</option>
-														{varient.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Year of MF. <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selectmfy}
-														onChange={handleSelectChange7}>
-														<option value=''>Select item</option>
-														{vyear.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Fuel <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selectfuel}
-														onChange={handleSelectChange4}>
-														<option value=''>Select item</option>
-														{fueldata.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Transmission <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selecttransmission}
-														onChange={handleSelectChange5}>
-														<option value=''>Select item</option>
-														{transmission.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-										</div>
-										<div class='col-md-6 col-xs-12'>
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Model <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selectmodel}
-														onChange={handleSelectChange3}>
-														<option value=''>Select item</option>
-														{model.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Exterior Color <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selectextirecolor}
-														onChange={handleSelectChange6}>
-														<option value=''>Select item</option>
-														{extirecolor.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Type <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														value={selecttype}
-														onChange={handleSelectChange2}>
-														<option value=''>Select item</option>
-														{typedata.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-
-											<div class='b-submit__main-element  '>
-												<label style={{ color: "black" }}>
-													Month of MF. <span>*</span>
-												</label>
-												<div class='s-relative'>
-													<select
-														class='m-select'
-														name='source'
-														value={selectmfm}
-														onChange={handleSelectChange8}>
-														<option value=''>Select item</option>
-														{vmonth.map((item, index) => (
-															<option key={index} value={item.code}>
-																{item.description}
-															</option>
-														))}
-													</select>
-													<span class='fa fa-caret-down'></span>
-												</div>
-											</div>
-
-											<button
-												id='procedbtn'
-												// onClick={isFormValid}
-												// to='/submit2'
-												type='submit'
-												class='btn m-btn  '>
-												Save &amp; PROCEED to next step
-												<span
-													id='arrowiconbtn'
-													class='fa fa-check'
-													aria-hidden='true'></span>
-											</button>
-										</div>
-									</div>
-									{/*  captcha code */}
-								</form>
+								</aside>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			{/* <Searchdata /> */}
-			{/* footer section */}
-			<div class='b-info'>
-				<div class='container'>
-					<div class='row'>
-						<div class='col-md-3 col-xs-12'>
-							<aside class='b-info__aside  '>
-								<article class='b-info__aside-article'>
-									<h3>OPENING HOURS</h3>
-									<div class='b-info__aside-article-item'>
-										<h6>Sales Department</h6>
-										<p>
-											Mon-Sat : 8:00am - 5:00pm
-											<br /> Sunday is closed
-										</p>
+
+							<div class='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
+								<div class='b-submit__main'>
+									<div class='s-headerSubmit s-lineDownLeft  '>
+										<h2 class=''>Add Your Vehicle Details</h2>
 									</div>
-								</article>
-								<article class='b-info__aside-article'>
-									<h3>About us</h3>
-									<p>
-										Established in the year 2002, Sushil Car Bazar is one of the
-										top & most trusted dealership for preowned luxury car.In
-										over 17 years of business history we have always had a
-										customer oriented approach & total customer satisfaction has
-										been our motive.
-									</p>
-								</article>
-							</aside>
-						</div>
+									{/*  form section */}
 
-						<div class='col-md-5 col-xs-12'>
-							<address class='b-info__contacts  '>
-								<p>contact us</p>
-								<div class='b-info__contacts-item'>
-									<span class='fa fa-map-marker'></span>
-									<ol>
-										Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12 Dividing
-										Road Pincode 121006
-									</ol>
-								</div>
-								<div class='b-info__contacts-item'>
-									<span class='fa fa-map-marker'></span>
-									<em>
-										<ol>Spaze Boulevard, Sector-47, Gurugram</ol>
-									</em>
-								</div>
-								<div class='b-info__contacts-item'>
-									<span class='fa fa-phone'></span>
-									<ol>
-										+91 92509 22333
-										<br />
-										+91 98114 36332
-									</ol>
-								</div>
+									<form class='s-submit clearfix' onSubmit={handleSaveData}>
+										<div class='row'>
+											<div class='col-md-6 col-xs-12'>
+												<div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Make <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selectedItem}
+															onChange={handleSelectChange}>
+															<option value=''>Select Make</option>
+															{data.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectedItem && (
+															<span style={{ color: "red" }}>
+																Please select Make
+															</span>
+														)}
+													</div>
+												</div>
+												<div class='b-submit__main-element  visible-xs '>
+													<label style={{ color: "black" }}>
+														Model <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selectmodel}
+															onChange={handleSelectChange3}>
+															<option value=''>Select Model</option>
+															{model.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectmodel && (
+															<span style={{ color: "red" }}>
+																Please select Model
+															</span>
+														)}
+													</div>
+												</div>
 
-								<div class='b-info__contacts-item'>
-									<span class='fa fa-envelope'></span>
-									<em>
-										<ol>sushilcarbazar@gmail.com</ol>
-									</em>
+												<div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Variant <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selectverient}
+															onChange={handleSelectChange9}>
+															<option value=''>Select Variant</option>
+															{varient.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectverient && (
+															<span style={{ color: "red" }}>
+																Please select Varient
+															</span>
+														)}
+													</div>
+												</div>
+
+												<div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Year of MF. <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selectmfy}
+															onChange={handleSelectChange7}>
+															<option value=''>Select Year</option>
+															{vyear.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectmfy && (
+															<span style={{ color: "red" }}>
+																Please select Year
+															</span>
+														)}
+													</div>
+												</div>
+
+												<div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Fuel <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selectfuel}
+															onChange={handleSelectChange4}>
+															<option value=''>Select Fuel</option>
+															{fueldata.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectfuel && (
+															<span style={{ color: "red" }}>
+																Please select Fuel
+															</span>
+														)}
+													</div>
+												</div>
+											</div>
+											<div class='col-md-6 col-xs-12'>
+												<div class='b-submit__main-element hidden-xs '>
+													<label style={{ color: "black" }}>
+														Model <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selectmodel}
+															onChange={handleSelectChange3}>
+															<option value=''>Select Model</option>
+															{model.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectmodel && (
+															<span style={{ color: "red" }}>
+																Please select Model
+															</span>
+														)}
+													</div>
+												</div>
+												<div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Exterior Color <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selectextirecolor}
+															onChange={handleSelectChange6}>
+															<option value=''>Select Exterior Color</option>
+															{extirecolor.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectextirecolor && (
+															<span style={{ color: "red" }}>
+																Please select Exterior Color
+															</span>
+														)}
+													</div>
+												</div>
+												{/* <div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Type <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selecttype}
+															onChange={handleSelectChange2}>
+															<option value=''>Select item</option>
+															{typedata.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selecttype && (
+															<span style={{ color: "red" }}>
+																Please select Type
+															</span>
+														)}
+													</div>
+												</div> */}
+
+												<div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Month of MF. <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															name='source'
+															value={selectmfm}
+															onChange={handleSelectChange8}>
+															<option value=''>Select Month</option>
+															{vmonth.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selectmfm && (
+															<span style={{ color: "red" }}>
+																Please select Month
+															</span>
+														)}
+													</div>
+												</div>
+												<div class='b-submit__main-element  '>
+													<label style={{ color: "black" }}>
+														Transmission <span>*</span>
+													</label>
+													<div class='s-relative'>
+														<select
+															class='m-select'
+															value={selecttransmission}
+															onChange={handleSelectChange5}>
+															<option value=''>Select Transmission</option>
+															{transmission.map((item, index) => (
+																<option key={index} value={item.code}>
+																	{item.description}
+																</option>
+															))}
+														</select>
+														<span class='fa fa-caret-down'></span>
+														{errors.selecttransmission && (
+															<span style={{ color: "red" }}>
+																Please select Transmission
+															</span>
+														)}
+													</div>
+												</div>
+
+												<button
+													id='procedbtn'
+													// onClick={isFormValid}
+													// to='/submit2'
+													type='submit'
+													class='btn m-btn  '>
+													PROCEED to next step
+													<span
+														id='arrowiconbtn'
+														class='fa fa-check'
+														aria-hidden='true'></span>
+												</button>
+											</div>
+										</div>
+										{/*  captcha code */}
+									</form>
 								</div>
-							</address>
-							<address class='b-info__map'>
-								<a href='contacts.html'>Open Location Map</a>
-							</address>
+							</div>
 						</div>
 					</div>
 				</div>

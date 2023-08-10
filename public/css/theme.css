@@ -36,8 +36,8 @@ body {
 }
 
 .s-title {
-	font: 700 18px "Open Sans", sans-serif;
-	margin: 0 0 50px 0;
+	font: 700 32px "Open Sans", sans-serif;
+	margin: 0 0 20px 0;
 	padding: 0 15px;
 	border-left: 4px solid #f76d2b;
 	border-right: 4px solid #f76d2b;
@@ -88,7 +88,7 @@ body {
 }
 
 .s-lineDownLeft:after {
-	background: url(../images/elements/chevron-down.png) center no-repeat;
+	/* background: url(../images/elements/chevron-down.png) center no-repeat; */
 	width: 15px;
 	left: 5%;
 	height: 7px;
@@ -263,6 +263,7 @@ body {
 	padding-top: 13px;
 	padding-bottom: 13px;
 	height: 46px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px !important;
 }
 
 .s-submit input[type="text"]:focus {
@@ -293,8 +294,10 @@ body {
 .s-submit button.btn.m-btn span.fa {
 	width: 30px;
 	height: 30px;
-	padding: 7px;
+	padding: 0;
 	font-size: 18px;
+	line-height: 29px;
+	text-align: center !important;
 }
 
 .s-submit input[type="checkbox"],
@@ -508,8 +511,8 @@ label.s-submitCheck {
 	font: 700 25px "Open Sans", sans-serif;
 	margin: 0 0 12px 0;
 	padding: 0px 15px;
-	border-left: 4px solid #f76d2b;
-	border-right: 4px solid #f76d2b;
+	border-left: 4px solid #f76d2b !important;
+	border-right: 4px solid #f76d2b !important;
 	text-transform: uppercase;
 	display: inline-block;
 	letter-spacing: 1px;

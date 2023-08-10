@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Carousel from "react-elastic-carousel";
 import Item from "./Item";
 import toast from "react-hot-toast";
-import ScrollTop from "./ScrollTop";
+import PageScrollTop from "./PageScrollTop";
 // import Modal from "react-modal";
 
 const breakPoints = [
@@ -214,9 +214,14 @@ function Details({ selectedProduct }) {
 		fetchData();
 	}, []);
 
+	const reloadPage = () => {
+		window.location.reload();
+		// toast.success("Page  Loading ! ");
+	};
+
 	return (
 		<>
-			<ScrollTop />
+			<PageScrollTop />
 			{/* top image half */}
 			<div
 				style={{ position: "top" }}
@@ -226,24 +231,20 @@ function Details({ selectedProduct }) {
 				<section className='b-pageHeader'>
 					<div className='container'>
 						<h1 className='wow ' data-wow-delay='0.5s'>
-							Vehicle Details Page
+							Vehicle Details
 						</h1>
 					</div>
 				</section>
 
-				<div
-					style={{ backgroundColor: "black" }}
-					className='b-breadCumbs s-shadow wow '
-					data-wow-delay='0.5s'>
-					<div className='container'>
-						<Link to='/' className='b-breadCumbs__page'>
+				<div className='b-breadCumbs s-shadow'>
+					<div className='container '>
+						<Link to='/' className='b-breadCumbs__page' onClick={reloadPage}>
 							Home
 						</Link>
 						<span className='fa fa-angle-right'></span>
-						<a href='listings.html' className='b-breadCumbs__page'>
-							Vehicle Details Page
+						<a href='/details' className='b-breadCumbs__page m-active'>
+							Detail
 						</a>
-						<span className='fa fa-angle-right'></span>
 					</div>
 				</div>
 
@@ -593,33 +594,34 @@ function Details({ selectedProduct }) {
 															data-to='#form1'>
 															GENERAL INQUIRY
 														</a>
-														<a href='#' className='j-tab' data-to='#form2'>
-															SCHEDULE TEST DRIVE
-														</a>
 													</div>
 													<form id='form1' style={{ fontSize: "15px" }}>
 														<input
+															className='phone_number'
 															type='text'
-															placeholder='Please enter name'
+															placeholder='Please Enter Name'
 															name='contactName'
 															onChange={(e) => setcontactName(e.target.value)}
 														/>
 														<input
+															className='phone_number'
 															type='email'
-															placeholder=' Please enter email id'
+															placeholder=' Please Enter Email Id'
 															onChange={(e) => setemail(e.target.value)}
 															name='email'
 														/>
 														<input
-															type='tel'
-															placeholder='Please enter phone no.'
+															className='phone_number'
+															type='number'
+															placeholder='Please Enter Phone No.'
 															name='mobile'
 															onChange={(e) => setmobile(e.target.value)}
 														/>
 
 														<input
-															type='tel'
-															placeholder='Pincode'
+															className='phone_number'
+															type='number'
+															placeholder=' Please Enter Pincode'
 															name='pincode'
 															onChange={(e) => setpincode(e.target.value)}
 														/>
@@ -660,9 +662,9 @@ function Details({ selectedProduct }) {
 																}}></label>
 															<div className='' style={{ marginTop: "-30px" }}>
 																<input
-																	className='s-relative'
+																	className='phone_number'
 																	placeholder='Please enter  the Captcha'
-																	type='text'
+																	type='number'
 																	value={userAnswer}
 																	onChange={(event) =>
 																		setUserAnswer(event.target.value)
@@ -807,87 +809,6 @@ function Details({ selectedProduct }) {
 									Multipoint Safety Check
 								</li>
 							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div className='b-info'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-md-3 col-xs-12'>
-							<aside
-								className='b-info__aside wow zoomInLeft'
-								data-wow-delay='0.3s'>
-								<article className='b-info__aside-article'>
-									<h3>OPENING HOURS</h3>
-									<div className='b-info__aside-article-item'>
-										<h6>Sales Department</h6>
-										<p>
-											Mon-Sat : 8:00am - 5:00pm
-											<br />
-											Sunday is closed
-										</p>
-									</div>
-								</article>
-								<article className='b-info__aside-article'>
-									<h3>About us</h3>
-									<p>
-										Established in the year 2002, Sushil Car Bazar is one of the
-										top & most trusted dealership for preowned luxury car.In
-										over 17 years of business history we have always had a
-										customer oriented approach & total customer satisfaction has
-										been our motive.
-									</p>
-								</article>
-								<Link to='/about' className='btn m-btn'>
-									Read More
-									<span
-										style={{ paddingLeft: "7px !important" }}
-										id='arrowiconbtn'
-										className='fa fa-angle-right'></span>
-								</Link>
-							</aside>
-						</div>
-
-						<div className='col-md-5 col-xs-12'>
-							<address
-								className='b-info__contacts wow zoomInUp'
-								data-wow-delay='0.3s'>
-								<p>contact us</p>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-map-marker'></span>
-									<ol>
-										Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12 Dividing
-										Road Pincode 121006
-									</ol>
-									<em />
-								</div>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-map-marker'></span>
-									<em>
-										<ol>Spaze Boulevard, Sector-47, Gurugram</ol>
-									</em>
-								</div>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-phone'></span>
-									<ol>
-										+91 92509 22333
-										<br />
-										+91 98114 36332
-									</ol>
-								</div>
-
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-envelope'></span>
-									<em>
-										<ol>sushilcarbazar@gmail.com</ol>
-									</em>
-								</div>
-							</address>
-							<address className='b-info__map'>
-								<a href='contacts.html'>Open Location Map</a>
-							</address>
 						</div>
 					</div>
 				</div>

@@ -54,83 +54,6 @@
 	}
 }
 
-/* .b-auto__main-item img {
-	width: 100%;
-	transition: 0.2s all ease-in-out;
-	margin-bottom: 4px;
-	border-radius: 12px !important;
-	border: 2px solid #999;
-	min-height: 560px !important;
-	height: 500px !important;
-	object-fit: cover !important;
-} */
-
-/* @media (max-width: 767px) {
-	#phoneView {
-		margin-left: 150px;
-	}
-	#btnphoneView {
-		background-color: #f76d2b;
-		width: 60px;
-		color: white;
-		font-size: 15px;
-		margin: 5px;
-	}
-	#btnmodelphonev {
-		background-color: green;
-		width: 60px;
-		color: white;
-		font-size: 15px;
-		margin: 5px;
-	}
-	#searcgbtn {
-		border-radius: 30px;
-		color: #fff;
-		display: inline-block;
-		font: 700 14px Open Sans, sans-serif;
-		margin-left: 0;
-		margin-top: 20px;
-		padding: 10px 55px !important;
-		text-align: center !important;
-	}
-	.m-home .b-homeAuto {
-		padding: 40px 0;
-		position: relative;
-		box-shadow: 0px 30px 100px -38px rgba(0, 0, 0, 0.3);
-		z-index: 100;
-	}
-	.b-welcome .container {
-		padding: 40px 15px 70px 15px;
-		height: 580px;
-	}
-	.m-home .b-welcome__services-auto,
-	.m-home .b-welcome__services-buying {
-		width: 90%;
-	}
-	.m-home .b-welcome__services-trade,
-	.m-home .b-welcome__services-support {
-		width: 90%;
-		float: right;
-	}
-	.m-home .b-count.sms-sec {
-		background: url(../images/backgrounds/app-image.jpg) right bottom no-repeat;
-		background-size: 100% 100% !important;
-	}
-	.b-info {
-		padding: 20px 0 10px 0;
-	}
-	.b-brands {
-		padding: 40px 0 120px 0;
-		text-align: center;
-	}
-	.m-home .b-asks {
-		padding: 40px 0 40px 0;
-		position: relative;
-		border-bottom: 1px solid #eeeeee;
-		text-align: center;
-	}
-} */
-
 @media screen and (max-width: 1920px) and (min-width: 1500px) {
 	.container {
 		width: 99% !important;
@@ -233,7 +156,7 @@
 		margin-bottom: 10px;
 	}
 	.b-brands__brand {
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 	}
 	.b-compare__block-inside-title {
 		padding-right: 40px;
@@ -484,6 +407,9 @@
 /*600-767*/
 
 @media screen and (max-width: 767px) {
+	#ser_hit1 {
+		height: auto !important;
+	}
 	.b-nav {
 		overflow: hidden;
 	}
@@ -745,6 +671,79 @@
 /*480-599*/
 
 @media screen and (max-width: 599px) {
+	.b-contacts__address-info {
+		margin-top: 20px;
+	}
+	#procedbtn22 {
+		padding: 7px 15px !important;
+		margin-top: 0 !important;
+	}
+	.box {
+		background-color: #222;
+		background-size: 100% 100%;
+		border-radius: 5px;
+		box-shadow: 0 0 15px #a4a4a4;
+		min-height: 160px !important;
+		overflow: hidden;
+		position: relative;
+	}
+	.box .box-heading {
+		border-radius: 5px;
+		bottom: 12px;
+		color: #fff;
+		left: 0;
+		padding: 0;
+		position: absolute;
+		text-align: center;
+		top: 63px !important;
+		transition: all 0.3s ease 0s;
+		width: 100%;
+	}
+	.form_clr {
+		width: 100%;
+		float: left;
+		background: #f0f0f0;
+		padding: 10px !important;
+		border-radius: 5px;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 4px 10px;
+	}
+	.car_mn2 {
+		margin-left: 0 !important;
+	}
+	.car_mn2 canvas {
+		width: 100% !important;
+	}
+	.mt-40 {
+		margin-top: 0 !important;
+	}
+	.pls1 {
+		width: 26px;
+		padding: 0px;
+		margin-top: 0 !important;
+		margin-left: 19px;
+		margin-bottom: 10px;
+	}
+	.pls2 {
+		width: 26px;
+		padding: 0;
+		margin-top: 0 !important;
+		position: absolute;
+		right: 21px !important;
+	}
+	.car-emi-title {
+		font: 700 20px "Open Sans", sans-serif;
+		margin: 0 0 12px 0;
+		padding: 0px 15px;
+		border-left: 4px solid #f76d2b;
+		border-right: 4px solid #f76d2b;
+		text-transform: uppercase;
+		display: inline-block;
+		letter-spacing: 1px;
+		margin-top: 20px;
+	}
+	.car_mn {
+		width: 100%;
+	}
 	#selectdata {
 		width: 36rem !important;
 		font-size: 17px;
@@ -963,6 +962,9 @@
 	.b-submit > .container > .row > div {
 		width: 100%;
 	}
+	.b-submit > .container > .form_clr > .row > div {
+		width: 100% !important;
+	}
 	.b-submit__aside {
 		margin-bottom: 40px;
 	}
@@ -1025,7 +1027,7 @@
 		width: 100%;
 	}
 	.b-count__item {
-		margin-bottom: 40px;
+		margin-bottom: 25px;
 	}
 	.b-contact__form input[type="text"] {
 		width: auto;
@@ -1225,6 +1227,22 @@ img {
 }
 
 @media screen and (max-width: 480px) {
+	#imglogop {
+		margin-top: 58px !important;
+	}
+	.s-title {
+		font: 700 20px "Open Sans", sans-serif;
+		margin: 0 0 20px 0;
+		padding: 0 15px;
+		border-left: 4px solid #f76d2b;
+		border-right: 4px solid #f76d2b;
+		text-transform: uppercase;
+		display: inline-block;
+		letter-spacing: 1px;
+	}
+	.service_sec_mn {
+		padding: 20px 0 0px 0px !important;
+	}
 	#searcgbtn {
 		text-align: center !important;
 		padding: 10px 45px !important;
@@ -1252,7 +1270,7 @@ img {
 	}
 	.navbar-inverse .navbar-toggle {
 		border-color: #333;
-		margin-top: -30px;
+		margin-top: -54px;
 	}
 	.b-welcome .container {
 		padding: 20px 15px 20px 15px;
@@ -1311,9 +1329,20 @@ img {
 	.m-home .b-homeAuto {
 		padding: 30px 0;
 		position: relative;
-		box-shadow: 0px 30px 100px -38px rgba(0, 0, 0, 0.3);
 		z-index: 100;
 		margin-top: 0 !important;
+	}
+	.sms-sec__item {
+		margin-top: 20px;
+	}
+	.b-asks__first {
+		padding: 10px 0 10px 30px;
+		position: relative;
+	}
+	.b-count__item h2 {
+		font: 700 30px "Outfit", sans-serif;
+		text-align: center;
+		margin: 5px 0 5px 0;
 	}
 	.m-home .b-featured {
 		padding-top: 30px;
@@ -1412,6 +1441,12 @@ img {
 	.b-contacts {
 		padding: 0px 0 0px 0;
 	}
+	.service_sec_mn {
+		background: url(../images/bg_mas.png) left top no-repeat;
+		background-size: 100% 100%;
+		width: 100%;
+		padding: 20px 0 0px 0px;
+	}
 	.b-contacts__address-hours-main,
 	.b-contacts__address-info-main {
 		padding: 15px 20px;
@@ -1508,6 +1543,9 @@ img {
 	.s-title {
 		margin: 0 0 20px 0;
 		padding: 0 15px;
+	}
+	.ref_icon {
+		margin-top: 10px;
 	}
 }
 

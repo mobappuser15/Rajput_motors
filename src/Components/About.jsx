@@ -19,7 +19,7 @@ function About({ reloadPage }) {
 					</section>
 					<div className='b-breadCumbs s-shadow'>
 						<div className='container'>
-							<Link to='/' className='b-breadCumbs__page m-active'>
+							<Link to='/' className='b-breadCumbs__page '>
 								Home
 							</Link>
 							<span className='fa fa-angle-right'></span>
@@ -33,11 +33,11 @@ function About({ reloadPage }) {
 							<div className='row'>
 								<div className='col-sm-6 col-xs-12'>
 									<div className='b-best__info'>
-										<header className='s-lineDownLeft b-best__info-head'>
+										<div className='s-lineDownLeft b-best__info-head'>
 											<h2 className=' '>
 												The Best &amp; the Largest Auto Dealer
 											</h2>
-										</header>
+										</div>
 
 										<p className=' '>
 											Established in the year 2002, Sushil Car Bazar is one of
@@ -60,17 +60,7 @@ function About({ reloadPage }) {
 										alt='best'
 										src='images/about/shushil.jpeg'></img>
 
-									<span
-										className='m-price   hidden-xs'
-										style={{
-											textAlign: "center",
-											fontWeight: "bold",
-											color: "",
-											marginLeft: "225px",
-											fontSize: "20px",
-
-											// backgroundColor: "#f76d2b",
-										}}>
+									<span className='m-price   hidden-xs'>
 										Mr. Sushil Bansal MD
 									</span>
 
@@ -227,74 +217,6 @@ function About({ reloadPage }) {
 										<li className=' '>Largest Car Dealership</li>
 										<li className=' '>Multipoint Safety Check</li>
 									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className='b-info'>
-						<div className='container'>
-							<div className='row'>
-								<div className='col-md-3 col-xs-12'>
-									<aside className='b-info__aside  '>
-										<article className='b-info__aside-article'>
-											<h3>OPENING HOURS</h3>
-											<div className='b-info__aside-article-item'>
-												<h6>Sales Department</h6>
-												<p>
-													Mon-Sat : 8:00am - 5:00pm
-													<br />
-													Sunday is closed
-												</p>
-											</div>
-										</article>
-										<article className='b-info__aside-article'>
-											<h3>About us</h3>
-											<p>
-												Established in the year 2002, Sushil Car Bazar is one of
-												the top & most trusted dealership for preowned luxury
-												car.In over 17 years of business history we have always
-												had a customer oriented approach & total customer
-												satisfaction has been our motive.
-											</p>
-										</article>
-									</aside>
-								</div>
-
-								<div className='col-md-5 col-xs-12'>
-									<address className='b-info__contacts  '>
-										<p>contact us</p>
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-map-marker'></span>
-											<ol>
-												Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12
-												Dividing Road Pincode 121006
-											</ol>
-										</div>
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-map-marker'></span>
-											<em>
-												<ol>Spaze Boulevard, Sector-47, Gurugram</ol>
-											</em>
-										</div>
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-phone'></span>
-											<ol>
-												+91 92509 22333
-												<br />
-												+91 98114 36332
-											</ol>
-										</div>
-
-										<div className='b-info__contacts-item'>
-											<span className='fa fa-envelope'></span>
-											<em>
-												<ol>sushilcarbazar@gmail.com</ol>
-											</em>
-										</div>
-									</address>
-									<address className='b-info__map'>
-										<Link to='/contact'>Open Location Map</Link>
-									</address>
 								</div>
 							</div>
 						</div>

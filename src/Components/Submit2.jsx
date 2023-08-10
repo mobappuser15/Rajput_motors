@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import styled from "./Item";
 import ScrollTop from "./ScrollTop";
+import "./detail.css";
 
 const Submit2 = () => {
 	const [statelist, setStateList] = useState([]);
@@ -21,6 +22,14 @@ const Submit2 = () => {
 	const [userAnswer, setUserAnswer] = useState("");
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
+	const [errors, setErrors] = useState({
+		name: false,
+		email: false,
+		mobile: false,
+		selectfuel: false,
+		selectedstate: false,
+		selectcity: false,
+	});
 
 	useEffect(() => {
 		const url =
@@ -170,69 +179,97 @@ const Submit2 = () => {
 
 	const handleSaveData = (e) => {
 		e.preventDefault();
+		const isValid = isFormValid();
 
-		const Datasecond = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-			branchCode: "GGN01",
-			uniqueSerial: "0",
-			mobile: mobile,
-			email: email,
-			mfdMonth: PropsData.mfdMonth,
-			firstName: name,
-			source: "26",
-			brand: PropsData.brand,
-			model: PropsData.model,
-			exteriorColor: PropsData.exteriorColor,
-			variantCode: PropsData.variantCode,
-			regnFormat: PropsData.regnFormat,
-			regnPart1: "",
-			regnPart2: "",
-			regnPart3: "",
-			regnPart4: "",
-			regn1: PropsData.regn1,
-			regn2: "",
-			vehicleRegnNo: "",
-			mfdYear: PropsData.mfdYear,
-			fuel: PropsData.fuel,
-			regnState: selectedstate,
-			regnCity: selectcity,
+		if (isValid) {
+			const Datasecond = {
+				brandCode: "UC",
+				countryCode: "IN",
+				companyId: "SUSHIL",
+				branchCode: "GGN01",
+				uniqueSerial: "0",
+				mobile: mobile,
+				email: email,
+				mfdMonth: PropsData.mfdMonth,
+				firstName: name,
+				source: "26",
+				brand: PropsData.brand,
+				model: PropsData.model,
+				exteriorColor: PropsData.exteriorColor,
+				variantCode: PropsData.variantCode,
+				regnFormat: PropsData.regnFormat,
+				regnPart1: "",
+				regnPart2: "",
+				regnPart3: "",
+				regnPart4: "",
+				regn1: PropsData.regn1,
+				regn2: "",
+				vehicleRegnNo: "",
+				mfdYear: PropsData.mfdYear,
+				fuel: PropsData.fuel,
+				regnState: selectedstate,
+				regnCity: selectcity,
 
-			loginCompanyID: "SUSHIL",
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
+				loginCompanyID: "SUSHIL",
+				loginUserId: "RAVI",
+				loginIpAddress: "180.151.78.50",
+			};
+			fetch(
+				" https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/UpdateBasicInfo",
+				{
+					method: "POST",
+					headers: {
+						ApplicationMode: "ONLINE",
+						EnvironmentType: "DEMO",
+						BrandCode: "UC",
+						CountryCode: "IN",
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(Datasecond),
+				}
+			)
+				.then((response) => response.json())
+				.then((data) => {
+					// alert(data.result);
+					toast.success(data.result);
+					navigate("/");
+					// Handle the response data here
+					console.log("Response:", data);
+				})
+				.catch((error) => {
+					// Handle any errors
+					toast(error);
+					console.error("Error:", error);
+				});
 
-		fetch(
-			" https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/UpdateBasicInfo",
-			{
-				method: "POST",
-				headers: {
-					ApplicationMode: "ONLINE",
-					EnvironmentType: "DEMO",
-					BrandCode: "UC",
-					CountryCode: "IN",
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(Datasecond),
-			}
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				toast.success(data.result);
-				navigate("/");
-				// Handle the response data here
-				console.log("Response:", data);
-			})
-			.catch((error) => {
-				// Handle any errors
-				toast(error);
-				console.error("Error:", error);
+			console.log(Datasecond, "secontdata");
+		} else {
+			console.log("Please fill all required fields.");
+		}
+	};
+
+	function isFormValid() {
+		// Perform validation checks for all the required fields
+		// Return true if all required fields are filled, otherwise false
+		const isValid =
+			name.trim() !== "" &&
+			email.trim() !== "" &&
+			// Add validation checks for other required fields here
+			// For example:
+			mobile.trim() !== "" &&
+			selectedstate.trim() !== "" &&
+			selectcity.trim() !== "" &&
+			// Update the error state for each field
+			setErrors({
+				name: name.trim() === "",
+				email: email.trim() === "",
+				mobile: mobile.trim() === "",
+				selectedstate: selectedstate.trim() === "",
+				selectcity: selectcity.trim() === "",
 			});
 
-		console.log(Datasecond, "secontdata");
-	};
+		return isValid;
+	}
 
 	return (
 		<div>
@@ -261,268 +298,301 @@ const Submit2 = () => {
 
 			<div className='b-submit'>
 				<div className='container'>
-					<div className='row'>
-						<div className='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
-							<aside className='b-submit__aside'>
-								<div className='b-submit__aside-step m-active '>
-									<h3>Step 1</h3>
-									<div className='b-submit__aside-step-inner m-active clearfix'>
-										<div className='b-submit__aside-step-inner-icon'>
-											<span className='fa fa-car'></span>
-										</div>
-										<div className='b-submit__aside-step-inner-info'>
-											<h4>Add YOUR Vehicle</h4>
-											<p>Select your vehicle &amp; add info</p>
-											<div className='b-submit__aside-step-inner-info-triangle'></div>
+					<div className='form_clr'>
+						<div className='row'>
+							<div className='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
+								<aside className='b-submit__aside'>
+									<div className='b-submit__aside-step m-active '>
+										<h3>Step 1</h3>
+										<div className='b-submit__aside-step-inner m-active clearfix'>
+											<div className='b-submit__aside-step-inner-icon'>
+												<span className='fa fa-car'></span>
+											</div>
+											<div className='b-submit__aside-step-inner-info'>
+												<h4>Add YOUR Vehicle</h4>
+												<p>Select your vehicle &amp; add info</p>
+												<div className='b-submit__aside-step-inner-info-triangle'></div>
+											</div>
 										</div>
 									</div>
-								</div>
 
-								<div className='b-submit__aside-step m-active '>
-									<h3>Step 2</h3>
-									<div className='b-submit__aside-step-inner m-active clearfix'>
-										<div className='b-submit__aside-step-inner-icon'>
-											<span className='fa fa-user'></span>
-										</div>
-										<div className='b-submit__aside-step-inner-info'>
-											<h4>Contact Details</h4>
-											<p>Choose vehicle specifications</p>
-											<div className='b-submit__aside-step-inner-info-triangle'></div>
+									<div className='b-submit__aside-step m-active '>
+										<h3>Step 2</h3>
+										<div className='b-submit__aside-step-inner m-active clearfix'>
+											<div className='b-submit__aside-step-inner-icon'>
+												<span className='fa fa-user'></span>
+											</div>
+											<div className='b-submit__aside-step-inner-info'>
+												<h4>Contact Details</h4>
+												<p>Choose vehicle specifications</p>
+												<div className='b-submit__aside-step-inner-info-triangle'></div>
+											</div>
 										</div>
 									</div>
-								</div>
-							</aside>
-						</div>
-						<div className='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
-							<div className='b-submit__main'>
-								<form className='s-submit'>
-									<div className='b-submit__main-contacts  sum_pding'>
-										<header className='s-headerSubmit s-lineDownLeft'>
-											<h2>Contact Details</h2>
-										</header>
+								</aside>
+							</div>
+							<div className='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
+								<div className='b-submit__main'>
+									<form className='s-submit'>
+										<div className='b-submit__main-contacts  sum_pding'>
+											<div className='s-headerSubmit s-lineDownLeft'>
+												<h2>Contact Details</h2>
+											</div>
 
-										<div className='row'>
-											<div className='col-md-6 col-xs-12'>
-												<div className='b-submit__main-element'>
-													<label style={{ color: "black" }}>
-														Name <span>*</span>
-													</label>
-													<input
-														type='text'
-														placeholder='please enter name'
-														name='name'
-														onChange={(e) => setname(e.target.value)}
-													/>
-												</div>
-											</div>
-											<div className='col-md-6 col-xs-12'>
-												<div className='b-submit__main-element'>
-													<label style={{ color: "black" }}>
-														Email Id <span>*</span>
-													</label>
-													<input
-														type='text'
-														name='email'
-														placeholder='please enter email id'
-														onChange={(e) => setemail(e.target.value)}
-													/>
-												</div>
-											</div>
-										</div>
+											<div className='row'>
+												<div className='col-md-6 col-xs-12'>
+													<div className='b-submit__main-element'>
+														<label style={{ color: "black" }}>
+															Name <span>*</span>
+														</label>
+														<input
+															type='text'
+															placeholder='Please Enter Name'
+															name='name'
+															onChange={(e) => setname(e.target.value)}
+														/>
 
-										<div className='row'>
-											<div className='col-md-6 col-xs-12'>
-												<div className='b-submit__main-element'>
-													<label style={{ color: "black" }}>
-														Enter Your Phone Number <span>*</span>
-													</label>
-													<input
-														type='text'
-														name='mobile'
-														placeholder='please enter mobile no.'
-														onChange={(e) => setmobile(e.target.value)}
-													/>
-												</div>
-											</div>
-											<div className='col-md-6 col-xs-12'>
-												<div className='b-submit__main-element '>
-													<label style={{ color: "black" }}>
-														State <span>*</span>
-													</label>
-													<div className='s-relative'>
-														<select
-															className='m-select'
-															value={selectedstate}
-															onChange={handleSelectChange11}>
-															<option value='regnCity'>select item</option>
-															{statelist.map((item, index) => (
-																<option key={index} value={item.code}>
-																	{item.description}
-																</option>
-															))}
-														</select>
-														<span className='fa fa-caret-down'></span>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className='row'>
-											<div className='col-md-6 col-xs-12'>
-												<div className='b-submit__main-element '>
-													<label style={{ color: "black" }}>
-														City <span>*</span>
-													</label>
-													<div className='s-relative'>
-														<select
-															className='m-select'
-															value={selectcity}
-															onChange={handleSelectChange12}>
-															<option value='regnCity'>select item</option>
-															{city.map((item, index) => (
-																<option key={index} value={item.code}>
-																	{item.description}
-																</option>
-															))}
-														</select>
-														<span className='fa fa-caret-down'></span>
-													</div>
-												</div>
-											</div>
-											<div className='col-md-6 col-xs-12'>
-												<div className='b-submit__main-element '>
-													<form>
-														<span
-															className='d-flex'
-															style={{
-																fontWeight: "600",
-																marginTop: "-20px",
-																height: "26px",
-																color: "green",
-															}}>
-															<span
-																style={{
-																	fontSize: "25px",
-																	marginLeft: "20px",
-																	marginTop: "20px",
-																	color: "red",
-																	fontWeight: "800px ",
-																}}>
-																{num1} + {num2} = ?
+														{errors.name && (
+															<span style={{ color: "red" }}>
+																Please Enter Name
 															</span>
-															<i
-																style={{
-																	marginLeft: "20px",
-																	marginTop: "30px",
-																}}
-																onClick={resetCaptcha}
-																class='fa fa-refresh fa-1x'
-																aria-hidden='true'></i>
-														</span>
+														)}
+													</div>
+												</div>
+												<div className='col-md-6 col-xs-12'>
+													<div className='b-submit__main-element'>
+														<label style={{ color: "black" }}>
+															Email Id <span>*</span>
+														</label>
+														<input
+															type='text'
+															name='email'
+															placeholder='Please Enter Email Id'
+															onChange={(e) => setemail(e.target.value)}
+														/>
 
-														<label
-															style={{
-																color: "black",
-																mrginTop: "-70px",
-															}}></label>
-														<div className='d-flex'>
-															<input
-																className='s-relative'
-																placeholder='Please enter  the Captcha'
-																type='text'
-																value={userAnswer}
-																onChange={(event) =>
-																	setUserAnswer(event.target.value)
-																}></input>
-															{/* <i
+														{errors.email && (
+															<span style={{ color: "red" }}>
+																Please Enter Email Id
+															</span>
+														)}
+													</div>
+												</div>
+											</div>
+
+											<div className='row'>
+												<div className='col-md-6 col-xs-12'>
+													<div className='b-submit__main-element'>
+														<label style={{ color: "black" }}>
+															Enter Your Phone Number <span>*</span>
+														</label>
+														<input
+															className='phone_number'
+															type='number'
+															name='mobile'
+															placeholder='Please Enter Mobile No.'
+															onChange={(e) => setmobile(e.target.value)}
+														/>
+
+														{errors.mobile && (
+															<span style={{ color: "red" }}>
+																Please Enter Phone No.
+															</span>
+														)}
+													</div>
+												</div>
+												<div className='col-md-6 col-xs-12'>
+													<div className='b-submit__main-element '>
+														<label style={{ color: "black" }}>
+															State <span>*</span>
+														</label>
+														<div className='s-relative'>
+															<select
+																className='m-select'
+																value={selectedstate}
+																onChange={handleSelectChange11}>
+																<option value='regnCity'>Select State </option>
+																{statelist.map((item, index) => (
+																	<option key={index} value={item.code}>
+																		{item.description}
+																	</option>
+																))}
+															</select>
+															<span className='fa fa-caret-down'></span>
+
+															{errors.selectedstate && (
+																<span style={{ color: "red" }}>
+																	Please Select State
+																</span>
+															)}
+														</div>
+													</div>
+												</div>
+											</div>
+											<div className='row'>
+												<div className='col-md-6 col-xs-12'>
+													<div className='b-submit__main-element '>
+														<label style={{ color: "black" }}>
+															City <span>*</span>
+														</label>
+														<div className='s-relative'>
+															<select
+																className='m-select'
+																value={selectcity}
+																onChange={handleSelectChange12}>
+																<option value='regnCity'>Select City</option>
+																{city.map((item, index) => (
+																	<option key={index} value={item.code}>
+																		{item.description}
+																	</option>
+																))}
+															</select>
+															<span className='fa fa-caret-down'></span>
+															{errors.selectcity && (
+																<span style={{ color: "red" }}>
+																	Please Select City
+																</span>
+															)}
+														</div>
+													</div>
+												</div>
+												<div className='col-md-6 col-xs-12'>
+													<div className='b-submit__main-element '>
+														<form>
+															<span
+																className='d-flex'
+																style={{
+																	fontWeight: "600",
+																	marginTop: "-20px",
+																	height: "26px",
+																	color: "green",
+																}}>
+																<span
+																	style={{
+																		fontSize: "25px",
+																		marginLeft: "20px",
+																		marginTop: "20px",
+																		color: "red",
+																		fontWeight: "800px ",
+																	}}>
+																	{num1} + {num2} = ?
+																</span>
+																<i
+																	style={{
+																		marginLeft: "20px",
+																		marginTop: "30px",
+																	}}
+																	onClick={resetCaptcha}
+																	class='fa fa-refresh fa-1x'
+																	aria-hidden='true'></i>
+															</span>
+
+															<label
+																style={{
+																	color: "black",
+																	mrginTop: "-70px",
+																}}></label>
+															<div className='d-flex'>
+																<input
+																	className='s-relative'
+																	placeholder='Please Enter Captcha'
+																	type='text'
+																	value={userAnswer}
+																	onChange={(event) =>
+																		setUserAnswer(event.target.value)
+																	}></input>
+																{/* <i
 																// onClick={handleSubmit}
 																class='fa fa-check-square-o fa-3x fa-success'
 																aria-hidden='true'></i> */}
-														</div>
-													</form>
+															</div>
+														</form>
 
-													{message && (
-														<p style={{ color: "black" }}>{message}</p>
-													)}
-													{error && <p style={{ color: "red" }}>{error}</p>}
+														{message && (
+															<p style={{ color: "black" }}>{message}</p>
+														)}
+														{error && <p style={{ color: "red" }}>{error}</p>}
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-									<div className=' '>
-										<div className='btn_wd1'>
-											<Link to='/salecar'>
+										<div className=' '>
+											<div className='btn_wd1'>
+												<Link to='/salecar'>
+													<button
+														id='procedbtn22'
+														style={{
+															backgroundColor: "#f76d2b",
+															color: "white",
+															marginTop: "30px",
+														}}
+														type='submit'
+														className='btn m-btn pull-right  btn-danger'>
+														Click to &amp; Back
+														<span
+															id='arrowiconbtn'
+															className='fa fa-arrow-left'></span>
+													</button>
+												</Link>
+											</div>
+											<div className='btn_wd1'>
 												<button
 													id='procedbtn22'
-													style={{
-														backgroundColor: "#f76d2b",
-														color: "white",
-														marginTop: "30px",
-													}}
-													type='submit'
+													style={{ backgroundColor: "#f76d2b" }}
+													type='button'
+													onClick={handleSubmit}
+													data-toggle='modal'
+													href='#ignismyModal'
 													className='btn m-btn pull-right  btn-danger'>
-													Click to &amp; Back
+													Click to &amp; Raise Request
 													<span
 														id='arrowiconbtn'
-														className='fa fa-arrow-left'></span>
+														className='fa fa-check'></span>
 												</button>
-											</Link>
-										</div>
-										<div className='btn_wd1'>
-											<button
-												id='procedbtn22'
-												style={{ backgroundColor: "#f76d2b" }}
-												type='button'
-												onClick={handleSubmit}
-												data-toggle='modal'
-												href='#ignismyModal'
-												className='btn m-btn pull-right  btn-danger'>
-												Click to &amp; Raise Request
-												<span id='arrowiconbtn' className='fa fa-check'></span>
-											</button>
 
-											{!error && (
-												<>
-													<div className=''>
-														<div className='row'>
-															<div
-																className='modal fade'
-																id='ignismyModal'
-																role='dialog'>
+												{!error && (
+													<>
+														<div className=''>
+															<div className='row'>
 																<div
-																	className='modal-dialog mdl_top'
-																	style={{ margingTop: "90px" }}>
-																	<div className='modal-content'>
-																		<div className='modal-header modl_hit'>
-																			<button
-																				type='button'
-																				className='close cls_btn'
-																				data-dismiss='modal'
-																				aria-label=''>
-																				<span>×</span>
-																			</button>
-																			<hr />
-																		</div>
+																	className='modal fade'
+																	id='ignismyModal'
+																	role='dialog'>
+																	<div
+																		className='modal-dialog mdl_top'
+																		style={{ margingTop: "90px" }}>
+																		<div className='modal-content'>
+																			<div className='modal-header modl_hit'>
+																				<button
+																					type='button'
+																					className='close cls_btn'
+																					data-dismiss='modal'
+																					aria-label=''>
+																					<span>×</span>
+																				</button>
+																				<hr />
+																			</div>
 
-																		<div className='modal-body'>
-																			<div className='thank-you-pop'>
-																				<img
-																					className=''
-																					src='http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png'
-																					alt=''
-																				/>
+																			<div className='modal-body'>
+																				<div className='thank-you-pop'>
+																					<img
+																						className=''
+																						src='http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png'
+																						alt=''
+																					/>
 
-																				<h4
-																					className=''
-																					style={{
-																						marginTop: "10px",
-																						marginLeft: "140px",
-																					}}>
-																					Are you sure to raise enquiry?
-																					{/* Your request has been received. We will
+																					<h4
+																						className=''
+																						style={{
+																							marginTop: "10px",
+																							marginLeft: "140px",
+																						}}>
+																						Are you sure to raise enquiry?
+																						{/* Your request has been received. We will
 																			contact you shortly! */}
-																				</h4>
+																					</h4>
 
-																				{/* <h4
+																					{/* <h4
 																					className='visible-xs'
 																					style={{
 																						marginTop: "10px",
@@ -531,43 +601,43 @@ const Submit2 = () => {
 																					Are you sure to raise enquiry??
 																					{/* Your request has been received. We will
 																			contact you shortly! */}
-																				{/* </h4>  */}
-																				<p></p>
-																				<div
-																					className='d-flex flx_mn_btn'
-																					style={{}}>
-																					<button
-																						onClick={handleSaveData}
-																						style={{
-																							backgroundColor: "#f76d2b",
-																							width: "60px",
-																							color: "white",
-																							fontSize: "15px",
-																							margin: "5px",
-																						}}
-																						type='submit'
-																						className='btn'
-																						data-dismiss='modal'>
-																						Yes
-																					</button>
+																					{/* </h4>  */}
+																					<p></p>
+																					<div
+																						className='d-flex flx_mn_btn'
+																						style={{}}>
+																						<button
+																							onClick={handleSaveData}
+																							style={{
+																								backgroundColor: "#f76d2b",
+																								width: "60px",
+																								color: "white",
+																								fontSize: "15px",
+																								margin: "5px",
+																							}}
+																							type='submit'
+																							className='btn'
+																							data-dismiss='modal'>
+																							Yes
+																						</button>
 
-																					<button
-																						style={{
-																							backgroundColor: "green",
-																							width: "60px",
-																							color: "white",
-																							fontSize: "15px",
-																							margin: "5px",
-																						}}
-																						type='button'
-																						className='close no_btn'
-																						data-dismiss='modal'
-																						aria-label=''>
-																						No
-																					</button>
-																				</div>
+																						<button
+																							style={{
+																								backgroundColor: "green",
+																								width: "60px",
+																								color: "white",
+																								fontSize: "15px",
+																								margin: "5px",
+																							}}
+																							type='button'
+																							className='close no_btn'
+																							data-dismiss='modal'
+																							aria-label=''>
+																							No
+																						</button>
+																					</div>
 
-																				{/* <div
+																					{/* <div
 																					id='phoneView'
 																					className='d-flex visible-xs '>
 																					<button
@@ -589,93 +659,25 @@ const Submit2 = () => {
 																						No
 																					</button>
 																				</div> */}
+																				</div>
 																			</div>
 																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-												</>
-											)}
+													</>
+												)}
+											</div>
 										</div>
-									</div>
-								</form>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			{/* footer section */}
-
-			<div className='b-info'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-md-3 col-xs-6'>
-							<aside className='b-info__aside  zoomInLeft'>
-								<article className='b-info__aside-article'>
-									<h3>OPENING HOURS</h3>
-									<div className='b-info__aside-article-item'>
-										<h6>Sales Department</h6>
-										<p>
-											Mon-Sat : 8:00am - 5:00pm
-											<br /> Sunday is closed
-										</p>
-									</div>
-								</article>
-								<article className='b-info__aside-article'>
-									<h3>About us</h3>
-									<p>
-										Established in the year 2002, Sushil Car Bazar is one of the
-										top & most trusted dealership for preowned luxury car.In
-										over 17 years of business history we have always had a
-										customer oriented approach & total customer satisfaction has
-										been our motive.
-									</p>
-								</article>
-							</aside>
-						</div>
-						<div className='col-md-3 col-xs-6'></div>
-
-						<div className='col-md-5 col-xs-6'>
-							<address className='b-info__contacts '>
-								<p>contact us</p>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-map-marker'></span>
-									<ol>
-										Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12 Dividing
-										Road Pin code 121006
-									</ol>
-								</div>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-map-marker'></span>
-									<em>
-										<ol>Spaze Boulevard, Sector-47, Gurugram</ol>
-									</em>
-								</div>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-phone'></span>
-									<ol>
-										+91 92509 22333
-										<br />
-										+91 98114 36332
-									</ol>
-								</div>
-
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-envelope'></span>
-									<em>
-										<ol>sushilcarbazar@gmail.com</ol>
-									</em>
-								</div>
-							</address>
-							<address className='b-info__map'>
-								<a href='contacts.html'>Open Location Map</a>
-							</address>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	);
 };

@@ -33,7 +33,7 @@ export default function ScrollTop() {
 			{" "}
 			{showTopBtn && (
 				<button className='icon-position icon-style' onClick={goToTop}>
-					Top
+					<i className='fa fa-angle-double-up'></i>
 				</button>
 			)}{" "}
 		</div>

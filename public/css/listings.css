@@ -30,7 +30,7 @@
 }
 
 .b-pageHeader__search {
-	padding: 10px 15px;
+	padding: 8px 15px;
 	float: right;
 }
 
@@ -152,6 +152,7 @@ select.m-select {
 	-moz-appearance: none;
 	-ms-appearance: none;
 	appearance: none !important;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px !important;
 }
 
 select.m-select:focus {
@@ -558,6 +559,7 @@ select.m-select + span.fa {
 	font: 600 11px "Open Sans", sans-serif;
 	display: block;
 	margin-bottom: 5px;
+	margin-top: 8px;
 }
 
 .b-items__cars-one-info-value {

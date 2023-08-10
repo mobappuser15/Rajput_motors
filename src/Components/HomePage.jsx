@@ -8,7 +8,7 @@ import Carousel from "react-elastic-carousel";
 import Item from "./Item";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./detail.css";
-import ScrollTop from "./ScrollTop";
+import PageScrollTop from "./PageScrollTop";
 import toast from "react-hot-toast";
 import ReactLoading from "react-loading";
 
@@ -39,6 +39,7 @@ export default function HomePage() {
 	const [selectedValue, setSelectedValue] = useState(null);
 	const [searchResults, setSearchResults] = useState([]);
 	const [demo, setDemo] = useState([]);
+	const [reset, setReset] = useState([]);
 	const [data, setData] = useState([]);
 	const [model, setModel] = useState([]);
 	const [source, setSource] = useState([]);
@@ -55,10 +56,6 @@ export default function HomePage() {
 	const [selectmodel, setSelectmodel] = useState("");
 	const [selectfuel, setSelectFuel] = useState("");
 	const [selecttransmission, setSelecttransmission] = useState("");
-	const [selectextirecolor, setSelectextirecolor] = useState("");
-	const [selectmfy, setSelectmfy] = useState("");
-	const [selectmfm, setSelectmfm] = useState("");
-	const [selectverient, setSelectverient] = useState("");
 	const [codemodel, setcodemodel] = useState("");
 	const [codemake, setcodemake] = useState("");
 	const [codevarient, setvarientdata] = useState([]);
@@ -158,53 +155,6 @@ export default function HomePage() {
 			});
 	}, [codemodel]);
 
-	// varient list
-	useEffect(() => {
-		const url =
-			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
-		const headers = {
-			ApplicationMode: "ONLINE",
-			EnvironmentType: "DEMO",
-			BrandCode: "UC",
-			CountryCode: "IN",
-			"Content-Type": "application/json",
-		};
-		const data = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-
-			calledBy: "VARIANT",
-			vehMake: codemodel,
-			vehModel: codemake,
-
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
-
-		fetch(url, {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			})
-			.then((jsonData) => {
-				const generalList = jsonData?.generalMasterList[0].generalList;
-				setVarient(generalList);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}, [codemake, codemodel]);
-
 	const handleSelectChange = (event) => {
 		setSelectedItem(event.target.value);
 		setcodemodel(event.target.value);
@@ -215,9 +165,14 @@ export default function HomePage() {
 		setcodemake(event.target.value);
 	};
 
-	const handleSelectChange9 = (event) => {
-		setSelectverient(event.target.value);
+	const handleSelectChangeminprize = (event) => {
+		setMinRange(event.target.value);
 	};
+
+	const handleSelectChangemaxnprize = (event) => {
+		setMaxRange(event.target.value);
+	};
+
 	const navigate = useNavigate();
 
 	// stock details
@@ -258,12 +213,10 @@ export default function HomePage() {
 					const responseData = await response.json();
 					setStockdata(responseData?.UsedCarVehStockDetail);
 
-					setDemo(responseData?.UsedCarVehStockDetail);
+					// setDemo(responseData?.UsedCarVehStockDetail);
 				} else {
 					throw new Error(
-						`Request failed with status code: ${response.status}`(
-							<ReactLoading />
-						)
+						`Request failed with status code: ${response.status}`()
 					);
 				}
 			} catch (error) {
@@ -280,8 +233,6 @@ export default function HomePage() {
 		);
 		setSelectedProduct(product);
 		setdetailspage(product);
-
-		// navigate("/details");
 	};
 
 	const fetchData = async () => {
@@ -319,8 +270,8 @@ export default function HomePage() {
 				const responseData = await response.json();
 				setSearchResults(responseData?.UsedCarVehStockDetail);
 				setDemo(responseData?.UsedCarVehStockDetail);
+
 				setShowdata(responseData?.UsedCarVehStockDetail);
-				console.log("responseData", responseData);
 			} else {
 				throw new Error(`Request failed with status code: ${response.status}`);
 			}
@@ -336,16 +287,17 @@ export default function HomePage() {
 		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
 	};
 
+	const reSet = () => {
+		console.log("i am runing");
+
+		setDemo(stockdata);
+	};
+
+	// console.log(filterDataCars, "filterDataCars");
+
 	const reloadPage = () => {
 		window.location.reload(false);
-		toast.success("meaage");
-		return (
-			<div>
-				<p>page loading</p>
-			</div>
-		);
-		console.log("datta chekc");
-		// window.prompt("message");
+		// toast.success("meaage");
 	};
 
 	useEffect(() => {
@@ -354,9 +306,125 @@ export default function HomePage() {
 		}
 	}, []);
 
+	const Amountdatamax = [
+		{
+			id: 100000,
+			img: " 1 Lac",
+		},
+		{
+			id: 500000,
+			img: " 5 Lac",
+		},
+		{
+			id: 1000000,
+			img: " 10 Lac",
+		},
+		{
+			id: 1100000,
+			img: " 11 Lac",
+		},
+
+		{
+			id: 1500000,
+			img: "15 Lac",
+		},
+
+		{
+			id: 2000000,
+			img: " 20 Lac",
+		},
+
+		{
+			id: 2500000,
+			img: "25 Lac",
+		},
+
+		{
+			id: 3000000,
+			img: "30 Lac",
+		},
+		{
+			id: 4000000,
+			img: "40  Lac",
+		},
+
+		{
+			id: 5000000,
+			img: "50 Lac",
+		},
+
+		{
+			id: 6000000,
+			img: "60  Lac",
+		},
+		{
+			id: 7000000,
+			img: "70 Lac",
+		},
+	];
+
+	const Amountdatamin = [
+		{
+			id: 100000,
+			img: " 1 Lac",
+		},
+		{
+			id: 500000,
+			img: " 5 Lac",
+		},
+		{
+			id: 1000000,
+			img: " 10 Lac",
+		},
+		{
+			id: 1100000,
+			img: " 11 Lac",
+		},
+
+		{
+			id: 1500000,
+			img: "15 Lac",
+		},
+
+		{
+			id: 2000000,
+			img: " 20 Lac",
+		},
+
+		{
+			id: 2500000,
+			img: "25 Lac",
+		},
+
+		{
+			id: 3000000,
+			img: "30 Lac",
+		},
+		{
+			id: 4000000,
+			img: "40  Lac",
+		},
+
+		{
+			id: 5000000,
+			img: "50 Lac",
+		},
+
+		{
+			id: 6000000,
+			img: "60  Lac",
+		},
+		{
+			id: 7000000,
+			img: "70 Lac",
+		},
+	];
+
+	console.log(demo, " i am  demo ");
+
 	return (
 		<div className=''>
-			<ScrollTop />
+			<PageScrollTop />
 
 			{detailspage === false ? (
 				<>
@@ -378,8 +446,8 @@ export default function HomePage() {
 									<div className='carousel-inner'>
 										<div className='carousel-item active'>
 											<img
-												style={{ marginTop: "53px" }}
-												src='media/main-slider/sushil-cars.jpg'
+												style={{ marginTop: "39px" }}
+												src='media/main-slider/sushil-cars2.png'
 												className='d-block w-100'
 												alt='...'
 											/>
@@ -396,7 +464,8 @@ export default function HomePage() {
 									<div className='carousel-inner'>
 										<div className='carousel-item active'>
 											<img
-												style={{ marginTop: "68px" }}
+												id='imglogop'
+												style={{ marginTop: "100px" }}
 												src='media/main-slider/sushil-cars.jpg'
 												className='d-block w-100'
 												alt='...'
@@ -407,13 +476,13 @@ export default function HomePage() {
 							</section>
 
 							{/* filter form search bar */}
-							<section className='b-search'>
+							<section className='b-search' id='ser_hit1'>
 								<div className='container'>
 									<div className='row'>
 										<div
 											className='b-search__main'
 											style={{
-												marginTop: "20px",
+												marginTop: "-6px",
 												borderRadius: "30px",
 												backgroundColor: "white",
 											}}>
@@ -459,27 +528,33 @@ export default function HomePage() {
 															<div
 																className='col-xs-12 col-md-3 col-lg-3 '
 																id='searchdata'>
-																<input
-																	id='input_data'
-																	className='inputdata'
-																	type='text'
-																	placeholder='Min Range'
-																	name='minRange'
-																	onChange={(e) => setMinRange(e.target.value)}
-																/>
+																<select
+																	value={minRange}
+																	onChange={handleSelectChangeminprize}>
+																	<option value=''>Select Min Price</option>
+																	{Amountdatamin.map((item, index) => (
+																		<option key={index} value={item.id}>
+																			{item.img}
+																		</option>
+																	))}
+																</select>
+																<span className='fa fa-caret-down'></span>
 															</div>
 
 															<div
 																className='col-xs-12 col-md-3 col-lg-3'
 																id='searchdata'>
-																<input
-																	id='input_data'
-																	className='inputdata'
-																	type='text'
-																	placeholder='Max Range'
-																	name='maxRange'
-																	onChange={(e) => setMaxRange(e.target.value)}
-																/>
+																<select
+																	value={maxRange}
+																	onChange={handleSelectChangemaxnprize}>
+																	<option value=''>Select Max Price</option>
+																	{Amountdatamax.map((item, index) => (
+																		<option key={index} value={item.id}>
+																			{item.img}
+																		</option>
+																	))}
+																</select>
+																<span className='fa fa-caret-down'></span>
 															</div>
 														</div>
 													</div>
@@ -509,9 +584,9 @@ export default function HomePage() {
 																	color: "white",
 																}}
 																id='searcgbtn'
+																onClick={reSet}
 																type='reset'
-																className='btn    btn-lg'
-																onClick={reloadPage}>
+																className='btn    btn-lg'>
 																<span>Reset</span>
 															</button>
 														</div>
@@ -529,9 +604,7 @@ export default function HomePage() {
 								<>
 									{/* vechile Stock home data on sale section */}
 
-									<section
-										className='b-homeAuto  hidden-xs  '
-										style={{ marginTop: "-38px" }}>
+									<section className='b-homeAuto  hidden-xs  '>
 										<div className='container'>
 											<div className='col-xs-12   visible-xs-horizental-scroll'>
 												<div className='b-homeAuto__latest'>
@@ -546,16 +619,17 @@ export default function HomePage() {
 														className='s-title'
 														// '0.9s'
 														style={{ fontFamily: "Segoe UI" }}>
-														LATEST VEHICLES ON SALE
+														LATEST VEHICLES SUGGESTED FOR YOU
 													</h2>
 
-													<div className='' id='cardrow'>
+													<div className='bag_clr1' id='cardrow'>
 														<Row xs={12} md={4} id='cardrow'>
-															{demo.length === 0 ? (
+															{stockdata.length === 0 ? (
 																<>
 																	<div
 																		className='loader hidden-xs'
 																		style={{ marginLeft: "600px" }}>
+																		<PageScrollTop />
 																		<ReactLoading
 																			type='spin'
 																			color='#f76d2b'
@@ -576,7 +650,7 @@ export default function HomePage() {
 																</>
 															) : (
 																<>
-																	{demo
+																	{stockdata
 																		?.filter(
 																			(item) =>
 																				item.programCode ===
@@ -838,17 +912,7 @@ export default function HomePage() {
 															)
 
 															.map((item) => (
-																<div
-																	className=''
-																	style={{
-																		width: "70%",
-																		borderRadius: "15px",
-																		marginLeft: "15px",
-																		// backgroundColor: "red",
-																		height: "70%",
-																		padding: "2px",
-																		border: "1px solid black",
-																	}}>
+																<div className='vehicles_mn'>
 																	<div key={item.uniqueSerial}>
 																		<div>
 																			{/* phone View */}
@@ -974,7 +1038,7 @@ export default function HomePage() {
 									<section
 										className='b-homeAuto hidden-xs'
 										style={{ marginTop: "-38px" }}>
-										<div className='container-fluid'>
+										<div className='container'>
 											<div className='col-xs-12   visible-xs-horizental-scroll'>
 												<div className='b-homeAuto__latest'>
 													<h5
@@ -990,9 +1054,8 @@ export default function HomePage() {
 														LATEST VEHICLES ON SALE Search
 													</h2>
 
-													<div className='  b-auto__main' id='cardrow'>
+													<div className=' bag_clr1' id='cardrow'>
 														<Row xs={12} md={4} id='cardrow'>
-															{console.log(demo, "demo stcok")}
 															{demo.length === 0 ? (
 																<div className='notdatafound'>
 																	<p>vehicle Not Available</p>
@@ -1005,10 +1068,6 @@ export default function HomePage() {
 																<>
 																	{demo?.map((item) => (
 																		<div key={item.uniqueSerial} id='cardrow'>
-																			{console.log(
-																				demo,
-																				"check data serach demooo"
-																			)}
 																			<Col>
 																				<div
 																					onClick={() =>
@@ -1279,10 +1338,60 @@ export default function HomePage() {
 								</>
 							)}
 
+							<div class='service_sec_mn'>
+								<div class='container'>
+									<div class='row'>
+										<div class='col-md-3 col-sm-6'>
+											<div class='serviceBox'>
+												<a href='#/carloans'>
+													<div class='service-icon'></div>
+												</a>
+												<h3 class='title'>Auto Loans</h3>
+												<p class='description'>Low Rates and Fast Approvals</p>
+											</div>
+										</div>
+
+										<div class='col-md-3 col-sm-6'>
+											<div class='serviceBox purple'>
+												<a href='#/insurence'>
+													<div class='service-icon'></div>
+												</a>
+												<h3 class='title'>Insurance</h3>
+												<p class='description'>
+													A Day Without Insurance is Like a Day Without Sunshine
+												</p>
+											</div>
+										</div>
+
+										<div class='col-md-3 col-sm-6'>
+											<div class='serviceBox green'>
+												<div class='service-icon'></div>
+												<h3 class='title'>Customer Requirements</h3>
+												<p class='description'>
+													Customer-centric products for customer-centric people
+												</p>
+											</div>
+										</div>
+
+										<div class='col-md-3 col-sm-6'>
+											<div class='serviceBox red'>
+												<a href='#/emical'>
+													{" "}
+													<div class='service-icon'></div>
+												</a>
+												<h3 class='title'>Emi calculator</h3>
+												<p class='description'>Low Rates and Fast Approvals</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
 							{/* Exclusive offers slider */}
 							<section className='b-featured hidden-xs'>
 								<div className='container-fluid'>
-									<h2 className='s-title '>Exclusive Offers</h2>
+									<h2 className='s-title ex_tx'>Exclusive Offers</h2>
+
 									<div className='carousel-wrapper'>
 										<Carousel breakPoints={breakPoints}>
 											{stockdata
@@ -1438,7 +1547,7 @@ export default function HomePage() {
 																			onClick={() =>
 																				singleProducthandle(item.uniqueSerial)
 																			}
-																			className='  visible-xs'>
+																			className='  visible-xs clr_mol1'>
 																			<div className=''>
 																				<div className=''>
 																					<img
@@ -1569,103 +1678,6 @@ export default function HomePage() {
 
 
 WELCOME TO SUSHIL CARS  section */}
-
-							<section className='b-welcome'>
-								<div className='container'>
-									<div className='row'>
-										<div className='col-md-3 col-lg-3 col-xs-12'>
-											<div className='row'>
-												<div className='col-xs-12 m-padding'>
-													<div className='b-welcome__services-auto  '>
-														<div className='b-welcome__services-img m-auto'>
-															<Link to='/carloans'>
-																<span className='fa fa-cab'></span>
-															</Link>
-														</div>
-
-														<h3>Auto Loans</h3>
-													</div>
-												</div>
-												<div className='col-xs-12 text-right visible-md visible-lg'>
-													<div className='m-circle  slideInRight'>
-														<span className='b-welcome__services-circle'></span>
-													</div>
-												</div>
-												<div className='col-xs-12 m-padding'>
-													<div className='b-welcome__services-buying  '>
-														<div className='b-welcome__services-img m-buying'>
-															<span className='fa fa-book'></span>
-														</div>
-														<h3>Customer Requirements</h3>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className='col-md-6 col-lg-6 col-xs-12'>
-											<div className='b-welcome__text  '>
-												<h2>INDIA'S LEADING CAR DEALER</h2>
-												<h3>WELCOME TO SUSHIL CARS</h3>
-												<p>
-													Established in the year 2002, Sushil Car Bazar is one
-													of the top & most trusted dealership for preowned
-													luxury car.In over 17 years of business history we
-													have always had a customer oriented approach & total
-													customer satisfaction has been our motive. We tend to
-													deliver the very best quality vehicle at the foremost
-													competitive cost. Sushil Car bazar is a one stop
-													solution to sell yourPremium/ Luxury car at best
-													price.
-												</p>
-												<ul className='welcome-points'>
-													<li>
-														<span className='fa fa-check'></span>Low Prices, No
-														Haggling
-													</li>
-													<li>
-														<span className='fa fa-check'></span>Largest Car
-														Dealership
-													</li>
-													<li>
-														<span className='fa fa-check'></span>Multipoint
-														Safety Check
-													</li>
-												</ul>
-											</div>
-										</div>
-										<div className='col-md-3 col-lg-3 col-xs-12'>
-											<div className='row'>
-												<div className='col-xs-12 m-padding'>
-													<div className='b-welcome__services-trade wow '>
-														<div className='b-welcome__services-img m-trade'>
-															<Link to='/insurence'>
-																<span className='fa fa-shield'></span>
-															</Link>
-														</div>
-														<h3>insurance</h3>
-													</div>
-												</div>
-												<div className='col-xs-12 text-left visible-md visible-lg'>
-													<div className='m-circle pull-right wow slideInLeft'>
-														<span className='b-welcome__services-circle m-left'></span>
-													</div>
-												</div>
-											</div>
-											<div className='row'>
-												<div className='col-xs-12 m-padding'>
-													<div className='b-welcome__services-trade wow '>
-														<div className='b-welcome__services-img m-trade'>
-															<Link to='/emical'>
-																<span className='fa fa-calculator'></span>
-															</Link>
-														</div>
-														<h3> Emi calculator</h3>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
 
 							{/* switch to go mobile */}
 							<section className='b-count sms-sec'>
@@ -1860,7 +1872,9 @@ WELCOME TO SUSHIL CARS  section */}
 								<div className='container'>
 									<h5 className='s-titleBg wow zoomInUp'>FIND OUT MORE</h5>
 									<br />
-									<h2 className='s-title wow zoomInUp'>BRANDS WE OFFER</h2>
+									<h2 className='s-title wow zoomInUp brd_padg'>
+										BRANDS WE OFFER
+									</h2>
 									<div className=''>
 										<div className='b-brands__brand wow rotateIn'>
 											<img src='media/brands/bmwLogo.png' alt='brand' />
@@ -1886,74 +1900,6 @@ WELCOME TO SUSHIL CARS  section */}
 									</div>
 								</div>
 							</section>
-							<div className='b-info'>
-								<div className='container'>
-									<div className='row'>
-										<div className='col-md-3 col-xs-12'>
-											<aside className='b-info__aside wow zoomInLeft'>
-												<article className='b-info__aside-article'>
-													<h3>OPENING HOURS</h3>
-													<div className='b-info__aside-article-item'>
-														<h6>Sales Department</h6>
-														<p>
-															Mon-Sat : 8:00am - 5:00pm
-															<br /> Sunday is closed
-														</p>
-													</div>
-												</article>
-												<article className='b-info__aside-article'>
-													<h3>About us</h3>
-													<p>
-														Established in the year 2002, Sushil Car Bazar is
-														one of the top & most trusted dealership for
-														preowned luxury car.In over 17 years of business
-														history we have always had a customer oriented
-														approach & total customer satisfaction has been our
-														motive
-													</p>
-												</article>
-											</aside>
-										</div>
-
-										<div className='col-md-5 col-xs-12'>
-											<address className='b-info__contacts wow zoomInUp'>
-												<p>contact us</p>
-												<div className='b-info__contacts-item'>
-													<span className='fa fa-map-marker'></span>
-													<ol>
-														Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12
-														Dividing Road Pincode 121006
-													</ol>
-												</div>
-												<div className='b-info__contacts-item'>
-													<span className='fa fa-map-marker'></span>
-													<em>
-														<ol>Spaze Boulevard, Sector-47, Gurugram</ol>
-													</em>
-												</div>
-												<div className='b-info__contacts-item'>
-													<span className='fa fa-phone'></span>
-													<ol>
-														+91 92509 22333
-														<br />
-														+91 98114 36332
-													</ol>
-												</div>
-
-												<div className='b-info__contacts-item'>
-													<span className='fa fa-envelope'></span>
-													<em>
-														<ol>sushilcarbazar@gmail.com</ol>
-													</em>
-												</div>
-											</address>
-											<address className='b-info__map'>
-												<Link to='/contact'>Open Location Map</Link>
-											</address>
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</>

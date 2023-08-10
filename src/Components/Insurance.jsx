@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ScrollTop from "./ScrollTop";
+import PageScrollTop from "./PageScrollTop";
 
 const Insurance = () => {
 	return (
 		<>
-			<ScrollTop />
+			<PageScrollTop />
 			<div
 				className='m-detail'
 				data-scrolling-animations='true'
@@ -92,7 +92,7 @@ const Insurance = () => {
 					<h2 className='s-title wow zoomInUp' data-wow-delay='0.5s'>
 						with the respective car insurance companies
 					</h2>
-					<div className='d-flex'>
+					<div className='car_brd2'>
 						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
 							<img src='media/brands/tata.png' alt='brand' />
 						</div>
@@ -141,122 +141,6 @@ const Insurance = () => {
 				</div>
 			</div>
 			{/* footer section  */}
-			<div className='b-info'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-md-3 col-xs-6'>
-							<aside
-								className='b-info__aside wow zoomInLeft'
-								data-wow-delay='0.3s'>
-								<article className='b-info__aside-article'>
-									<h3>OPENING HOURS</h3>
-									<div className='b-info__aside-article-item'>
-										<h6>Sales Department</h6>
-										<p>
-											Mon-Sat : 8:00am - 5:00pm
-											<br />
-											Sunday is closed
-										</p>
-									</div>
-								</article>
-								<article className='b-info__aside-article'>
-									<h3>About us</h3>
-									<p>
-										Established in the year 2002, Sushil Car Bazar is one of the
-										top & most trusted dealership for preowned luxury car.In
-										over 17 years of business history we have always had a
-										customer oriented approach & total customer satisfaction has
-										been our motive.
-									</p>
-								</article>
-							</aside>
-						</div>
-						<div className='col-md-3 col-xs-6'>
-							<div className='b-info__latest'>
-								<h3>LATEST AUTOS</h3>
-								<div
-									className='b-info__latest-article wow zoomInUp'
-									data-wow-delay='0.3s'>
-									<div className='b-info__latest-article-photo m-audi'></div>
-									<div className='b-info__latest-article-info'>
-										<h6>
-											<a href='detail.html'>HYUNDAI CRETA S PLUS</a>
-										</h6>
-										<p>
-											<span className='fa fa-tachometer'></span> 33,000 KM
-										</p>
-									</div>
-								</div>
-								<div
-									className='b-info__latest-article wow zoomInUp'
-									data-wow-delay='0.3s'>
-									<div className='b-info__latest-article-photo m-audiSpyder'></div>
-									<div className='b-info__latest-article-info'>
-										<h6>
-											<a href='#'>MERCEDES BENZ A-CLASS</a>
-										</h6>
-										<p>
-											<span className='fa fa-tachometer'></span> 8,000 KM
-										</p>
-									</div>
-								</div>
-								<div
-									className='b-info__latest-article wow zoomInUp'
-									data-wow-delay='0.3s'>
-									<div className='b-info__latest-article-photo m-aston'></div>
-									<div className='b-info__latest-article-info'>
-										<h6>
-											<a href='#'>VOLVO XC40 T4 R-DESIGN</a>
-										</h6>
-										<p>
-											<span className='fa fa-tachometer'></span> 20,000 KM
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className='col-md-3 col-xs-6'>
-							<address
-								className='b-info__contacts wow zoomInUp'
-								data-wow-delay='0.3s'>
-								<p>contact us</p>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-map-marker'></span>
-									<ol>
-										Plot No, 5 Block A1 Sector 11 DLF Faridabad, 11-12 Dividing
-										Road Pincode 121006
-									</ol>
-								</div>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-map-marker'></span>
-									<em>
-										<ol>Spaze Boulevard, Sector-47, Gurugram</ol>
-									</em>
-								</div>
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-phone'></span>
-									<ol>
-										+91 92509 22333
-										<br />
-										+91 98114 36332
-									</ol>
-								</div>
-
-								<div className='b-info__contacts-item'>
-									<span className='fa fa-envelope'></span>
-									<em>
-										<ol>sushilcarbazar@gmail.com</ol>
-									</em>
-								</div>
-							</address>
-							<address className='b-info__map'>
-								<a href='contacts.html'>Open Location Map</a>
-							</address>
-						</div>
-					</div>
-				</div>
-			</div>
 		</>
 	);
 };

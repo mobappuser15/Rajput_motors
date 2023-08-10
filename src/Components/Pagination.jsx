@@ -26,14 +26,19 @@ function Pagenation({ onPageChange, currentpage, totalPage }) {
 		return items;
 	};
 	return (
-		<Pagination style={{ paddingLeft: "148px", margin: "31px 0" }}>
-			<Pagination.Prev onClick={handlePrevClick} disabled={currentpage === 1} />
-			{generatePaginationItems()}
-			<Pagination.Next
-				onClick={handleNextClick}
-				disabled={currentpage === totalPage}
-			/>
-		</Pagination>
+		<div className='pagination_mn'>
+			<Pagination>
+				<Pagination.Prev
+					onClick={handlePrevClick}
+					disabled={currentpage === 1}
+				/>
+				{generatePaginationItems()}
+				<Pagination.Next
+					onClick={handleNextClick}
+					disabled={currentpage === totalPage}
+				/>
+			</Pagination>
+		</div>
 	);
 }
 

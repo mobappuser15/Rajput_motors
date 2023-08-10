@@ -30,7 +30,7 @@
 	text-align: center;
 	width: 100%;
 	margin-left: 0px;
-	margin-top: 10px;
+	/* margin-top: 10px; */
 }
 
 .prise_mn {
@@ -56,5 +56,7 @@
 		margin-top: 10px;
 		margin-bottom: 20px;
 		margin-left: 54px;
+	}
+	.filterbutton {
 	}
 }

@@ -193,7 +193,7 @@ a.m-langLink {
 }
 
 .b-topbar-social {
-	margin-top: 4px;
+	margin-top: -11px !important;
 }
 
 .b-nav__list ul li {
@@ -258,7 +258,7 @@ a.m-langLink {
 
 .b-slider img {
 	width: 100%;
-	max-height: 550px;
+	max-height: 406px;
 	object-fit: cover;
 }
 
@@ -1593,10 +1593,10 @@ a.m-langLink {
 
 .b-info__aside {
 	position: relative;
-	margin-top: -200px;
+	margin-top: -44px;
 	border-top: 3px solid #f76d2b;
 	padding: 35px 0 35px 0;
-	z-index: 100000;
+	/* z-index: 99465; */
 }
 
 .b-info__aside-article {
