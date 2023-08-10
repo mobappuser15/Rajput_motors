@@ -39,7 +39,7 @@ export default function HomePage() {
 	const [selectedValue, setSelectedValue] = useState(null);
 	const [searchResults, setSearchResults] = useState([]);
 	const [demo, setDemo] = useState([]);
-	const [reset, setReset] = useState([]);
+	// const [reset, setReset] = useState([]);
 	const [data, setData] = useState([]);
 	const [model, setModel] = useState([]);
 	const [source, setSource] = useState([]);
@@ -421,6 +421,9 @@ export default function HomePage() {
 	];
 
 	console.log(demo, " i am  demo ");
+	const reset = () => {
+		setShowdata(false);
+	};
 
 	return (
 		<div className=''>
@@ -584,7 +587,7 @@ export default function HomePage() {
 																	color: "white",
 																}}
 																id='searcgbtn'
-																onClick={reSet}
+																onClick={reset}
 																type='reset'
 																className='btn    btn-lg'>
 																<span>Reset</span>
