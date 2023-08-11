@@ -16,7 +16,7 @@ const Navbar = () => {
 	return (
 		<header className=' fixed-top'>
 			<Link to='/'>
-				<img onClick={reloadPage} className='' src='images/logo/logo-1.png' />
+				<img className='' src='images/logo/logo-1.png' />
 			</Link>
 			<nav className='' ref={navRef}>
 				<Link to='/' onClick={showNavbar}>

@@ -907,7 +907,7 @@ export default function HomePage() {
 
 													<div className='row' id='cardrow'>
 														{/* testing details */}
-														{demo
+														{stockdata
 															?.filter(
 																(item) =>
 																	item.programCode ===
