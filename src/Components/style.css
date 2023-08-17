@@ -286,6 +286,6 @@ input[type="range"]:focus {
 
 .detail-group {
 	padding: 15px;
-	border: 1px solid #b1b1b1;
+	/* border: 1px solid #b1b1b1; */
 	border-radius: 10px;
 }

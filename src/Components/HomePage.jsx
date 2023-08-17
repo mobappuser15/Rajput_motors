@@ -11,7 +11,7 @@ import "./detail.css";
 import PageScrollTop from "./PageScrollTop";
 import toast from "react-hot-toast";
 import ReactLoading from "react-loading";
-
+import { useLocation } from "react-router-dom";
 import Details from "./Details";
 import { styled } from "@mui/material/styles";
 
@@ -29,7 +29,7 @@ const breakPoints2 = [
 	{ width: 1200, itemsToShow: 2 },
 ];
 
-export default function HomePage() {
+export default function HomePage({ page }) {
 	const [stockdata, setStockdata] = useState([]);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 	const [result, setResult] = useState("");
@@ -66,6 +66,13 @@ export default function HomePage() {
 	const [selectedVariant, setSelectedVariant] = useState("");
 	const [showdata, setShowdata] = useState(false);
 	const [detailspage, setdetailspage] = useState(false);
+	const [methu, setMethu] = useState([]);
+	var [homepage, setHomepage] = useState(false);
+
+	const location = useLocation();
+	const queryParams = new URLSearchParams(location.search);
+	const pageParam = queryParams.get("page");
+	const pageValue = pageParam !== null ? pageParam : false;
 
 	// make list
 	useEffect(() => {
@@ -212,6 +219,7 @@ export default function HomePage() {
 				if (response.ok) {
 					const responseData = await response.json();
 					setStockdata(responseData?.UsedCarVehStockDetail);
+					setMethu(responseData?.UsedCarVehStockDetail);
 
 					// setDemo(responseData?.UsedCarVehStockDetail);
 				} else {
@@ -226,7 +234,7 @@ export default function HomePage() {
 
 		fetchData();
 	}, []);
-
+	console.log(homepage, "asdfbkjl;");
 	const singleProducthandle = (uniqueSerial) => {
 		const product = stockdata.find(
 			(item) => item.uniqueSerial === uniqueSerial
@@ -362,7 +370,6 @@ export default function HomePage() {
 			img: "70 Lac",
 		},
 	];
-
 	const Amountdatamin = [
 		{
 			id: 100000,
@@ -419,10 +426,13 @@ export default function HomePage() {
 			img: "70 Lac",
 		},
 	];
-
-	console.log(demo, " i am  demo ");
 	const reset = () => {
 		setShowdata(false);
+		setSelectedItem("");
+		setSelectmodel("");
+		setMinRange("");
+		setMaxRange("");
+		setStockdata(methu);
 	};
 
 	return (
@@ -510,7 +520,8 @@ export default function HomePage() {
 																		</option>
 																	))}
 																</select>
-																<span className='fa fa-caret-down'></span>
+
+																<div class='col-xs-12 col-md-3 col-lg-3'></div>
 															</div>
 															<div
 																className='col-xs-12 col-md-3 col-lg-3'
@@ -525,7 +536,6 @@ export default function HomePage() {
 																		</option>
 																	))}
 																</select>
-																<span className='fa fa-caret-down'></span>
 															</div>
 
 															<div
@@ -541,7 +551,6 @@ export default function HomePage() {
 																		</option>
 																	))}
 																</select>
-																<span className='fa fa-caret-down'></span>
 															</div>
 
 															<div
@@ -557,7 +566,6 @@ export default function HomePage() {
 																		</option>
 																	))}
 																</select>
-																<span className='fa fa-caret-down'></span>
 															</div>
 														</div>
 													</div>
@@ -664,11 +672,12 @@ export default function HomePage() {
 																			<div key={item.uniqueSerial} id='cardrow'>
 																				<Col>
 																					<div
-																						onClick={() =>
+																						onClick={() => {
 																							singleProducthandle(
 																								item.uniqueSerial
-																							)
-																						}
+																							);
+																							setHomepage(true);
+																						}}
 																						className=' card2 b-auto__main-item hidden-xs '>
 																						<img
 																							style={{
@@ -682,7 +691,6 @@ export default function HomePage() {
 																							}
 																							alt='nissan'
 																						/>
-
 																						<div
 																							className=' d-flex b-items__cars-one-info-title'
 																							style={{
@@ -705,44 +713,14 @@ export default function HomePage() {
 																							</div>
 																						</div>
 
-																						<div
-																							id='textitem'
-																							className='d-flex'
-																							style={{
-																								marginTop: "-4px",
-																							}}>
-																							<ul
-																								className='d-flex'
-																								style={{ fontSize: "" }}>
-																								<div className='b'>
-																									{item.vehOdometer} kms
-																								</div>
-
-																								<div
-																									className=''
-																									style={{
-																										marginLeft: "15px",
-																									}}>
-																									{item.exteriorColor}
-																								</div>
-																								<div
-																									className=''
-																									style={{
-																										marginLeft: "15px",
-																									}}>
-																									{item.vehFuelCode}
-																								</div>
-
-																								<div
-																									className=''
-																									style={{
-																										marginLeft: "15px",
-																									}}>
-																									{item.transmissionDesc}
-																								</div>
+																						<div class='rate_ts_mn'>
+																							<ul>
+																								<li>{item.vehOdometer} KMS</li>
+																								<li>{item.exteriorColor}</li>
+																								<li>{item.vehFuelCode}</li>
+																								<li>{item.transmissionDesc}</li>
 																							</ul>
 																						</div>
-
 																						<span
 																							style={{
 																								marginLeft: "20px",
@@ -1038,6 +1016,7 @@ export default function HomePage() {
 							) : (
 								<>
 									{/* Search Stock data on sale section */}
+
 									<section
 										className='b-homeAuto hidden-xs'
 										style={{ marginTop: "-38px" }}>
@@ -1108,35 +1087,12 @@ export default function HomePage() {
 																						</div>
 																					</div>
 
-																					<div
-																						id='textitem'
-																						className='d-flex'
-																						style={{
-																							marginTop: "-4px",
-																						}}>
-																						<ul
-																							className='d-flex'
-																							style={{ fontSize: "" }}>
-																							<div className='b'>
-																								{item.vehOdometer} kms
-																							</div>
-
-																							<div
-																								className=''
-																								style={{ marginLeft: "20px" }}>
-																								{item.exteriorColor}
-																							</div>
-																							<div
-																								className=''
-																								style={{ marginLeft: "20px" }}>
-																								{item.vehFuelCode}
-																							</div>
-
-																							<div
-																								className=''
-																								style={{ marginLeft: "20px" }}>
-																								{item.transmissionDesc}
-																							</div>
+																					<div class='rate_ts_mn'>
+																						<ul>
+																							<li>{item.vehOdometer} KMS</li>
+																							<li>{item.exteriorColor}</li>
+																							<li>{item.vehFuelCode}</li>
+																							<li>{item.transmissionDesc}</li>
 																						</ul>
 																					</div>
 
@@ -1777,7 +1733,6 @@ WELCOME TO SUSHIL CARS  section */}
 									</div>
 								</div>
 							</section>
-
 							<section className='b-asks'>
 								<div className='container'>
 									<div className='row'>
@@ -1786,13 +1741,13 @@ WELCOME TO SUSHIL CARS  section */}
 												<div className='b-asks__first-circle'>
 													<span className='fa fa-search'></span>
 												</div>
-												<div className='b-asks__first-info'>
+												<Link to='/detailsdata' className='b-asks__first-info'>
 													<h2>ARE YOU LOOKING FOR A CAR?</h2>{" "}
 													<p>
 														Search Our Inventory With Thousands Of Cars And More
 														Cars Are Adding On Daily Basis
 													</p>
-												</div>
+												</Link>
 												<div className='b-asks__first-arrow'>
 													<Link to='/detailsdata'>
 														<span className='fa fa-angle-right'></span>
@@ -1805,7 +1760,7 @@ WELCOME TO SUSHIL CARS  section */}
 												<div className='b-asks__first-circle'>
 													<span className='fa fa-rupee'></span>
 												</div>
-												<div className='b-asks__first-info'>
+												<Link to='/salecar' className='b-asks__first-info'>
 													<h2 style={{ color: "white" }}>
 														DO YOU WANT TO SELL A CAR?
 													</h2>
@@ -1813,7 +1768,7 @@ WELCOME TO SUSHIL CARS  section */}
 														Search Our Inventory With Thousands Of Cars And More
 														Cars Are Adding On Daily Basis
 													</p>
-												</div>
+												</Link>
 												<div className='b-asks__first-arrow'>
 													<Link to='/salecar'>
 														<span className='fa fa-angle-right'></span>

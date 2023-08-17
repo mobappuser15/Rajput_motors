@@ -8,7 +8,7 @@ header {
 	color: white;
 	font-size: 16px;
 	padding-left: 54px;
-	font-family: "Outfit", sans-serif;
+	font-family: "Open Sans", sans-serif;
 }
 
 nav a {
@@ -24,7 +24,6 @@ nav a:hover {
 a:hover,
 a:focus {
 	color: #f76d2b;
-	border-color: #f76d2b;
 	text-decoration: none;
 	/* border-bottom: 3px solid #f76d2b; */
 }
@@ -47,7 +46,7 @@ header .nav-btn {
 		background-color: #222;
 		color: #fff;
 		display: flex;
-		font-family: Outfit, sans-serif;
+		font-family: "Open Sans", sans-serif;
 		font-size: 16px;
 		height: auto;
 		justify-content: space-between;

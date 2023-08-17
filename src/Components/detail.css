@@ -112,6 +112,14 @@ h3 {
 	/* body {
 		background-color: red;
 	} */
+	.car_mn2 canvas {
+		/* margin-left: 145px !important; */
+		height: auto !important;
+		width: 80% !important;
+		margin: 0 auto !important;
+		text-align: center;
+		margin-top: 22px !important;
+	}
 	#cardrow {
 		margin-top: 10px !important;
 		align-items: stretch;
@@ -353,6 +361,7 @@ button:active {
 	border-radius: 4px;
 	padding: 0px 3px;
 	margin-bottom: 15px;
+	font: 400 14px "Open Sans", sans-serif;
 }
 
 .iMqSPA {
@@ -621,7 +630,7 @@ button:active {
 		display: inline;
 	}
 	#selectdata2 {
-		width: 95px;
+		width: 108px;
 		font-size: 10px;
 		color: #000;
 		border-radius: 4px;
@@ -789,15 +798,15 @@ button:active {
 }
 
 .btn-sm {
-	font-size: 12px;
 	border: none;
 	background-color: #f76d2b !important;
 	color: #fff !important;
-	padding: 5px 30px 10px !important;
+	padding: 10px 30px 10px !important;
 	margin: 6px 0px 1px 0px;
 	text-align: center;
 	justify-content: center;
-	margin-left: 20px !important;
+	margin-left: 0;
+	font-size: 14px;
 }
 
 .phone_number {

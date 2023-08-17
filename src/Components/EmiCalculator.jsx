@@ -20,8 +20,8 @@ import "./detail.css";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const EmiCalculator = () => {
-	const [pAmount, setpAmount] = useState(50000);
-	const [interest, setinterest] = useState(7);
+	const [pAmount, setpAmount] = useState(100000);
+	const [interest, setinterest] = useState(20);
 	const [duration, setDuration] = useState(84);
 	const maxValue = 50000000;
 	const intMax = 20;
@@ -42,49 +42,10 @@ const EmiCalculator = () => {
 	const TotalAmountOfInterest = Math.round(totalAmt - TotalAmountOfCredit);
 
 	const DataSheet = {
-		marksTenure: [
-			{ value: 0, label: "0" },
-			{ value: 12, label: "1Y" },
-			{ value: 24, label: "2Y" },
-			{ value: 36, label: "3Y" },
-			{ value: 48, label: "4Y" },
-			{ value: 60, label: "5Y" },
-			{ value: 72, label: "6Y" },
-			{ value: 84, label: "7Y" },
-		],
+		marksTenure: [{ value: 84, label: "7Y" }],
 
-		marksInt: [
-			{ value: 0, label: "0" },
-			{ value: 1, label: "1%" },
-			{ value: 2, label: "2%" },
-			{ value: 3, label: "3%" },
-			{ value: 4, label: "4%" },
-			{ value: 5, label: "5%" },
-			{ value: 6, label: "6%" },
-			{ value: 7, label: "7%" },
-			{ value: 8, label: "8%" },
-			{ value: 9, label: "9%" },
-
-			{ value: 10, label: "10%" },
-			{ value: 11, label: "11%" },
-			{ value: 12, label: "12%" },
-			{ value: 13, label: "13%" },
-			{ value: 14, label: "14%" },
-			{ value: 15, label: "15%" },
-			{ value: 16, label: "16%" },
-			{ value: 17, label: "17%" },
-			{ value: 18, label: "18%" },
-			{ value: 19, label: "19%" },
-			{ value: 20, label: "20%" },
-		],
-		marksAmt: [
-			{ value: 0, label: "0" },
-			{ value: 10000000, label: "1cr" },
-			{ value: 20000000, label: "2cr" },
-			{ value: 30000000, label: "3cr" },
-			{ value: 40000000, label: "4cr" },
-			{ value: 50000000, label: "5cr" },
-		],
+		marksInt: [{ value: 20, label: "20%" }],
+		marksAmt: [{ value: 50000000, label: "5cr" }],
 	};
 
 	const data = {
@@ -92,7 +53,7 @@ const EmiCalculator = () => {
 		datasets: [
 			{
 				data: [TotalAmountOfInterest, pAmount],
-				backgroundColor: ["pink", "lightblue"],
+				backgroundColor: ["#f76d2b", "#9b9b9b"],
 				fontSize: "20px",
 			},
 		],
@@ -169,10 +130,13 @@ const EmiCalculator = () => {
 									/>
 								</div>
 
-								<div className=' col-sm-5 car_mn'>
+								<div className=' col-sm-4 car_mn'>
 									<div className='detail-group'>
 										<Typography gutterBottom>
 											<strong style={{ fontSize: "17px" }}>Loan Amount</strong>
+											<strong style={{ fontSize: "17px", marginLeft: "50px" }}>
+												Rs. {pAmount.toLocaleString("en-IN")}
+											</strong>
 										</Typography>
 										<Box md={{ width: 700 }}>
 											<Slider
@@ -191,7 +155,11 @@ const EmiCalculator = () => {
 										</Box>
 										<Typography gutterBottom>
 											<strong style={{ fontSize: "17px" }}>
-												Interest Rate %
+												Interest Rate
+											</strong>
+
+											<strong style={{ fontSize: "17px", marginLeft: "50px" }}>
+												{interest} %
 											</strong>
 										</Typography>
 										{/* <p>{pAmount}</p> */}
@@ -212,6 +180,10 @@ const EmiCalculator = () => {
 
 										<Typography style={{ fontSize: "17px" }} gutterBottom>
 											<strong>Tenure (Manths)</strong>
+											<strong style={{ marginLeft: "50px" }}>
+												{" "}
+												{duration} months
+											</strong>
 										</Typography>
 										<Box md={{ width: 700 }}>
 											<Slider
@@ -227,85 +199,50 @@ const EmiCalculator = () => {
 											/>
 										</Box>
 									</div>
-									<Table
-										style={{
-											width: "100%",
-											border: "2px solid #ccc",
-											backgroundColor: "pink",
-											marginTop: "10px",
-											fontSize: "15px",
-										}}
-										aria-label='simple table'>
-										<TableRow>
-											<TableCell>
-												<strong style={{ fontSize: "17px" }}>
-													Loan Amount
-												</strong>
-											</TableCell>
-											<TableCell>
-												<strong style={{ fontSize: "17px" }}>
-													Rs. {pAmount.toLocaleString("en-IN")}
-												</strong>
-											</TableCell>
-										</TableRow>
-
-										<TableRow>
-											<TableCell>
-												<strong style={{ fontSize: "17px" }}>Interest %</strong>
-											</TableCell>
-											<TableCell>
-												<strong style={{ fontSize: "17px" }}>
-													{interest} %
-												</strong>
-											</TableCell>
-										</TableRow>
-
-										<TableRow>
-											<TableCell>
-												<strong style={{ fontSize: "17px" }}>
-													Tenure (Months)
-												</strong>
-											</TableCell>
-											<TableCell style={{ fontSize: "17px" }}>
-												<strong>{duration} months</strong>
-											</TableCell>
-										</TableRow>
-
-										<TableRow>
-											<TableCell style={{ fontSize: "17px" }}>
-												<strong>EMI (Monthly)</strong>
-											</TableCell>
-											<TableCell style={{ fontSize: "17px" }}>
-												<strong>Rs. {emi}</strong>
-											</TableCell>
-										</TableRow>
-
-										<TableRow>
-											<TableCell>
-												<strong style={{ fontSize: "17px" }}>
-													Total Interest
-												</strong>
-											</TableCell>
-											<TableCell style={{ fontSize: "17px" }}>
-												<strong>Rs. {TotalAmountOfInterest}</strong>
-											</TableCell>
-										</TableRow>
-
-										<TableRow>
-											<TableCell style={{ fontSize: "17px" }}>
-												<strong style={{ fontSize: "17px" }}>
-													Total Payment
-													<br /> (Loan Amount + Interest)
-												</strong>
-											</TableCell>
-											<TableCell style={{ fontSize: "17px" }}>
-												<strong>Rs. {totalAmt ? totalAmt : 0}</strong>
-											</TableCell>
-										</TableRow>
-									</Table>
 								</div>
 
-								<div className='col-sm-5 car_mn2'>
+								<div
+									className='col-sm-2'
+									id='circledata'
+									style={{ marginTop: "46px", marginLeft: "98px" }}>
+									<Typography gutterBottom>
+										<strong style={{ fontSize: "15px" }}>
+											Interest Amount
+										</strong>
+										<br />
+										<strong style={{ fontSize: "17px" }}>
+											Rs. {TotalAmountOfInterest.toLocaleString("en-IN")}
+										</strong>
+									</Typography>
+
+									<br />
+
+									<Typography gutterBottom>
+										<strong style={{ fontSize: "15px" }}>
+											Monthly Loan EMI
+										</strong>
+										<br />
+										<strong style={{ fontSize: "17px" }}>
+											Rs. {emi.toLocaleString("en-IN")}
+										</strong>
+									</Typography>
+									<br />
+
+									<Typography gutterBottom>
+										<strong style={{ fontSize: "15px" }}>
+											Total Amount Payable
+										</strong>{" "}
+										<br />
+										<strong style={{ fontSize: "17px" }}>
+											Rs.{" "}
+											{totalAmt.toLocaleString("en-IN")
+												? totalAmt.toLocaleString("en-IN")
+												: 0}
+										</strong>
+									</Typography>
+								</div>
+
+								<div className='col-sm-4 car_mn2 canvas'>
 									<Doughnut data={data} />
 								</div>
 							</div>

@@ -487,22 +487,19 @@ a.m-langLink {
 	text-align: left;
 	border-radius: 5px;
 	margin-left: 2px;
-	background-color: #f2f3f5;
-	font: 400 14px "Outfit", sans-serif;
-	/* background: transparent; */
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	-ms-appearance: none;
-	appearance: none !important;
+	background: transparent;
 	cursor: pointer;
-	color: #7a7979 !important;
-	font-weight: bold;
+	color: #565454 !important;
+	border: 1px solid #eeeeee;
+	font: 400 13px "Open Sans", sans-serif;
+	background-color: #f2f3f5;
 }
 
 .b-search__main-form select + span.fa {
 	top: 19px;
 	right: 45px;
 	position: absolute;
+	display: none;
 }
 
 .b-search__main-form select:focus {
@@ -1048,6 +1045,7 @@ a.m-langLink {
 	border-radius: 100%;
 	text-align: center;
 	margin-right: 15px;
+	margin-top: 20px;
 }
 
 .b-asks__first-circle span {
@@ -1073,8 +1071,10 @@ a.m-langLink {
 }
 
 .b-asks__first-info p {
+	line-height: 22px !important;
 	font: 400 13px "Outfit", sans-serif;
 	margin: 0;
+	padding: 0 86px;
 }
 
 .b-asks__first-arrow {

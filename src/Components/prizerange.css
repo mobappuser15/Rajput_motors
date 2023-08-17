@@ -50,13 +50,16 @@
 		margin-top: -14px;
 	}
 	.prizeslider {
-		width: 267px !important;
+		width: 85%;
 		height: 6px;
 		background-color: rgb(162, 165, 167);
-		margin-top: 10px;
+		margin: 0 auto;
+		margin-top: 12px;
 		margin-bottom: 20px;
-		margin-left: 54px;
 	}
 	.filterbutton {
+		margin: 0 auto !important;
+		text-align: center;
+		margin-bottom: 10px !important;
 	}
 }

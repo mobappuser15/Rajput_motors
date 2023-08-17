@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactLoading from "react-loading";
+import PageScrollTop from "./PageScrollTop";
 
 const Contact = ({ loading }) => {
 	return (
 		<div>
 			<>
+				<PageScrollTop />
 				<div className='m-contacts'>
 					<section className='b-pageHeader'>
 						<div className='container'>
@@ -43,37 +45,35 @@ const Contact = ({ loading }) => {
 														Plot No, 5 Block A1 Sector 11 DLF Faridabad ,11-12
 														Dividing Road Pincode 121006
 													</p>{" "}
-													<span className='fa fa-home'></span>
+													<span
+														className='fa fa-home'
+														style={{ marginTop: "10px" }}></span>
 													ADDRESS-2
 													<p style={{ color: "black" }}>
 														Spaze Boulevard, Sector-47, Gurugram
 													</p>
 												</div>
 												<div className='b-contacts__address-info-main-item'>
-													<div className='row'>
-														<div className=''>
-															<span className='fa fa-phone'></span>
-															PHONE
-														</div>
-														<div className=''>
-															<p style={{ color: "black" }}>
-																+91 92509 22333 / +91 98114 36332
-															</p>
-														</div>
+													<div className=''>
+														<span className='fa fa-phone'></span>
+														PHONE
+													</div>
+													<div className=''>
+														<p style={{ color: "black" }}>
+															+91 92509 22333 / +91 98114 36332
+														</p>
 													</div>
 												</div>
 												<div className='b-contacts__address-info-main-item'></div>
 												<div className='b-contacts__address-info-main-item'>
-													<div className='row'>
-														<div className=''>
-															<span className='fa fa-envelope'></span>
-															EMAIL
-														</div>
-														<div className=''>
-															<p style={{ color: "black" }}>
-																sushilcarbazar@gmail.com
-															</p>
-														</div>
+													<div className=''>
+														<span className='fa fa-envelope'></span>
+														EMAIL
+													</div>
+													<div className=''>
+														<p style={{ color: "black" }}>
+															sushilcarbazar@gmail.com
+														</p>
 													</div>
 												</div>
 											</address>

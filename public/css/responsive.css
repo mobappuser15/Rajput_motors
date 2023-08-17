@@ -671,6 +671,23 @@
 /*480-599*/
 
 @media screen and (max-width: 599px) {
+	#circledata {
+		margin-top: 0 !important;
+		margin-left: 0px !important;
+		text-align: center;
+	}
+	.car_mn2 canvas {
+		/* margin-left: 145px !important; */
+		margin-top: 34px !important;
+		height: 88% !important;
+		width: 100% !important;
+	}
+	.car_mn2 canvas {
+		margin-top: 20px !important;
+		height: 88% !important;
+		width: 100% !important;
+		text-align: center;
+	}
 	.b-contacts__address-info {
 		margin-top: 20px;
 	}
@@ -708,9 +725,13 @@
 		box-shadow: rgba(0, 0, 0, 0.24) 0px 4px 10px;
 	}
 	.car_mn2 {
-		margin-left: 0 !important;
+		margin-left: 0px !important;
+		height: auto !important;
+		width: 100% !important;
 	}
 	.car_mn2 canvas {
+		margin: 0px !important;
+		height: auto !important;
 		width: 100% !important;
 	}
 	.mt-40 {
@@ -1310,6 +1331,7 @@ img {
 		border-radius: 100%;
 		text-align: center;
 		margin-right: 15px;
+		margin-top: 20px;
 	}
 	.b-asks__first-circle .fa {
 		font-size: 17px;
@@ -1336,8 +1358,14 @@ img {
 		margin-top: 20px;
 	}
 	.b-asks__first {
-		padding: 10px 0 10px 30px;
+		padding: 17px 0 5px 10px;
 		position: relative;
+	}
+	.b-asks__first-info p {
+		line-height: 20px !important;
+		font: 400 12px "Outfit", sans-serif;
+		margin: 0;
+		padding: 0 66px;
 	}
 	.b-count__item h2 {
 		font: 700 30px "Outfit", sans-serif;

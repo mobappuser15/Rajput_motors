@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
 	return (
@@ -12,10 +13,7 @@ function Footer() {
 									<h3>OPENING HOURS</h3>
 									<div class='b-info__aside-article-item'>
 										<h6>Sales Department</h6>
-										<p>
-											Mon-Sat : 8:00am - 5:00pm
-											<br /> Sunday is closed
-										</p>
+										<p>Mon-Sun : 10:00am - 7:00pm</p>
 									</div>
 								</article>
 								<article class='b-info__aside-article'>
@@ -61,10 +59,19 @@ function Footer() {
 									<em>
 										<ol>sushilcarbazar@gmail.com</ol>
 									</em>
+									<address class='b-info__map'>
+										<Link
+											style={{
+												marginLeft: "-125px",
+												marginTop: "-30px",
+
+												textDecoration: "none",
+											}}
+											to='/contact'>
+											Open Location Map
+										</Link>
+									</address>
 								</div>
-							</address>
-							<address class='b-info__map'>
-								<a href='contacts.html'>Open Location Map</a>
 							</address>
 						</div>
 					</div>

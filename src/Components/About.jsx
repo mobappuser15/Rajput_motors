@@ -4,12 +4,14 @@ import "./detail.css";
 import styled from "./Item";
 import "./about.css";
 import ReactLoading from "react-loading";
+import PageScrollTop from "./PageScrollTop";
 
 function About({ reloadPage }) {
 	// Simulate page loading effect for demonstration purposes
 
 	return (
 		<div className=''>
+			<PageScrollTop />
 			<>
 				<div className='m-about'>
 					<section className='b-pageHeader'>
@@ -23,9 +25,7 @@ function About({ reloadPage }) {
 								Home
 							</Link>
 							<span className='fa fa-angle-right'></span>
-							<Link to='/about' className='b-breadCumbs__page m-active'>
-								About Us
-							</Link>
+							<Link className='b-breadCumbs__page m-active'>About Us</Link>
 						</div>
 					</div>
 					<section className='b-best'>
@@ -159,7 +159,7 @@ function About({ reloadPage }) {
 										<div className='b-more__info-block'>
 											<div className='b-more__info-block-title'>
 												Fair Price for Everyone
-												<a className='j-more'>
+												<a className=''>
 													<span className='fa fa-angle-left'></span>
 												</a>
 											</div>

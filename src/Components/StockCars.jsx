@@ -635,9 +635,14 @@ const StockCars = () => {
 	};
 
 	const reloadPage = () => {
-		window.location.reload();
+		window.location.reload(false);
+		console.log("refersh data");
 	};
 
+	const reset = () => {
+		setShowdata(showdata);
+		console.log("clear filter data");
+	};
 	return (
 		<>
 			<PageScrollTop />
@@ -778,10 +783,16 @@ const StockCars = () => {
 									<div
 										className='filterbutton visible-xs'
 										style={{ margin: "10px 20px 10px 60px" }}>
-										<button className=' btn-sm' onClick={handleSaveData}>
+										<button
+											id='filter_buton'
+											className=' btn-sm'
+											onClick={handleSaveData}>
 											Search
 										</button>
-										<button className=' btn-sm' onClick={reloadPage}>
+										<button
+											id='filter_buton'
+											className=' btn-sm'
+											onClick={reloadPage}>
 											Reset
 										</button>
 									</div>
@@ -874,7 +885,7 @@ const StockCars = () => {
 													onClick={handleSaveData}
 													value={selectfuel}
 													onChange={handleSelectChange4}>
-													<option value=''> Fuel-type</option>
+													<option value=''> Fuel Type</option>
 													{fueldata.map((item, index) => (
 														<option key={index} value={item.code}>
 															{item.description}
@@ -893,6 +904,7 @@ const StockCars = () => {
 											className=''
 											style={{ alignItems: "center" }}>
 											<button
+												type='reset'
 												style={{
 													color: "black",
 

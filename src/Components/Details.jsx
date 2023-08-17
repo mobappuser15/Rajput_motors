@@ -33,6 +33,10 @@ function Details({ selectedProduct }) {
 	const [error, setError] = useState("");
 	const [changeimage, setchangeimage] = useState();
 	const [zoom, setZoom] = useState(null);
+	const [mobileError, setMobileError] = useState("");
+	const [pincodeError, setPincodeError] = useState("");
+	const [captchaError, setCaptchaError] = useState("");
+	const [modalOpen, setModalOpen] = useState(false);
 
 	const generateNumbers = () => {
 		setNum1(Math.floor(Math.random() * 10));
@@ -40,25 +44,36 @@ function Details({ selectedProduct }) {
 	};
 
 	const resetCaptcha = () => {
+		setNum1(Math.floor(Math.random() * 10));
+		setNum2(Math.floor(Math.random() * 10));
 		setUserAnswer("");
-		setMessage("");
-		setError("");
-		generateNumbers();
 	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-
-		const sum = num1 + num2;
-
-		if (parseInt(userAnswer) === sum) {
-			setMessage("Correct answer!");
-			setError("");
-			resetCaptcha();
+	const handleSubmit = () => {
+		if (mobile.length !== 10) {
+			setMobileError("Mobile number must be exactly 10 digits");
 		} else {
-			setMessage("");
-			setError("Please Enter captcha code");
-			setUserAnswer("");
+			setMobileError("");
+		}
+
+		if (pincode.length !== 4) {
+			setPincodeError("Pincode must be exactly 4 digits");
+		} else {
+			setPincodeError("");
+		}
+
+		if (parseInt(userAnswer) !== num1 + num2) {
+			setCaptchaError("Captcha answer is incorrect");
+		} else {
+			setCaptchaError("");
+		}
+
+		if (
+			mobile.length === 10 &&
+			pincode.length === 4 &&
+			parseInt(userAnswer) === num1 + num2
+		) {
+			setModalOpen(true);
 		}
 	};
 
@@ -69,13 +84,67 @@ function Details({ selectedProduct }) {
 
 	const closeModal = () => {
 		setSelectedImage(null);
-		// setIsModalOpen(false);
+		setModalOpen(false);
 	};
 
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		const fetchData = async () => {
+			const url =
+				"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+			const headers = {
+				ApplicationMode: "ONLINE",
+				EnvironmentType: "DEMO",
+				BrandCode: "UC",
+				CountryCode: "IN",
+				"Content-Type": "application/json",
+			};
+			const data = {
+				brandCode: "UC",
+				countryCode: "IN",
+				companyId: "SUSHIL",
+				budgetFrom: 0,
+				budgetTo: 2000000,
+				vehBrandCode: "ALL",
+				vehModelCode: "HECTOR",
+				vehFuel: "PETROL",
+				loginCompanyID: "ORBIT",
+				loginUserId: "SULTAN",
+				loginIpAddress: "192.168.10.32",
+			};
+
+			try {
+				const response = await fetch(url, {
+					method: "POST",
+					headers: headers,
+					body: JSON.stringify(data),
+				});
+
+				if (response.ok) {
+					const responseData = await response.json();
+					setStockdata(responseData?.UsedCarVehStockDetail);
+				} else {
+					throw new Error(
+						`Request failed with status code: ${response.status}`
+					);
+				}
+			} catch (error) {
+				console.error("Error:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const reloadPage = () => {
+		window.location.reload();
+		// toast.success("Page  Loading ! ");
+	};
+
 	const HandleDataSave = (e) => {
 		e.preventDefault();
+		// const isValid = isFormValid();
 
 		const Datasecond = {
 			brandCode: "UC",
@@ -136,7 +205,7 @@ function Details({ selectedProduct }) {
 		};
 
 		fetch(
-			" https://mobile.orbitsys.com/OrbitsysSmbApiDemo/Prospect/SaveNewProspect",
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/Prospect/SaveNewProspect",
 			{
 				method: "POST",
 				headers: {
@@ -152,71 +221,14 @@ function Details({ selectedProduct }) {
 			.then((response) => response.json())
 			.then((data) => {
 				toast.success(data.result);
-				// alert(data.result);
 				navigate("/");
-
-				// Handle the response data here
-				// console.log("Response:", data);
 			})
 			.catch((error) => {
-				// Handle any errors
-				// console.error("Error:", error);
-			});
-
-		// console.log(Datasecond, "secontdata");
-	};
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const url =
-				"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
-			const headers = {
-				ApplicationMode: "ONLINE",
-				EnvironmentType: "DEMO",
-				BrandCode: "UC",
-				CountryCode: "IN",
-				"Content-Type": "application/json",
-			};
-			const data = {
-				brandCode: "UC",
-				countryCode: "IN",
-				companyId: "SUSHIL",
-				budgetFrom: 0,
-				budgetTo: 2000000,
-				vehBrandCode: "ALL",
-				vehModelCode: "HECTOR",
-				vehFuel: "PETROL",
-				loginCompanyID: "ORBIT",
-				loginUserId: "SULTAN",
-				loginIpAddress: "192.168.10.32",
-			};
-
-			try {
-				const response = await fetch(url, {
-					method: "POST",
-					headers: headers,
-					body: JSON.stringify(data),
-				});
-
-				if (response.ok) {
-					const responseData = await response.json();
-					setStockdata(responseData?.UsedCarVehStockDetail);
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			} catch (error) {
+				// Handle API call errors
 				console.error("Error:", error);
-			}
-		};
-
-		fetchData();
-	}, []);
-
-	const reloadPage = () => {
-		window.location.reload();
-		// toast.success("Page  Loading ! ");
+				// You might want to show an error message here
+			});
+		closeModal();
 	};
 
 	return (
@@ -242,9 +254,7 @@ function Details({ selectedProduct }) {
 							Home
 						</Link>
 						<span className='fa fa-angle-right'></span>
-						<a href='/details' className='b-breadCumbs__page m-active'>
-							Detail
-						</a>
+						<a className='b-breadCumbs__page m-active'>Detail</a>
 					</div>
 				</div>
 
@@ -615,16 +625,32 @@ function Details({ selectedProduct }) {
 															type='number'
 															placeholder='Please Enter Phone No.'
 															name='mobile'
-															onChange={(e) => setmobile(e.target.value)}
+															onChange={(e) => {
+																setmobile(e.target.value);
+																setMobileError(""); // Clear the error when the user starts typing
+															}}
 														/>
+														{mobileError && (
+															<span style={{ color: "red" }}>
+																{mobileError}
+															</span>
+														)}
 
 														<input
 															className='phone_number'
 															type='number'
 															placeholder=' Please Enter Pincode'
 															name='pincode'
-															onChange={(e) => setpincode(e.target.value)}
+															onChange={(e) => {
+																setpincode(e.target.value);
+																setPincodeError(""); // Clear the error when the user starts typing
+															}}
 														/>
+														{pincodeError && (
+															<span style={{ color: "red" }}>
+																{pincodeError}
+															</span>
+														)}
 
 														<form>
 															<span
@@ -694,7 +720,7 @@ function Details({ selectedProduct }) {
 														</button>
 
 														{/* popup message */}
-														{!error && (
+														{!mobileError && (
 															<div className=''>
 																<div className='row'>
 																	<div

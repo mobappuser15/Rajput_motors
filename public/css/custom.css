@@ -631,17 +631,21 @@ body {
 	padding: 0;
 	margin-top: 44px;
 	position: absolute;
-	right: 54%;
+	right: 61%;
 }
 
 .pls1 img {
 }
 
 .car_mn2 {
-	margin-left: 122px;
+	margin-left: 65px;
 }
 
 .car_mn2 canvas {
+	/* margin-left: 145px !important; */
+	margin-top: 34px !important;
+	height: 88% !important;
+	width: 64% !important;
 }
 
 .hqNMZF {
@@ -712,4 +716,14 @@ body {
 
 .b-topbar-social ul li img {
 	width: 20px !important;
+}
+
+.MuiSlider-colorSecondary {
+	color: #f76d2b !important;
+}
+
+#filter_buton {
+	margin-left: 20px !important;
+	padding: 6px 30px 6px !important;
+	margin-bottom: 10px;
 }

@@ -8,6 +8,7 @@ import {
 	useLocation,
 	Navigate,
 } from "react-router-dom";
+
 import Gellery from "./Components/Gellery";
 import Contact from "./Components/Contact";
 import Submit1 from "./Components/Submit1";
@@ -33,8 +34,10 @@ import "./App.css";
 // import AdminDash from "./Pages/AdminDash";
 import { Header, Container } from "react-bootstrap";
 import ReactLoading from "react-loading";
+import { useState } from "react";
 
 export default function App({ isLoggedIn }) {
+	const [page, setPage] = useState(false);
 	const reloadPage = () => {
 		window.location.reload();
 		// toast.success("Page  Loading ! ");
@@ -57,7 +60,7 @@ export default function App({ isLoggedIn }) {
 					element={isLoggedIn ? <DashBoard /> : <Navigate to='/homepage' />}
 					exact
 				/>
-				<Route exact path='/' element={<HomePage />} exact />
+				<Route exact path='/' element={<HomePage page={page} />} exact />
 				<Route path='/insurence' element={<Insurance />} />{" "}
 				<Route path='/about' element={<About />} />{" "}
 				<Route path='/salecar' element={<Submit1 />} />{" "}
@@ -70,7 +73,7 @@ export default function App({ isLoggedIn }) {
 				<Route path='/submit2' element={<Submit2 />} />{" "}
 				<Route path='/carloans' element={<CarLoan />} />{" "}
 				{/* <Route path='/Addvechils' element={<AddVechil />} />{" "}
-                        				<Route path='/stocktable' element={<StoreVechileTable />} />{" "} */}{" "}
+                                                                                                        				<Route path='/stocktable' element={<StoreVechileTable />} />{" "} */}{" "}
 			</Routes>{" "}
 			<Toaster
 				position='top-center'

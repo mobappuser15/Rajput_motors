@@ -4,6 +4,7 @@ import Submit4 from "./Submit4";
 import { Link, useNavigate } from "react-router-dom";
 import Searchdata from "./Searchdata";
 import ScrollTop from "./ScrollTop";
+import PageScrollTop from "./PageScrollTop";
 
 const Submit1 = () => {
 	const [num1, setNum1] = useState(1);
@@ -520,7 +521,7 @@ const Submit1 = () => {
 		// Return true if all required fields are filled, otherwise false
 		const isValid =
 			selectedItem.trim() !== "" &&
-			selectverient.trim() !== "" &&
+			// selectverient.trim() !== "" &&
 			// Add validation checks for other required fields here
 			// For example:
 			selectmfy.trim() !== "" &&
@@ -534,7 +535,7 @@ const Submit1 = () => {
 		// Update the error state for each field
 		setErrors({
 			selectedItem: selectedItem.trim() === "",
-			selectverient: selectverient.trim() === "",
+			// selectverient: selectverient.trim() === "",
 			selectmfy: selectmfy.trim() === "",
 			selectfuel: selectfuel.trim() === "",
 			selecttransmission: selecttransmission.trim() === "",
@@ -549,7 +550,7 @@ const Submit1 = () => {
 
 	return (
 		<div style={{ margingTop: "40px" }}>
-			<ScrollTop />
+			<PageScrollTop />
 			{/* header section */}
 			<div class='m-submit1' data-scrolling-animations='true'>
 				<section class='b-pageHeader'>
@@ -564,10 +565,7 @@ const Submit1 = () => {
 							Home
 						</Link>
 						<span class='fa fa-angle-right'></span>
-						<a href='submit1.html' class='b-breadCumbs__page m-active'>
-							{" "}
-							Submit a Vehicle
-						</a>
+						<a class='b-breadCumbs__page m-active'> Sell Car</a>
 					</div>
 				</div>
 			</div>
@@ -634,10 +632,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectedItem && (
 															<span style={{ color: "red" }}>
-																Please select Make
+																Please Select Make
 															</span>
 														)}
 													</div>
@@ -658,10 +655,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectmodel && (
 															<span style={{ color: "red" }}>
-																Please select Model
+																Please Select Model
 															</span>
 														)}
 													</div>
@@ -683,10 +679,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectverient && (
 															<span style={{ color: "red" }}>
-																Please select Varient
+																Please Select Variant
 															</span>
 														)}
 													</div>
@@ -708,10 +703,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectmfy && (
 															<span style={{ color: "red" }}>
-																Please select Year
+																Please Select Year
 															</span>
 														)}
 													</div>
@@ -733,10 +727,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectfuel && (
 															<span style={{ color: "red" }}>
-																Please select Fuel
+																Please Select Fuel
 															</span>
 														)}
 													</div>
@@ -759,10 +752,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectmodel && (
 															<span style={{ color: "red" }}>
-																Please select Model
+																Please Select Model
 															</span>
 														)}
 													</div>
@@ -783,10 +775,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectextirecolor && (
 															<span style={{ color: "red" }}>
-																Please select Exterior Color
+																Please Select Exterior Color
 															</span>
 														)}
 													</div>
@@ -833,10 +824,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selectmfm && (
 															<span style={{ color: "red" }}>
-																Please select Month
+																Please Select Month
 															</span>
 														)}
 													</div>
@@ -857,10 +847,9 @@ const Submit1 = () => {
 																</option>
 															))}
 														</select>
-														<span class='fa fa-caret-down'></span>
 														{errors.selecttransmission && (
 															<span style={{ color: "red" }}>
-																Please select Transmission
+																Please Select Transmission
 															</span>
 														)}
 													</div>

@@ -4,7 +4,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import styled from "./Item";
 import ScrollTop from "./ScrollTop";
-import "./detail.css";
 
 const Submit2 = () => {
 	const [statelist, setStateList] = useState([]);
@@ -22,14 +21,6 @@ const Submit2 = () => {
 	const [userAnswer, setUserAnswer] = useState("");
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
-	const [errors, setErrors] = useState({
-		name: false,
-		email: false,
-		mobile: false,
-		selectfuel: false,
-		selectedstate: false,
-		selectcity: false,
-	});
 
 	useEffect(() => {
 		const url =
@@ -179,97 +170,69 @@ const Submit2 = () => {
 
 	const handleSaveData = (e) => {
 		e.preventDefault();
-		const isValid = isFormValid();
 
-		if (isValid) {
-			const Datasecond = {
-				brandCode: "UC",
-				countryCode: "IN",
-				companyId: "SUSHIL",
-				branchCode: "GGN01",
-				uniqueSerial: "0",
-				mobile: mobile,
-				email: email,
-				mfdMonth: PropsData.mfdMonth,
-				firstName: name,
-				source: "26",
-				brand: PropsData.brand,
-				model: PropsData.model,
-				exteriorColor: PropsData.exteriorColor,
-				variantCode: PropsData.variantCode,
-				regnFormat: PropsData.regnFormat,
-				regnPart1: "",
-				regnPart2: "",
-				regnPart3: "",
-				regnPart4: "",
-				regn1: PropsData.regn1,
-				regn2: "",
-				vehicleRegnNo: "",
-				mfdYear: PropsData.mfdYear,
-				fuel: PropsData.fuel,
-				regnState: selectedstate,
-				regnCity: selectcity,
+		const Datasecond = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "SUSHIL",
+			branchCode: "GGN01",
+			uniqueSerial: "0",
+			mobile: mobile,
+			email: email,
+			mfdMonth: PropsData.mfdMonth,
+			firstName: name,
+			source: "26",
+			brand: PropsData.brand,
+			model: PropsData.model,
+			exteriorColor: PropsData.exteriorColor,
+			variantCode: PropsData.variantCode,
+			regnFormat: PropsData.regnFormat,
+			regnPart1: "",
+			regnPart2: "",
+			regnPart3: "",
+			regnPart4: "",
+			regn1: PropsData.regn1,
+			regn2: "",
+			vehicleRegnNo: "",
+			mfdYear: PropsData.mfdYear,
+			fuel: PropsData.fuel,
+			regnState: selectedstate,
+			regnCity: selectcity,
 
-				loginCompanyID: "SUSHIL",
-				loginUserId: "RAVI",
-				loginIpAddress: "180.151.78.50",
-			};
-			fetch(
-				" https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/UpdateBasicInfo",
-				{
-					method: "POST",
-					headers: {
-						ApplicationMode: "ONLINE",
-						EnvironmentType: "DEMO",
-						BrandCode: "UC",
-						CountryCode: "IN",
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(Datasecond),
-				}
-			)
-				.then((response) => response.json())
-				.then((data) => {
-					// alert(data.result);
-					toast.success(data.result);
-					navigate("/");
-					// Handle the response data here
-					console.log("Response:", data);
-				})
-				.catch((error) => {
-					// Handle any errors
-					toast(error);
-					console.error("Error:", error);
-				});
+			loginCompanyID: "SUSHIL",
+			loginUserId: "RAVI",
+			loginIpAddress: "180.151.78.50",
+		};
 
-			console.log(Datasecond, "secontdata");
-		} else {
-			console.log("Please fill all required fields.");
-		}
-	};
-
-	function isFormValid() {
-		// Perform validation checks for all the required fields
-		// Return true if all required fields are filled, otherwise false
-		const isValid =
-			name.trim() !== "" &&
-			email.trim() !== "" &&
-			// Add validation checks for other required fields here
-			// For example:
-			mobile.trim() !== "" &&
-			selectedstate.trim() !== "" &&
-			selectcity.trim() !== "" &&
-			// Update the error state for each field
-			setErrors({
-				name: name.trim() === "",
-				email: email.trim() === "",
-				mobile: mobile.trim() === "",
-				selectedstate: selectedstate.trim() === "",
-				selectcity: selectcity.trim() === "",
+		fetch(
+			" https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/UpdateBasicInfo",
+			{
+				method: "POST",
+				headers: {
+					ApplicationMode: "ONLINE",
+					EnvironmentType: "DEMO",
+					BrandCode: "UC",
+					CountryCode: "IN",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(Datasecond),
+			}
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				toast.success(data.result);
+				navigate("/");
+				// Handle the response data here
+				console.log("Response:", data);
+			})
+			.catch((error) => {
+				// Handle any errors
+				toast(error);
+				console.error("Error:", error);
 			});
 
-		return isValid;
-	}
+		console.log(Datasecond, "secontdata");
+	};
 
 	return (
 		<div>
@@ -347,16 +310,10 @@ const Submit2 = () => {
 														</label>
 														<input
 															type='text'
-															placeholder='Please Enter Name'
+															placeholder='please enter name'
 															name='name'
 															onChange={(e) => setname(e.target.value)}
 														/>
-
-														{errors.name && (
-															<span style={{ color: "red" }}>
-																Please Enter Name
-															</span>
-														)}
 													</div>
 												</div>
 												<div className='col-md-6 col-xs-12'>
@@ -367,15 +324,9 @@ const Submit2 = () => {
 														<input
 															type='text'
 															name='email'
-															placeholder='Please Enter Email Id'
+															placeholder='please enter email id'
 															onChange={(e) => setemail(e.target.value)}
 														/>
-
-														{errors.email && (
-															<span style={{ color: "red" }}>
-																Please Enter Email Id
-															</span>
-														)}
 													</div>
 												</div>
 											</div>
@@ -387,18 +338,11 @@ const Submit2 = () => {
 															Enter Your Phone Number <span>*</span>
 														</label>
 														<input
-															className='phone_number'
-															type='number'
+															type='text'
 															name='mobile'
-															placeholder='Please Enter Mobile No.'
+															placeholder='please enter mobile no.'
 															onChange={(e) => setmobile(e.target.value)}
 														/>
-
-														{errors.mobile && (
-															<span style={{ color: "red" }}>
-																Please Enter Phone No.
-															</span>
-														)}
 													</div>
 												</div>
 												<div className='col-md-6 col-xs-12'>
@@ -411,20 +355,14 @@ const Submit2 = () => {
 																className='m-select'
 																value={selectedstate}
 																onChange={handleSelectChange11}>
-																<option value='regnCity'>Select State </option>
+																<option value='regnCity'>select item</option>
 																{statelist.map((item, index) => (
 																	<option key={index} value={item.code}>
 																		{item.description}
 																	</option>
 																))}
 															</select>
-															<span className='fa fa-caret-down'></span>
-
-															{errors.selectedstate && (
-																<span style={{ color: "red" }}>
-																	Please Select State
-																</span>
-															)}
+															{/* <span className='fa fa-caret-down'></span> */}
 														</div>
 													</div>
 												</div>
@@ -440,19 +378,14 @@ const Submit2 = () => {
 																className='m-select'
 																value={selectcity}
 																onChange={handleSelectChange12}>
-																<option value='regnCity'>Select City</option>
+																<option value='regnCity'>select item</option>
 																{city.map((item, index) => (
 																	<option key={index} value={item.code}>
 																		{item.description}
 																	</option>
 																))}
 															</select>
-															<span className='fa fa-caret-down'></span>
-															{errors.selectcity && (
-																<span style={{ color: "red" }}>
-																	Please Select City
-																</span>
-															)}
+															{/* <span className='fa fa-caret-down'></span> */}
 														</div>
 													</div>
 												</div>
@@ -495,7 +428,7 @@ const Submit2 = () => {
 															<div className='d-flex'>
 																<input
 																	className='s-relative'
-																	placeholder='Please Enter Captcha'
+																	placeholder='Please enter  the Captcha'
 																	type='text'
 																	value={userAnswer}
 																	onChange={(event) =>

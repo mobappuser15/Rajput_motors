@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ScrollTop from "./ScrollTop";
+import PageScrollTop from "./PageScrollTop";
 
 const CarLoan = () => {
 	return (
 		<>
-			<ScrollTop />
+			<PageScrollTop />
 			<div
 				className='m-detail'
 				data-scrolling-animations='true'
@@ -76,9 +77,7 @@ const CarLoan = () => {
 						Home
 					</Link>
 					<span className='fa fa-angle-right'></span>
-					<a href='insurance.html' className='b-breadCumbs__page m-active'>
-						Car Loan
-					</a>
+					<a className='b-breadCumbs__page m-active'>Car Loan</a>
 				</div>
 			</div>
 			{/* brand details */}

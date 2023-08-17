@@ -100,7 +100,7 @@
 }
 
 .b-more__info-block-title a {
-	color: #fff;
+	color: #fff !important;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -109,6 +109,10 @@
 	border-left: 28px solid transparent;
 	height: 0;
 	width: 60px;
+}
+
+.b-more__info-block-title a:hover,
+a:focus {
 }
 
 .b-more__info-block-title > a span.fa {

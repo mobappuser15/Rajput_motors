@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
-
+import Homepage from "./HomePage";
 const Navbar = () => {
 	const navRef = useRef();
+	const [page, setPage] = useState(false);
 	const showNavbar = () => {
 		navRef.current.classList.toggle("responsive_nav");
 	};
@@ -15,11 +16,11 @@ const Navbar = () => {
 
 	return (
 		<header className=' fixed-top'>
-			<Link to='/'>
+			<Link to={`/?page=${page}`}>
 				<img className='' src='images/logo/logo-1.png' />
 			</Link>
 			<nav className='' ref={navRef}>
-				<Link to='/' onClick={showNavbar}>
+				<Link to={`/?page=${page}`} onClick={showNavbar}>
 					HOME
 				</Link>
 				<Link to='/salecar' onClick={showNavbar}>
@@ -50,23 +51,29 @@ const Navbar = () => {
 					<div className='b-topbar-social'>
 						<ul>
 							<li>
-								<a href='https://www.facebook.com/profile.php?id=100077481055938'>
+								<a
+									href='https://www.facebook.com/profile.php?id=100077481055938'
+									target='_blank'>
 									<img src='images/logo/fb.png' alt='fb' />
 								</a>
 							</li>
 							<li>
-								<a href='https://www.instagram.com/sushilcarbazzar/'>
+								<a
+									href='https://www.instagram.com/sushilcarbazzar/'
+									target='_blank'>
 									<img src='images/logo/instra.png' alt='fb' />
 								</a>
 							</li>
 							<li>
-								<a href='https://www.youtube.com/@sushilcarbazzar5502'>
+								<a
+									href='https://www.youtube.com/@sushilcarbazzar5502'
+									target='_blank'>
 									<img src='images/logo/ytb.png' alt='fb' />
 								</a>
 							</li>
 
 							<li>
-								<a href='#' style={{ marginTop: "10px" }}>
+								<a href='tel:9192509 22333' style={{ marginTop: "10px" }}>
 									<span className='no_top1'>
 										<i class='fa-sharp fa-solid fa-phone'></i> +91 92509 22333
 									</span>
