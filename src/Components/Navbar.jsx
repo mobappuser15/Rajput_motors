@@ -1,33 +1,42 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
+import toast from "react-hot-toast";
 import Homepage from "./HomePage";
-const Navbar = () => {
+import Details from "./Details";
+const Navbar = ({ onHomeClick }) => {
 	const navRef = useRef();
 	const [page, setPage] = useState(false);
+
 	const showNavbar = () => {
 		navRef.current.classList.toggle("responsive_nav");
 	};
 
-	const reloadPage = () => {
-		window.location.reload();
-		// toast.success("Page  Loading ! ");
-	};
-
 	return (
 		<header className=' fixed-top'>
-			<Link to={`/?page=${page}`}>
+			<Link to='/'>
 				<img className='' src='images/logo/logo-1.png' />
 			</Link>
 			<nav className='' ref={navRef}>
-				<Link to={`/?page=${page}`} onClick={showNavbar}>
-					HOME
+				<Link
+					href=''
+					to='/'
+					onClick={() => {
+						showNavbar();
+						onHomeClick();
+					}}>
+					<span>HOME</span>
 				</Link>
 				<Link to='/salecar' onClick={showNavbar}>
 					SELL CAR
 				</Link>
-				<Link to='/detailsdata ' onClick={reloadPage} onClick={showNavbar}>
-					BUY CAR
+				<Link
+					to='/detailsdata '
+					onClick={() => {
+						showNavbar();
+						onHomeClick();
+					}}>
+					<span>BUY CAR</span>
 				</Link>
 				<Link to='/about' onClick={showNavbar}>
 					ABOUT US

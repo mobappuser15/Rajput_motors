@@ -4,6 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import styled from "./Item";
 import ScrollTop from "./ScrollTop";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const Submit2 = () => {
 	const [statelist, setStateList] = useState([]);
@@ -21,6 +23,10 @@ const Submit2 = () => {
 	const [userAnswer, setUserAnswer] = useState("");
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
+	const [mobileError, setMobileError] = useState("");
+	const [modalOpen, setModalOpen] = useState(false);
+	const [captchaError, setCaptchaError] = useState("");
+	const [captchaValid, setCaptchaValid] = useState(false);
 
 	useEffect(() => {
 		const url =
@@ -37,8 +43,7 @@ const Submit2 = () => {
 			countryCode: "IN",
 			companyId: "SUSHIL",
 			calledBy: "STATE",
-			// vehMake: "BMW",
-			// vehModel: "220D",
+
 			loginUserId: "RAVI",
 			loginIpAddress: "180.151.78.50",
 		};
@@ -88,15 +93,6 @@ const Submit2 = () => {
 			loginIpAddress: "180.151.78.50",
 		};
 
-		// {"brandCode":"UC",
-		// "countryCode":"IN",
-		// "companyId":"SUSHIL",
-		// "calledBy":"STATE",
-		// "vehMake":"HYUNDAI",
-		// "vehModel":"EMBERA",
-		// "loginUserId":"RAVI",
-		// "loginIpAddress":"180.151.78.50"}
-
 		fetch(url, {
 			method: "POST",
 			headers: headers,
@@ -114,7 +110,6 @@ const Submit2 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData.generalMasterList[0].generalList;
 				setCity(generalList);
-				// console.log(generalList, "city list data");
 				console.log(jsonData, "json");
 			})
 			.catch((error) => {
@@ -130,30 +125,33 @@ const Submit2 = () => {
 		setSelectcity(event.target.value);
 	};
 
-	const generateNumbers = () => {
+	const resetCaptcha = () => {
 		setNum1(Math.floor(Math.random() * 10));
 		setNum2(Math.floor(Math.random() * 10));
-	};
-
-	const resetCaptcha = () => {
 		setUserAnswer("");
-		setMessage("");
-		setError("");
-		generateNumbers();
+		setCaptchaValid(false); // Clear captcha validation
 	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		const sum = num1 + num2;
-		if (parseInt(userAnswer) === sum) {
-			setMessage("Correct answer!");
-			setError("incorrect ");
-			resetCaptcha();
-		} else {
-			setMessage("");
+	const handleSubmit = () => {
+		let formIsValid = true;
 
-			setError("please enter captcha code");
-			setUserAnswer("");
+		if (mobile.length !== 10) {
+			setMobileError("Mobile number must be exactly 10 digits");
+			formIsValid = false;
+		} else {
+			setMobileError("");
+		}
+
+		if (parseInt(userAnswer) !== num1 + num2) {
+			setCaptchaError("Captcha answer is incorrect");
+			formIsValid = false;
+		} else {
+			setCaptchaError("");
+			setCaptchaValid(true);
+		}
+
+		if (formIsValid && captchaValid) {
+			setModalOpen(true);
 		}
 	};
 
@@ -162,9 +160,7 @@ const Submit2 = () => {
 		toast.success("Page  Loading ! ");
 	};
 	const Props = localStorage.getItem("data");
-	// localStorage.removeItem("data");
 	const PropsData = JSON.parse(Props);
-	// console.log(Props, "proData");
 
 	const navigate = useNavigate();
 
@@ -310,7 +306,7 @@ const Submit2 = () => {
 														</label>
 														<input
 															type='text'
-															placeholder='please enter name'
+															placeholder='Please Enter Name'
 															name='name'
 															onChange={(e) => setname(e.target.value)}
 														/>
@@ -324,7 +320,7 @@ const Submit2 = () => {
 														<input
 															type='text'
 															name='email'
-															placeholder='please enter email id'
+															placeholder='Please Enter Email Id'
 															onChange={(e) => setemail(e.target.value)}
 														/>
 													</div>
@@ -340,9 +336,14 @@ const Submit2 = () => {
 														<input
 															type='text'
 															name='mobile'
-															placeholder='please enter mobile no.'
+															placeholder='Please Enter Mobile No.'
 															onChange={(e) => setmobile(e.target.value)}
 														/>
+														{mobileError && (
+															<span style={{ color: "red" }}>
+																{mobileError}
+															</span>
+														)}
 													</div>
 												</div>
 												<div className='col-md-6 col-xs-12'>
@@ -351,18 +352,23 @@ const Submit2 = () => {
 															State <span>*</span>
 														</label>
 														<div className='s-relative'>
-															<select
-																className='m-select'
+															<Select
+																className='selectdataf1'
 																value={selectedstate}
-																onChange={handleSelectChange11}>
-																<option value='regnCity'>select item</option>
+																onChange={handleSelectChange11}
+																displayEmpty>
+																<MenuItem className='selectoption' value=''>
+																	Select State
+																</MenuItem>
 																{statelist.map((item, index) => (
-																	<option key={index} value={item.code}>
+																	<MenuItem
+																		className='selectoption'
+																		key={index}
+																		value={item.code}>
 																		{item.description}
-																	</option>
+																	</MenuItem>
 																))}
-															</select>
-															{/* <span className='fa fa-caret-down'></span> */}
+															</Select>
 														</div>
 													</div>
 												</div>
@@ -374,18 +380,23 @@ const Submit2 = () => {
 															City <span>*</span>
 														</label>
 														<div className='s-relative'>
-															<select
-																className='m-select'
+															<Select
+																className='selectdataf1'
 																value={selectcity}
-																onChange={handleSelectChange12}>
-																<option value='regnCity'>select item</option>
+																onChange={handleSelectChange12}
+																displayEmpty>
+																<MenuItem className='selectoption' value=''>
+																	Select State
+																</MenuItem>
 																{city.map((item, index) => (
-																	<option key={index} value={item.code}>
+																	<MenuItem
+																		className='selectoption'
+																		key={index}
+																		value={item.code}>
 																		{item.description}
-																	</option>
+																	</MenuItem>
 																))}
-															</select>
-															{/* <span className='fa fa-caret-down'></span> */}
+															</Select>
 														</div>
 													</div>
 												</div>
@@ -408,6 +419,7 @@ const Submit2 = () => {
 																		color: "red",
 																		fontWeight: "800px ",
 																	}}>
+																	{" "}
 																	{num1} + {num2} = ?
 																</span>
 																<i
@@ -428,16 +440,14 @@ const Submit2 = () => {
 															<div className='d-flex'>
 																<input
 																	className='s-relative'
-																	placeholder='Please enter  the Captcha'
+																	placeholder='Please Enter   Captcha'
 																	type='text'
 																	value={userAnswer}
 																	onChange={(event) =>
 																		setUserAnswer(event.target.value)
 																	}></input>
-																{/* <i
-																// onClick={handleSubmit}
-																class='fa fa-check-square-o fa-3x fa-success'
-																aria-hidden='true'></i> */}
+
+																<span style={{ color: "red" }}>*</span>
 															</div>
 														</form>
 
@@ -483,7 +493,7 @@ const Submit2 = () => {
 														className='fa fa-check'></span>
 												</button>
 
-												{!error && (
+												{!mobileError && captchaValid && (
 													<>
 														<div className=''>
 															<div className='row'>
@@ -521,20 +531,8 @@ const Submit2 = () => {
 																							marginLeft: "140px",
 																						}}>
 																						Are you sure to raise enquiry?
-																						{/* Your request has been received. We will
-																			contact you shortly! */}
 																					</h4>
 
-																					{/* <h4
-																					className='visible-xs'
-																					style={{
-																						marginTop: "10px",
-																						marginLeft: "80px",
-																					}}>
-																					Are you sure to raise enquiry??
-																					{/* Your request has been received. We will
-																			contact you shortly! */}
-																					{/* </h4>  */}
 																					<p></p>
 																					<div
 																						className='d-flex flx_mn_btn'
@@ -569,29 +567,6 @@ const Submit2 = () => {
 																							No
 																						</button>
 																					</div>
-
-																					{/* <div
-																					id='phoneView'
-																					className='d-flex visible-xs '>
-																					<button
-																						id='btnphoneView'
-																						onClick={handleSaveData}
-																						style={{}}
-																						type='submit'
-																						className='btn'
-																						data-dismiss='modal'>
-																						Yes phone
-																					</button>
-
-																					<button
-																						id='btnmodelphonev'
-																						type='button'
-																						className='close'
-																						data-dismiss='modal'
-																						aria-label=''>
-																						No
-																					</button>
-																				</div> */}
 																				</div>
 																			</div>
 																		</div>
@@ -610,7 +585,6 @@ const Submit2 = () => {
 					</div>
 				</div>
 			</div>
-			{/* footer section */}
 		</div>
 	);
 };

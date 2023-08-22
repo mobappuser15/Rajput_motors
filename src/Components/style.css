@@ -289,3 +289,35 @@ input[type="range"]:focus {
 	/* border: 1px solid #b1b1b1; */
 	border-radius: 10px;
 }
+
+.emipara {
+	font: 300 17px "Open Sans", sans-serif;
+}
+
+.rangedata {
+	font: 300 17px "Open Sans", sans-serif;
+}
+
+.pamountno {
+	margin-top: -9px;
+	margin-left: 347px;
+	/* font: 300 12px "Open Sans", sans-serif; */
+}
+
+#prezedata {
+	text-align: right;
+}
+
+#sidata {
+	font-size: 11px;
+	color: #787676;
+}
+
+#dataprize {
+	padding-left: 17px;
+	padding-bottom: 23px;
+}
+
+#rangSlide {
+	padding-left: 0px;
+}

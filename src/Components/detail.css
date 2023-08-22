@@ -825,3 +825,17 @@ button:active {
 #ser_hit1 {
 	height: 129px;
 }
+
+.data {
+	margin-top: 90% !important;
+}
+
+.amount_details {
+	font-size: 17px;
+	margin-left: 170px;
+}
+
+.amount_details2 {
+	font-size: 17px;
+	margin-left: 210px;
+}

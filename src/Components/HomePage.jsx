@@ -14,6 +14,8 @@ import ReactLoading from "react-loading";
 import { useLocation } from "react-router-dom";
 import Details from "./Details";
 import { styled } from "@mui/material/styles";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const breakPoints = [
 	{ width: 1, itemsToShow: 1 },
@@ -29,7 +31,7 @@ const breakPoints2 = [
 	{ width: 1200, itemsToShow: 2 },
 ];
 
-export default function HomePage({ page }) {
+export default function HomePage({ detailspage, setDetailspage }) {
 	const [stockdata, setStockdata] = useState([]);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 	const [result, setResult] = useState("");
@@ -65,14 +67,9 @@ export default function HomePage({ page }) {
 	const [selectedModel, setSelectedModel] = useState("");
 	const [selectedVariant, setSelectedVariant] = useState("");
 	const [showdata, setShowdata] = useState(false);
-	const [detailspage, setdetailspage] = useState(false);
+	// const [detailspage, setDetailspage] = useState(false);
 	const [methu, setMethu] = useState([]);
 	var [homepage, setHomepage] = useState(false);
-
-	const location = useLocation();
-	const queryParams = new URLSearchParams(location.search);
-	const pageParam = queryParams.get("page");
-	const pageValue = pageParam !== null ? pageParam : false;
 
 	// make list
 	useEffect(() => {
@@ -162,6 +159,8 @@ export default function HomePage({ page }) {
 			});
 	}, [codemodel]);
 
+	console.log("detailspage == ", detailspage);
+
 	const handleSelectChange = (event) => {
 		setSelectedItem(event.target.value);
 		setcodemodel(event.target.value);
@@ -234,13 +233,13 @@ export default function HomePage({ page }) {
 
 		fetchData();
 	}, []);
-	console.log(homepage, "asdfbkjl;");
+	console.log(detailspage, "asdfbkjl;");
 	const singleProducthandle = (uniqueSerial) => {
 		const product = stockdata.find(
 			(item) => item.uniqueSerial === uniqueSerial
 		);
 		setSelectedProduct(product);
-		setdetailspage(product);
+		setDetailspage((product) => !product);
 	};
 
 	const fetchData = async () => {
@@ -433,6 +432,7 @@ export default function HomePage({ page }) {
 		setMinRange("");
 		setMaxRange("");
 		setStockdata(methu);
+		console.log("clear filtering data....");
 	};
 
 	return (
@@ -510,62 +510,99 @@ export default function HomePage({ page }) {
 															<div
 																className='col-xs-12 col-md-3 col-lg-3'
 																id='searchdata'>
-																<select
+																<Select
+																	className='selectdataf'
 																	value={selectedItem}
-																	onChange={handleSelectChange}>
-																	<option value=''>Select Make</option>
+																	onChange={handleSelectChange}
+																	displayEmpty>
+																	<MenuItem value='' className='selectoption'>
+																		Select Make
+																	</MenuItem>
 																	{data.map((item, index) => (
-																		<option key={index} value={item.code}>
+																		<MenuItem
+																			className='selectoption'
+																			key={index}
+																			value={item.code}>
 																			{item.description}
-																		</option>
+																		</MenuItem>
 																	))}
-																</select>
+																</Select>
 
 																<div class='col-xs-12 col-md-3 col-lg-3'></div>
 															</div>
 															<div
 																className='col-xs-12 col-md-3 col-lg-3'
 																id='searchdata'>
-																<select
+																<Select
+																	className='selectdataf'
 																	value={selectmodel}
-																	onChange={handleSelectChange3}>
-																	<option value=''>Select Model</option>
+																	onChange={handleSelectChange3}
+																	displayEmpty
+																	inputProps={{
+																		"aria-label": "Without label",
+																	}}>
+																	<MenuItem value='' className='selectoption'>
+																		Select Model
+																	</MenuItem>
 																	{model.map((item, index) => (
-																		<option key={index} value={item.code}>
+																		<MenuItem
+																			className='selectoption'
+																			key={index}
+																			value={item.code}>
 																			{item.description}
-																		</option>
+																		</MenuItem>
 																	))}
-																</select>
+																</Select>
 															</div>
 
 															<div
 																className='col-xs-12 col-md-3 col-lg-3 '
 																id='searchdata'>
-																<select
+																<Select
+																	className='selectdataf'
 																	value={minRange}
-																	onChange={handleSelectChangeminprize}>
-																	<option value=''>Select Min Price</option>
+																	onChange={handleSelectChangeminprize}
+																	displayEmpty
+																	inputProps={{
+																		"aria-label": "Without label",
+																	}}>
+																	<MenuItem value='' className='selectoption'>
+																		Select Min Price
+																	</MenuItem>
 																	{Amountdatamin.map((item, index) => (
-																		<option key={index} value={item.id}>
+																		<MenuItem
+																			className='selectoption'
+																			key={index}
+																			value={item.id}>
 																			{item.img}
-																		</option>
+																		</MenuItem>
 																	))}
-																</select>
+																</Select>
 															</div>
 
 															<div
 																className='col-xs-12 col-md-3 col-lg-3'
 																id='searchdata'>
-																<select
+																<Select
+																	className='selectdataf'
 																	value={maxRange}
-																	onChange={handleSelectChangemaxnprize}>
-																	<option value=''>Select Max Price</option>
+																	onChange={handleSelectChangemaxnprize}
+																	displayEmpty
+																	inputProps={{
+																		"aria-label": "Without label",
+																	}}>
+																	<MenuItem value='' className='selectoption'>
+																		Select Max Price
+																	</MenuItem>
 																	{Amountdatamax.map((item, index) => (
-																		<option key={index} value={item.id}>
+																		<MenuItem
+																			className='selectoption'
+																			key={index}
+																			value={item.id}>
 																			{item.img}
-																		</option>
+																		</MenuItem>
 																	))}
-																</select>
+																</Select>
 															</div>
 														</div>
 													</div>
@@ -994,7 +1031,7 @@ export default function HomePage({ page }) {
 																							<div
 																								className='b-items__cars-one-info-title'
 																								style={{ fontSize: "15px" }}>
-																								Rs{" "}
+																								<i class='fa fa-rupee'></i>{" "}
 																								{item.vehSellPriceRecommended}
 																							</div>
 																						</span>
@@ -1105,7 +1142,8 @@ export default function HomePage({ page }) {
 																						<div
 																							className='b-items__cars-one-info-title'
 																							style={{ fontSize: "18px" }}>
-																							Rs {item.vehSellPriceRecommended}
+																							<i class='fa fa-rupee'></i>{" "}
+																							{item.vehSellPriceRecommended}
 																						</div>
 																					</span>
 																				</div>
@@ -1147,8 +1185,6 @@ export default function HomePage({ page }) {
 													</h2>
 
 													<div className='row' id='cardrow'>
-														{/* testing details */}
-
 														{demo.length === 0 ? (
 															<div className='notdatafound'>
 																<p>vehicle Not Available</p>
@@ -1166,7 +1202,6 @@ export default function HomePage({ page }) {
 																			width: "70%",
 																			borderRadius: "15px",
 																			marginLeft: "15px",
-																			// backgroundColor: "red",
 																			height: "70%",
 																			padding: "2px",
 																			border: "1px solid black",
@@ -1274,7 +1309,7 @@ export default function HomePage({ page }) {
 																								<div
 																									className='b-items__cars-one-info-title'
 																									style={{ fontSize: "15px" }}>
-																									Rs{" "}
+																									<i class='fa fa-rupee'></i>{" "}
 																									{item.vehSellPriceRecommended}
 																								</div>
 																							</span>
@@ -1441,7 +1476,8 @@ export default function HomePage({ page }) {
 																			fontSize: "21px",
 																			color: "white",
 																		}}>
-																		Rs {item.vehSellPriceRecommended}
+																		<i class='fa fa-rupee'></i>{" "}
+																		{item.vehSellPriceRecommended}
 																	</div>
 																</span>
 																<div
@@ -1450,9 +1486,6 @@ export default function HomePage({ page }) {
 																	{" "}
 																	{item.vehBrandCode}
 																</div>{" "}
-																<Link className='visible-xs' to='/details'>
-																	See More...
-																</Link>
 															</div>
 														</div>
 													</div>
@@ -1492,7 +1525,6 @@ export default function HomePage({ page }) {
 																	width: "70%",
 																	borderRadius: "15px",
 																	marginLeft: "15px",
-																	// backgroundColor: "red",
 																	height: "70%",
 																	padding: "2px",
 																	border: "1px solid black",
@@ -1600,7 +1632,8 @@ export default function HomePage({ page }) {
 																								fontSize: "15px",
 																								color: "white",
 																							}}>
-																							Rs {item.vehSellPriceRecommended}
+																							<i class='fa fa-rupee'></i>{" "}
+																							{item.vehSellPriceRecommended}
 																						</div>
 																					</span>
 																				</div>

@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Searchdata from "./Searchdata";
 import ScrollTop from "./ScrollTop";
 import PageScrollTop from "./PageScrollTop";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const Submit1 = () => {
 	const [num1, setNum1] = useState(1);
@@ -599,7 +601,7 @@ const Submit1 = () => {
 											</div>
 											<div class='b-submit__aside-step-inner-info'>
 												<h4>Contact details</h4>
-												<p>Choose vehicle specifications</p>
+												<p>Update Your Contact Details</p>
 											</div>
 										</div>
 									</div>
@@ -621,17 +623,23 @@ const Submit1 = () => {
 														Make <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selectedItem}
-															onChange={handleSelectChange}>
-															<option value=''>Select Make</option>
+															onChange={handleSelectChange}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Make
+															</MenuItem>
 															{data.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectedItem && (
 															<span style={{ color: "red" }}>
 																Please Select Make
@@ -644,17 +652,23 @@ const Submit1 = () => {
 														Model <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selectmodel}
-															onChange={handleSelectChange3}>
-															<option value=''>Select Model</option>
+															onChange={handleSelectChange3}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Model
+															</MenuItem>
 															{model.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectmodel && (
 															<span style={{ color: "red" }}>
 																Please Select Model
@@ -668,17 +682,23 @@ const Submit1 = () => {
 														Variant <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selectverient}
-															onChange={handleSelectChange9}>
-															<option value=''>Select Variant</option>
+															onChange={handleSelectChange9}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Variant{" "}
+															</MenuItem>
 															{varient.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectverient && (
 															<span style={{ color: "red" }}>
 																Please Select Variant
@@ -692,17 +712,23 @@ const Submit1 = () => {
 														Year of MF. <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selectmfy}
-															onChange={handleSelectChange7}>
-															<option value=''>Select Year</option>
+															onChange={handleSelectChange7}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Year{" "}
+															</MenuItem>
 															{vyear.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectmfy && (
 															<span style={{ color: "red" }}>
 																Please Select Year
@@ -716,17 +742,23 @@ const Submit1 = () => {
 														Fuel <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selectfuel}
-															onChange={handleSelectChange4}>
-															<option value=''>Select Fuel</option>
+															onChange={handleSelectChange4}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Fuel{" "}
+															</MenuItem>
 															{fueldata.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectfuel && (
 															<span style={{ color: "red" }}>
 																Please Select Fuel
@@ -741,17 +773,23 @@ const Submit1 = () => {
 														Model <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selectmodel}
-															onChange={handleSelectChange3}>
-															<option value=''>Select Model</option>
+															onChange={handleSelectChange3}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Model{" "}
+															</MenuItem>
 															{model.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectmodel && (
 															<span style={{ color: "red" }}>
 																Please Select Model
@@ -764,17 +802,23 @@ const Submit1 = () => {
 														Exterior Color <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selectextirecolor}
-															onChange={handleSelectChange6}>
-															<option value=''>Select Exterior Color</option>
+															onChange={handleSelectChange6}
+															displayEmpty>
+															<MenuItem value='' className='selectoption'>
+																Select Exterior Color{" "}
+															</MenuItem>
 															{extirecolor.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectextirecolor && (
 															<span style={{ color: "red" }}>
 																Please Select Exterior Color
@@ -782,48 +826,30 @@ const Submit1 = () => {
 														)}
 													</div>
 												</div>
-												{/* <div class='b-submit__main-element  '>
-													<label style={{ color: "black" }}>
-														Type <span>*</span>
-													</label>
-													<div class='s-relative'>
-														<select
-															class='m-select'
-															value={selecttype}
-															onChange={handleSelectChange2}>
-															<option value=''>Select item</option>
-															{typedata.map((item, index) => (
-																<option key={index} value={item.code}>
-																	{item.description}
-																</option>
-															))}
-														</select>
-														<span class='fa fa-caret-down'></span>
-														{errors.selecttype && (
-															<span style={{ color: "red" }}>
-																Please select Type
-															</span>
-														)}
-													</div>
-												</div> */}
 
 												<div class='b-submit__main-element  '>
 													<label style={{ color: "black" }}>
 														Month of MF. <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
 															name='source'
+															className='selectdataf1'
 															value={selectmfm}
-															onChange={handleSelectChange8}>
-															<option value=''>Select Month</option>
+															onChange={handleSelectChange8}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Month{" "}
+															</MenuItem>
 															{vmonth.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
 														{errors.selectmfm && (
 															<span style={{ color: "red" }}>
 																Please Select Month
@@ -836,17 +862,24 @@ const Submit1 = () => {
 														Transmission <span>*</span>
 													</label>
 													<div class='s-relative'>
-														<select
-															class='m-select'
+														<Select
+															className='selectdataf1'
 															value={selecttransmission}
-															onChange={handleSelectChange5}>
-															<option value=''>Select Transmission</option>
+															onChange={handleSelectChange5}
+															displayEmpty>
+															<MenuItem className='selectoption' value=''>
+																Select Month{" "}
+															</MenuItem>
 															{transmission.map((item, index) => (
-																<option key={index} value={item.code}>
+																<MenuItem
+																	className='selectoption'
+																	key={index}
+																	value={item.code}>
 																	{item.description}
-																</option>
+																</MenuItem>
 															))}
-														</select>
+														</Select>
+
 														{errors.selecttransmission && (
 															<span style={{ color: "red" }}>
 																Please Select Transmission
@@ -857,8 +890,6 @@ const Submit1 = () => {
 
 												<button
 													id='procedbtn'
-													// onClick={isFormValid}
-													// to='/submit2'
 													type='submit'
 													class='btn m-btn  '>
 													PROCEED to next step
@@ -869,7 +900,6 @@ const Submit1 = () => {
 												</button>
 											</div>
 										</div>
-										{/*  captcha code */}
 									</form>
 								</div>
 							</div>

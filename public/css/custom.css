@@ -634,9 +634,6 @@ body {
 	right: 61%;
 }
 
-.pls1 img {
-}
-
 .car_mn2 {
 	margin-left: 65px;
 }
@@ -644,8 +641,8 @@ body {
 .car_mn2 canvas {
 	/* margin-left: 145px !important; */
 	margin-top: 34px !important;
-	height: 88% !important;
-	width: 64% !important;
+	height: 70% !important;
+	width: 75% !important;
 }
 
 .hqNMZF {

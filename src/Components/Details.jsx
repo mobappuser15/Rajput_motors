@@ -18,12 +18,10 @@ function Details({ selectedProduct }) {
 	const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [stockdata, setStockdata] = useState([]);
-
 	const [email, setemail] = useState("");
 	const [mobile, setmobile] = useState("");
 	const [contactName, setcontactName] = useState("");
 	const [pincode, setpincode] = useState("");
-
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [num1, setNum1] = useState(Math.floor(Math.random() * 10));
@@ -37,6 +35,7 @@ function Details({ selectedProduct }) {
 	const [pincodeError, setPincodeError] = useState("");
 	const [captchaError, setCaptchaError] = useState("");
 	const [modalOpen, setModalOpen] = useState(false);
+	const [captchaValid, setCaptchaValid] = useState(false);
 
 	const generateNumbers = () => {
 		setNum1(Math.floor(Math.random() * 10));
@@ -47,35 +46,39 @@ function Details({ selectedProduct }) {
 		setNum1(Math.floor(Math.random() * 10));
 		setNum2(Math.floor(Math.random() * 10));
 		setUserAnswer("");
+		setCaptchaValid(false); // Clear captcha validation
 	};
 
 	const handleSubmit = () => {
+		let formIsValid = true;
+
 		if (mobile.length !== 10) {
 			setMobileError("Mobile number must be exactly 10 digits");
+			formIsValid = false;
 		} else {
 			setMobileError("");
 		}
 
-		if (pincode.length !== 4) {
-			setPincodeError("Pincode must be exactly 4 digits");
+		if (pincode.length !== 6) {
+			setPincodeError("Pincode must be exactly 6 digits");
+			formIsValid = false;
 		} else {
 			setPincodeError("");
 		}
 
 		if (parseInt(userAnswer) !== num1 + num2) {
 			setCaptchaError("Captcha answer is incorrect");
+			formIsValid = false;
 		} else {
 			setCaptchaError("");
+			setCaptchaValid(true);
 		}
 
-		if (
-			mobile.length === 10 &&
-			pincode.length === 4 &&
-			parseInt(userAnswer) === num1 + num2
-		) {
+		if (formIsValid && captchaValid) {
 			setModalOpen(true);
 		}
 	};
+	console.log(handleSubmit, "handleSubmit");
 
 	const handleImageClick = (image) => {
 		// setSelectedImage(image);
@@ -89,53 +92,7 @@ function Details({ selectedProduct }) {
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const url =
-				"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
-			const headers = {
-				ApplicationMode: "ONLINE",
-				EnvironmentType: "DEMO",
-				BrandCode: "UC",
-				CountryCode: "IN",
-				"Content-Type": "application/json",
-			};
-			const data = {
-				brandCode: "UC",
-				countryCode: "IN",
-				companyId: "SUSHIL",
-				budgetFrom: 0,
-				budgetTo: 2000000,
-				vehBrandCode: "ALL",
-				vehModelCode: "HECTOR",
-				vehFuel: "PETROL",
-				loginCompanyID: "ORBIT",
-				loginUserId: "SULTAN",
-				loginIpAddress: "192.168.10.32",
-			};
-
-			try {
-				const response = await fetch(url, {
-					method: "POST",
-					headers: headers,
-					body: JSON.stringify(data),
-				});
-
-				if (response.ok) {
-					const responseData = await response.json();
-					setStockdata(responseData?.UsedCarVehStockDetail);
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			} catch (error) {
-				console.error("Error:", error);
-			}
-		};
-
-		fetchData();
-	}, []);
+	//
 
 	const reloadPage = () => {
 		window.location.reload();
@@ -592,9 +549,7 @@ function Details({ selectedProduct }) {
 													<p>Call the seller 24/7 and they would help you.</p>
 												</div>
 												<div className='b-detail__main-aside-about-seller'>
-													<p>
-														Seller Info: <span>Sushil Car Bazar</span>
-													</p>
+													<p>Seller Info</p>
 												</div>
 												<div className='b-detail__main-aside-about-form'>
 													<div className='b-detail__main-aside-about-form-links'>
@@ -606,6 +561,7 @@ function Details({ selectedProduct }) {
 														</a>
 													</div>
 													<form id='form1' style={{ fontSize: "15px" }}>
+														Name <span style={{ color: "red" }}>*</span>
 														<input
 															className='phone_number'
 															type='text'
@@ -613,6 +569,7 @@ function Details({ selectedProduct }) {
 															name='contactName'
 															onChange={(e) => setcontactName(e.target.value)}
 														/>
+														Email <span style={{ color: "red" }}>*</span>
 														<input
 															className='phone_number'
 															type='email'
@@ -620,6 +577,7 @@ function Details({ selectedProduct }) {
 															onChange={(e) => setemail(e.target.value)}
 															name='email'
 														/>
+														Mobile No. <span style={{ color: "red" }}>*</span>
 														<input
 															className='phone_number'
 															type='number'
@@ -635,7 +593,8 @@ function Details({ selectedProduct }) {
 																{mobileError}
 															</span>
 														)}
-
+														<br />
+														Pincode <span style={{ color: "red" }}>*</span>
 														<input
 															className='phone_number'
 															type='number'
@@ -651,7 +610,6 @@ function Details({ selectedProduct }) {
 																{pincodeError}
 															</span>
 														)}
-
 														<form>
 															<span
 																className='d-flex'
@@ -687,9 +645,10 @@ function Details({ selectedProduct }) {
 																	marginTop: "10px",
 																}}></label>
 															<div className='' style={{ marginTop: "-30px" }}>
+																Captcha <span style={{ color: "red" }}>*</span>
 																<input
 																	className='phone_number'
-																	placeholder='Please enter  the Captcha'
+																	placeholder='Please Enter Captcha'
 																	type='number'
 																	value={userAnswer}
 																	onChange={(event) =>
@@ -697,14 +656,11 @@ function Details({ selectedProduct }) {
 																	}></input>
 															</div>
 														</form>
-
-														{message && (
-															<span style={{ color: "red" }}>{message}</span>
+														{captchaValid && (
+															<span style={{ color: "red" }}>
+																{captchaValid}
+															</span>
 														)}
-														{error && (
-															<span style={{ color: "red" }}>{error}</span>
-														)}
-
 														<button
 															id=''
 															style={{ backgroundColor: "#f76d2b" }}
@@ -718,9 +674,8 @@ function Details({ selectedProduct }) {
 																id='arrowiconbtn'
 																className='fa fa-ticket fa-5x'></span>
 														</button>
-
 														{/* popup message */}
-														{!mobileError && (
+														{!mobileError && captchaValid && (
 															<div className=''>
 																<div className='row'>
 																	<div

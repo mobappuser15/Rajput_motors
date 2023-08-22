@@ -221,6 +221,8 @@ a:focus {
 
 .b-contacts {
 	padding: 20px 0 40px 0;
+	background: url(../images/car_bg1.jpg) left top no-repeat !important;
+	background-size: cover !important;
 }
 
 .b-map {

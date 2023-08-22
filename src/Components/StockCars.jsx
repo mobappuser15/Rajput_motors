@@ -13,20 +13,15 @@ import "./prizerange.css";
 import PageScrollTop from "./PageScrollTop";
 import ReactLoading from "react-loading";
 import Pagination from "./Pagination";
+import Navbar from "./Navbar";
 
 import { Typography, makeStyles, TablePagination } from "@material-ui/core";
 
 const MIN = 50000;
 const MAX = 6000000;
 
-const StockCars = () => {
-	const [openprice, setOpenprice] = useState(false);
-	const [openyear, setOpenyear] = useState(false);
-	const [opendriven, setOpendriven] = useState(false);
-	const [openmanuf, setOpenmanuf] = useState(false);
-	const [openbodytype, setOpenbodytype] = useState(false);
+const StockCars = ({ detailspage, setDetailspage }) => {
 	const [openfueltype, setOpenfueltype] = useState(false);
-	const [openTransmission, setOpenTransmission] = useState(false);
 	const [stockdata, setStockdata] = useState([]);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -36,44 +31,29 @@ const StockCars = () => {
 
 	const [data, setData] = useState([]);
 	const [model, setModel] = useState([]);
-	const [source, setSource] = useState([]);
-	const [varient, setVarient] = useState([]);
-	const [vyear, setVechileYear] = useState([]);
 	const [fueldata, setFuelData] = useState([]);
-	const [transmission, setTransmission] = useState([]);
-	const [selectbodytype, setselectbodytype] = useState([]);
-	const [kmsDriven, setkmsDriven] = useState([]);
 	const [selectedItem, setSelectedItem] = useState("");
-	const [resourcedata, setResoucedata] = useState("");
-	const [selecttype, setSelecttype] = useState("");
 	const [selectmodel, setSelectmodel] = useState("");
 	const [selectfuel, setSelectFuel] = useState("");
-	const [selecttransmission, setSelecttransmission] = useState([]);
-	const [selectextirecolor, setSelectextirecolor] = useState("");
 	const [selectmfy, setSelectmfy] = useState("");
 	const [selectverient, setSelectverient] = useState("");
 	const [codemodel, setcodemodel] = useState("");
 	const [codemake, setcodemake] = useState("");
-	const [codevarient, setvarientdata] = useState([]);
 	const [minRange, setMinRange] = useState("");
 	const [maxRange, setMaxRange] = useState("");
 	const [selectedMake, setSelectedMake] = useState([]);
 	const [selectedModel, setSelectedModel] = useState("");
-	const [selectedVariant, setSelectedVariant] = useState("");
 	const [showdata, setShowdata] = useState(false);
 
-	const [result, setResult] = useState("");
-	const [makedatarequest, setMake] = useState([]);
 	const [inputvalue, setInputvalue] = useState("");
 	const [typedata, setDatatype] = useState([]);
-	const [vmonth, setVechileMonth] = useState([]);
-	const [extirecolor, setExtirearColor] = useState([]);
-	const [selectmfm, setSelectmfm] = useState("");
-	const [detailspage, setdetailspage] = useState(false);
+	// const [detailspage, setdetailspage] = useState(false);
+	const [methu, setMethu] = useState([]);
 
 	const [prizevalue, setprizevalue] = useState([MIN, MAX]);
 
 	const [currentpage, setCurrentPage] = useState(1);
+	var [homepage, setHomepage] = useState(false);
 	const itemsperpage = 18;
 	const totalItems = demo.length;
 	const totalPage = Math.ceil(totalItems / itemsperpage);
@@ -84,7 +64,8 @@ const StockCars = () => {
 
 	const Startindex = (currentpage - 1) * itemsperpage;
 	const EndIndex = Startindex + itemsperpage;
-	const currentData = stockdata.slice(Startindex, EndIndex);
+	var currentData = stockdata.slice(Startindex, EndIndex);
+	console.log(currentData, "currentData....");
 
 	// All Stock Show
 	useEffect(() => {
@@ -124,6 +105,7 @@ const StockCars = () => {
 
 					setStockdata(responseData?.UsedCarVehStockDetail);
 					setDemo(responseData?.UsedCarVehStockDetail);
+					setMethu(responseData?.UsedCarVehStockDetail);
 
 					setSearchResults(responseData?.UsedCarVehStockDetail);
 				} else {
@@ -146,7 +128,7 @@ const StockCars = () => {
 
 		setSelectedProduct(product);
 		// navigate("/details");
-		setdetailspage(product);
+		setDetailspage((product) => !product);
 	};
 
 	// make list
@@ -236,178 +218,7 @@ const StockCars = () => {
 				console.error(error);
 			});
 	}, [codemodel]);
-	// Lead Type list
-	useEffect(() => {
-		const url =
-			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
-		const headers = {
-			ApplicationMode: "ONLINE",
-			EnvironmentType: "DEMO",
-			BrandCode: "UC",
-			CountryCode: "IN",
-			"Content-Type": "application/json",
-		};
-		const data = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-			calledBy: "LEAD_TYPE",
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
 
-		fetch(url, {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			})
-			.then((jsonData) => {
-				const generalList = jsonData?.generalMasterList[0].generalList;
-				setDatatype(generalList);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}, []);
-	// varient list
-	useEffect(() => {
-		const url =
-			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
-		const headers = {
-			ApplicationMode: "ONLINE",
-			EnvironmentType: "DEMO",
-			BrandCode: "UC",
-			CountryCode: "IN",
-			"Content-Type": "application/json",
-		};
-		const data = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-
-			calledBy: "VARIANT",
-			vehMake: codemodel,
-			vehModel: codemake,
-
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
-
-		fetch(url, {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			})
-			.then((jsonData) => {
-				const generalList = jsonData?.generalMasterList[0].generalList;
-				setVarient(generalList);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}, [codemake, codemodel]);
-	// year list
-	useEffect(() => {
-		const url =
-			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
-		const headers = {
-			ApplicationMode: "ONLINE",
-			EnvironmentType: "DEMO",
-			BrandCode: "UC",
-			CountryCode: "IN",
-			"Content-Type": "application/json",
-		};
-		const data = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-			calledBy: "MF_YEAR",
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
-
-		fetch(url, {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			})
-			.then((jsonData) => {
-				const generalList = jsonData?.generalMasterList[0].generalList;
-				setVechileYear(generalList);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}, []);
-	// month list
-	useEffect(() => {
-		const url =
-			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
-		const headers = {
-			ApplicationMode: "ONLINE",
-			EnvironmentType: "DEMO",
-			BrandCode: "UC",
-			CountryCode: "IN",
-			"Content-Type": "application/json",
-		};
-		const data = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-			calledBy: "MONTH",
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
-
-		fetch(url, {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			})
-			.then((jsonData) => {
-				const generalList = jsonData?.generalMasterList[0].generalList;
-				setVechileMonth(generalList);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}, []);
 	// fuel list
 	useEffect(() => {
 		const url =
@@ -450,94 +261,6 @@ const StockCars = () => {
 				console.error(error);
 			});
 	}, []);
-	//  TRANSMISSION list
-	useEffect(() => {
-		const url =
-			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
-		const headers = {
-			ApplicationMode: "ONLINE",
-			EnvironmentType: "DEMO",
-			BrandCode: "UC",
-			CountryCode: "IN",
-			"Content-Type": "application/json",
-		};
-		const data = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-			calledBy: "TRANSMISSION",
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
-
-		fetch(url, {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			})
-			.then((jsonData) => {
-				const generalList = jsonData?.generalMasterList[0].generalList;
-				setTransmission(generalList);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}, []);
-	// extier color list
-
-	useEffect(() => {
-		const url =
-			"https://mobile.Orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetGeneralMaster";
-		const headers = {
-			ApplicationMode: "ONLINE",
-			EnvironmentType: "DEMO",
-			BrandCode: "UC",
-			CountryCode: "IN",
-			"Content-Type": "application/json",
-		};
-		const data = {
-			brandCode: "UC",
-			countryCode: "IN",
-			companyId: "SUSHIL",
-			calledBy: "EXT_COLOR",
-
-			vehMake: codemodel,
-			vehModel: codemake,
-			loginUserId: "RAVI",
-			loginIpAddress: "180.151.78.50",
-		};
-
-		fetch(url, {
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw new Error(
-						`Request failed with status code: ${response.status}`
-					);
-				}
-			})
-			.then((jsonData) => {
-				const generalList = jsonData?.generalMasterList[0].generalList;
-				setExtirearColor(generalList);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}, [codemodel, codemake]);
 
 	const handleSelectChange = (event) => {
 		setSelectedItem(event.target.value);
@@ -548,36 +271,9 @@ const StockCars = () => {
 		setSelectFuel(event.target.value);
 	};
 
-	const handleSelectChange2 = (event) => {
-		setSelecttype(event.target.value);
-	};
 	const handleSelectChange3 = (event) => {
 		setSelectmodel(event.target.value);
 		setcodemake(event.target.value);
-	};
-
-	const handleSelectChange5 = (event) => {
-		setSelecttransmission(event.target.value);
-	};
-	const handleSelectChange6 = (event) => {
-		setSelectextirecolor(event.target.value);
-	};
-	const handleSelectChange7 = (event) => {
-		setSelectmfy(event.target.value);
-	};
-	const handleSelectChange8 = (event) => {
-		setSelectmfm(event.target.value);
-	};
-	const handleSelectChange9 = (event) => {
-		setSelectverient(event.target.value);
-	};
-
-	const handleSelectBodyType = (event) => {
-		setselectbodytype(event.target.value);
-	};
-
-	const handleSelectKmsType = (event) => {
-		setkmsDriven(event.target.value);
 	};
 
 	const navigate = useNavigate();
@@ -639,9 +335,14 @@ const StockCars = () => {
 		console.log("refersh data");
 	};
 
-	const reset = () => {
-		setShowdata(showdata);
-		console.log("clear filter data");
+	const reset = (currentData) => {
+		setShowdata(true);
+		setSelectedItem("");
+		setSelectmodel("");
+
+		setStockdata(methu);
+		// const currentData = stockdata.slice(Startindex, EndIndex);
+		console.log("clear filter datannnn,,...");
 	};
 	return (
 		<>
@@ -792,7 +493,8 @@ const StockCars = () => {
 										<button
 											id='filter_buton'
 											className=' btn-sm'
-											onClick={reloadPage}>
+											onClick={reloadPage}
+											type='reset'>
 											Reset
 										</button>
 									</div>
@@ -1022,7 +724,8 @@ const StockCars = () => {
 																						<div
 																							className='b-items__cars-one-info-title'
 																							style={{ fontSize: "18px" }}>
-																							Rs {item.vehSellPriceRecommended}
+																							<i class='fa fa-rupee'></i>{" "}
+																							{item.vehSellPriceRecommended}
 																						</div>
 																					</span>
 																				</div>
@@ -1058,20 +761,11 @@ const StockCars = () => {
 														{currentData.length === 0 ? (
 															<div className='notdatafound'>
 																<p>vehicle Not Available</p>
-																<img
-																	src='https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?size=626&ext=jpg'
-																	alt='imph'
-																/>
 															</div>
 														) : (
 															<>
 																{currentData?.map((item) => (
 																	<div key={item.uniqueSerial}>
-																		{/* {console.log(
-																			demo,
-																			"check demo search data"
-																		)} */}
-
 																		<>
 																			<Col>
 																				<div
@@ -1137,7 +831,7 @@ const StockCars = () => {
 																							<div
 																								className='b-items__cars-one-info-title'
 																								style={{ fontSize: "18px" }}>
-																								Rs{" "}
+																								<i class='fa fa-rupee'></i>{" "}
 																								{item.vehSellPriceRecommended}
 																							</div>
 																						</span>

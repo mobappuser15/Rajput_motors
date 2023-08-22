@@ -2,13 +2,42 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./detail.css";
 import styled from "./Item";
+import toast from "react-hot-toast";
 import "./about.css";
 import ReactLoading from "react-loading";
 import PageScrollTop from "./PageScrollTop";
+import Details from "./Details";
+import ErrorPage from "./ErrorPage";
 
 function About({ reloadPage }) {
-	// Simulate page loading effect for demonstration purposes
+	// const [isLoading, setIsLoading] = useState(true);
 
+	// useEffect(() => {
+	// 	if (reloadPage) {
+	// 		// Display loading message while page is reloading
+	// 		console.log("Page reloading...");
+	// 		// alert("data loading");
+	// 		// Simulate reloading by setting a timeout
+	// 		setTimeout(() => {
+	// 			setIsLoading(false); // Set loading state to false after the timeout
+	// 		}, 2000); // Change this timeout value as needed
+	// 	} else {
+	// 		setIsLoading(false); // If not reloading, set loading state to false
+	// 	}
+	// }, [reloadPage]);
+
+	// if (isLoading) {
+	// 	return (
+	// 		<div className='loading-message'>
+	// 			<div className='pageloadingsize hidden-xs'>
+	// 				<ErrorPage />
+	// 			</div>{" "}
+	// 			<div className='pageloadingsize1 visible-xs'>
+	// 				<ErrorPage />
+	// 			</div>{" "}
+	// 		</div>
+	// 	);
+	// }
 	return (
 		<div className=''>
 			<PageScrollTop />
@@ -93,10 +122,12 @@ function About({ reloadPage }) {
 										</div>
 										<div className='boxContent'>
 											<p className='description'>
-												Gurgaon-based dealer-networking solutions provider is
-												enabling new OEMs to expand swiftly by using its
-												cost-efficient, fully integrated offerings for managing
-												sales and aftersales operations.
+												At our company, we believe in providing our customers
+												with the best value for their money. That's why we offer
+												low prices and a no-haggling policy. We understand that
+												price is an important factor when making purchasing
+												decisions, and we want to ensure that our products and
+												services are accessible to everyone.
 											</p>
 										</div>
 									</div>
@@ -110,9 +141,12 @@ function About({ reloadPage }) {
 										</div>
 										<div className='boxContent'>
 											<p className='description'>
-												We offer IT services and ready-to-use Web hosted
-												software systems for a number of verticals which can be
-												customized easily to meet your specific needs
+												We are the Welcome to our dealership, where we proudly
+												hold the title of being the largest car dealership in
+												the area. With an extensive inventory and a commitment
+												to exceptional customer service, we strive to provide an
+												unmatched car buying experience for our valued
+												customers.
 											</p>
 										</div>
 									</div>
@@ -126,10 +160,13 @@ function About({ reloadPage }) {
 										a
 										<div className='boxContent'>
 											<p className='description'>
-												We can assist you in the outsourcing of critical
-												business operations backed by our in-house IT support.
-												We will assist you for any outsourced business process
-												for your organization.
+												Our customer Our rigorous safety protocols cover every
+												aspect of the vehicle, from the engine to the brakes,
+												ensuring that each car undergoes thorough inspections
+												before it reaches our customers. We leave no stone
+												unturned when it comes to guaranteeing that our cars are
+												in optimal condition and meet the highest safety
+												standards.
 											</p>
 										</div>
 									</div>
@@ -226,4 +263,5 @@ function About({ reloadPage }) {
 		</div>
 	);
 }
+
 export default About;

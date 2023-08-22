@@ -34,25 +34,55 @@ import "./App.css";
 // import AdminDash from "./Pages/AdminDash";
 import { Header, Container } from "react-bootstrap";
 import ReactLoading from "react-loading";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ErrorPage from "./Components/ErrorPage";
 
 export default function App({ isLoggedIn }) {
-	const [page, setPage] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [detailspage, setDetailspage] = useState(false);
 	const reloadPage = () => {
 		window.location.reload();
 		// toast.success("Page  Loading ! ");
 	};
-	console.log(reloadPage, "reloadPage");
+	const handleHomeClick = () => {
+		setDetailspage(false); // Set detailspage to false when clicking on HOME
+	};
+	useEffect(() => {
+		if (reloadPage) {
+			// Display loading message while page is reloading
+			console.log("Page reloading...");
+			// alert("data loading");
+			// Simulate reloading by setting a timeout
+			setTimeout(() => {
+				setIsLoading(false); // Set loading state to false after the timeout
+			}, 1000); // Change this timeout value as needed
+		} else {
+			setIsLoading(false); // If not reloading, set loading state to false
+		}
+	}, [reloadPage]);
+
+	// if (isLoading) {
+	// 	return (
+	// 		<div className='loading-message'>
+	// 			<div className='pageloadingsize hidden-xs'>
+	// 				<ErrorPage />
+	// 			</div>{" "}
+	// 			<div className='pageloadingsize1 visible-xs'>
+	// 				<ErrorPage />
+	// 			</div>{" "}
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<div className=''>
 			{" "}
 			<ScrollTop />
 			<div className='fixed-top'>
-				<Navbar />
+				<Navbar onHomeClick={handleHomeClick} />{" "}
 			</div>{" "}
 			<Routes>
-				<Route exact path='/yyuu' element={<Signup />} exact />{" "}
+				<Route exact path='/ghhj' element={<Signup />} exact />{" "}
 				{/* <Route exact path='/admin' element={<AdminDash />} exact /> */}{" "}
 				<Route
 					exact
@@ -60,20 +90,38 @@ export default function App({ isLoggedIn }) {
 					element={isLoggedIn ? <DashBoard /> : <Navigate to='/homepage' />}
 					exact
 				/>
-				<Route exact path='/' element={<HomePage page={page} />} exact />
+				<Route
+					exact
+					path='/'
+					element={
+						<HomePage
+							detailspage={detailspage}
+							setDetailspage={setDetailspage}
+						/>
+					}
+					exact
+				/>
 				<Route path='/insurence' element={<Insurance />} />{" "}
 				<Route path='/about' element={<About />} />{" "}
 				<Route path='/salecar' element={<Submit1 />} />{" "}
 				<Route path='/buycar' element={<ListTableTwo />} />{" "}
 				<Route path='/notification' element={<Notification />} />{" "}
 				<Route path='/contact' element={<Contact />} />{" "}
-				<Route path='/detailsdata' element={<StockCars />} />{" "}
+				<Route
+					path='/detailsdata'
+					element={
+						<StockCars
+							detailspage={detailspage}
+							setDetailspage={setDetailspage}
+						/>
+					}
+				/>{" "}
 				<Route path='/details' element={<Details />} />{" "}
 				<Route path='/emical' element={<EmiCalculator />} />{" "}
 				<Route path='/submit2' element={<Submit2 />} />{" "}
 				<Route path='/carloans' element={<CarLoan />} />{" "}
 				{/* <Route path='/Addvechils' element={<AddVechil />} />{" "}
-                                                                                                        				<Route path='/stocktable' element={<StoreVechileTable />} />{" "} */}{" "}
+                                                                                                                                                                                                                                                                                                                                                                                                            				<Route path='/stocktable' element={<StoreVechileTable />} />{" "} */}{" "}
 			</Routes>{" "}
 			<Toaster
 				position='top-center'
