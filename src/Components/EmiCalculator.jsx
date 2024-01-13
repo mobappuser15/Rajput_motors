@@ -8,6 +8,9 @@ import { Typography, Slider } from "@material-ui/core";
 import { Doughnut } from "react-chartjs-2";
 import Box from "@material-ui/core/Box";
 import "./detail.css";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
+import Socalmedia from "./Socalmedia";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -67,7 +70,7 @@ const EmiCalculator = () => {
 		datasets: [
 			{
 				data: [totalAmountOfInterest, pAmount],
-				backgroundColor: ["#f76d2b", "#9b9b9b"],
+				backgroundColor: ["#c1272d", "#9b9b9b"],
 				fontSize: "20px",
 			},
 		],
@@ -82,6 +85,8 @@ const EmiCalculator = () => {
 
 	return (
 		<>
+			<Navbar />
+			<Socalmedia />
 			<PageScrollTop />
 			<section className='b-pageHeader'>
 				<div className='container'>
@@ -320,58 +325,37 @@ const EmiCalculator = () => {
 
 			<section className='b-brands s-shadow'>
 				<div className='container'>
-					<h5 className='s-titleBg ' data-wow-delay='0.5s'>
-						FIND OUT MORE
-					</h5>
-					<br />
-					<h2 className='s-title ' data-wow-delay='0.5s'>
+					<h2 className='s-title brd_padg ' data-wow-delay='0.5s'>
 						BRANDS WE OFFER
 					</h2>
-					<div className=''>
+					<div className='brnd_bdr'>
 						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
-							<img src='media/brands/bmwLogo.png' alt='brand' />
+							<img src='images/logo/mg.jpg' alt='brand' />
+						</div>
+
+						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
+							<img src='images/logo/kia.png' alt='brand' />
 						</div>
 						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
-							<img src='media/brands/kia.png' alt='brand' />
+							<img src='images/logo/volvo.png' alt='brand' />
 						</div>
 						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
-							<img src='media/brands/volvo.png' alt='brand' />
+							<img src='images/logo/merc.jpg' alt='brand' />
 						</div>
 						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
-							<img src='media/brands/mercLogo.png' alt='brand' />
+							<img src='images/logo/audi.jpg' alt='brand' />
 						</div>
 						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
-							<img src='media/brands/audiLogo.png' alt='brand' />
+							<img src='images/logo/hunda.jpg' alt='brand' />
 						</div>
 						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
-							<img src='media/brands/honda.png' alt='brand' />
-						</div>
-						<div className='b-brands__brand wow rotateIn' data-wow-delay='0.5s'>
-							<img src='media/brands/mg.png' alt='brand' />
+							<img src='images/logo/bmw.jpg' alt='brand' />
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<div className='b-features'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-md-9 col-md-offset-3 col-xs-6 col-xs-offset-6'>
-							<ul className='b-features__items'>
-								<li className='' data-wow-delay='0.3s' data-wow-offset='100'>
-									Low Prices, No Haggling
-								</li>
-								<li className='' data-wow-delay='0.3s' data-wow-offset='100'>
-									Largest Car Dealership
-								</li>
-								<li className='' data-wow-delay='0.3s' data-wow-offset='100'>
-									Multipoint Safety Check
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Footer />
 		</>
 	);
 };

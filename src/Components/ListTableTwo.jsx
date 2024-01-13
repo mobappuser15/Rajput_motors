@@ -22,7 +22,7 @@ const ListTableTwo = () => {
 			const data = {
 				brandCode: "UC",
 				countryCode: "IN",
-				companyId: "SUSHIL",
+				companyId: "CARZ",
 				budgetFrom: 0,
 				budgetTo: 2000000,
 				vehBrandCode: "ALL",
@@ -160,13 +160,11 @@ const ListTableTwo = () => {
 																		singleProducthandle(item.uniqueSerial)
 																	}
 																	className=' card2 b-auto__main-item '>
-																	{/* {console.log(item.modelImages, "data image url")} */}
 																	<img
 																		style={{
 																			aspectRatio: "2/2",
 																			width: "100%",
-																			// border: "3px solid gray",
-																			// borderRadius: "20px",
+																			
 																		}}
 																		className=' img-responsive center-block'
 																		src={frontImage.uri}
@@ -276,7 +274,6 @@ const ListTableTwo = () => {
 																		singleProducthandle(item.uniqueSerial)
 																	}
 																	className='  '>
-																	{/* {console.log(item.modelImages, "data image url")} */}
 																	<img
 																		style={{
 																			marginLeft: "1px",
@@ -454,7 +451,7 @@ const ListTableTwo = () => {
 								<article className='b-info__aside-article'>
 									<h3>About us</h3>
 									<p>
-										Established in the year 2002, Sushil Car Bazar is one of the
+										Established in the year 2002, CARZ Car Bazar is one of the
 										top & most trusted dealership for preowned luxury car.In
 										over 17 years of business history we have always had a
 										customer oriented approach & total customer satisfaction has
@@ -501,7 +498,7 @@ const ListTableTwo = () => {
 								<div className='b-info__contacts-item'>
 									<span className='fa fa-envelope'></span>
 									<em>
-										<ol>sushilcarbazar@gmail.com</ol>
+										<ol>CARZcarbazar@gmail.com</ol>
 									</em>
 								</div>
 							</address>

@@ -181,3 +181,18 @@
     padding:5px;
     margin-left: 15px;
 }
+
+
+.header_pos2{display: inherit;}
+
+.header_pos2::after{background: #7d0000;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: calc(22% + 0px);
+    -webkit-transform: skewX(30deg);
+    transform: skewX(30deg);
+    border-right: 4px solid #fff;}

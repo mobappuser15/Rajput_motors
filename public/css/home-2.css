@@ -32,11 +32,13 @@
 .m-home .b-search__main {
 	border-radius: 15px !important;
 	bottom: 0px;
-	background-image: url(../images/searchshadw.png);
+	background: none;
 	background-repeat: no-repeat;
 	background-size: 100%;
-	background-position: bottom -14px center;
+	background-position: bottom 0px center;
 	height: 320px;
+	width: 90%;
+	margin-left: 4%;
 }
 
 .m-home .b-search .container > h1 {
@@ -48,32 +50,34 @@
 
 .m-home .b-search__main > h4 {
 	text-transform: uppercase;
-	font: 600 25px "Open Sans", sans-serif;
-	margin: 0 0 45px 0;
-	padding-bottom: 20px;
+	font: 600 80px "Open Sans", sans-serif;
+	margin: 0 0 0px 0;
+	padding: 10px 40px;
 	position: relative;
 	display: inline-block;
+	text-shadow: 5px 5px 4px #232323;
 }
 
+.m-home .b-search__main > p{ color: #fff; font-size: 19px; margin-bottom: 40px;}
+
 .m-home .b-search__main > h4:before {
-	height: 1px;
-	width: 70%;
-	left: 15%;
-	border-bottom: 1px solid #b4b4b4;
-	content: "";
-	position: absolute;
-	top: 100%;
-	display: block;
+	/* content: ""; */
+    position: absolute;
+    height: 6px;
+    width: 25px;
+    background: #fff;
+    right: 0px;
+    bottom: 0;
 }
 
 .m-home .b-search__main > h4:after {
-	background: url(../images/elements/chevron-down.png) center no-repeat;
-	width: 100%;
-	height: 7px;
-	content: "";
-	position: absolute;
-	top: 100%;
-	display: block;
+	/* content: ""; */
+    position: absolute;
+    height: 25px;
+    width: 6px;
+    background: #fff;
+    right: 0px;
+    bottom: 0;
 }
 
 /* World */
@@ -93,8 +97,7 @@
 .m-home .b-featured {
 	padding-top: 65px;
 	padding-bottom: 70px;
-	background: url(../images/backgrounds/featured.jpg);
-	background-size: cover;
+	background: #fff;
 }
 
 .m-home .b-featured:after {
@@ -174,13 +177,13 @@
 /* Home Auto */
 
 .m-home .b-homeAuto {
-	padding: 255px 0 70px 0;
+	padding: 55px 0 70px 0;
 	position: relative;
 	z-index: 100;
 }
 
 .m-home .b-homeAuto__latest {
-	text-align: left;
+	text-align: center;
 	margin-right: 15px;
 }
 
@@ -292,6 +295,7 @@
 
 .m-home .b-count__item h5 {
 	font-weight: 600;
+	color: #fff;
 }
 
 /* Home Reviews */

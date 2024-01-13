@@ -16,8 +16,18 @@ import Details from "./Details";
 import { styled } from "@mui/material/styles";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Socalmedia from "./Socalmedia";
+import Footer from "./Footer";
+import { useParams } from "react-router-dom";
 
 const breakPoints = [
+	{ width: 1, itemsToShow: 1 },
+	{ width: 550, itemsToShow: 2, itemsToScroll: 2 },
+	{ width: 768, itemsToShow: 4 },
+	{ width: 1200, itemsToShow: 4 },
+];
+
+const breakPoints3 = [
 	{ width: 1, itemsToShow: 1 },
 	{ width: 550, itemsToShow: 2, itemsToScroll: 2 },
 	{ width: 768, itemsToShow: 4 },
@@ -31,7 +41,8 @@ const breakPoints2 = [
 	{ width: 1200, itemsToShow: 2 },
 ];
 
-export default function HomePage({ detailspage, setDetailspage }) {
+export default function HomePage() {
+	const [detailspage, setDetailspage] = useState(false);
 	const [stockdata, setStockdata] = useState([]);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 	const [result, setResult] = useState("");
@@ -41,7 +52,6 @@ export default function HomePage({ detailspage, setDetailspage }) {
 	const [selectedValue, setSelectedValue] = useState(null);
 	const [searchResults, setSearchResults] = useState([]);
 	const [demo, setDemo] = useState([]);
-	// const [reset, setReset] = useState([]);
 	const [data, setData] = useState([]);
 	const [model, setModel] = useState([]);
 	const [source, setSource] = useState([]);
@@ -67,9 +77,11 @@ export default function HomePage({ detailspage, setDetailspage }) {
 	const [selectedModel, setSelectedModel] = useState("");
 	const [selectedVariant, setSelectedVariant] = useState("");
 	const [showdata, setShowdata] = useState(false);
-	// const [detailspage, setDetailspage] = useState(false);
 	const [methu, setMethu] = useState([]);
 	var [homepage, setHomepage] = useState(false);
+	const handleHomeClick = () => {
+		setDetailspage(false);
+	};
 
 	// make list
 	useEffect(() => {
@@ -85,9 +97,9 @@ export default function HomePage({ detailspage, setDetailspage }) {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "RAJPUT",
 			calledBy: "MAKE",
-			loginUserId: "RAVI",
+			loginUserId: "VICKY",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -128,11 +140,11 @@ export default function HomePage({ detailspage, setDetailspage }) {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "RAJPUT",
 			calledBy: "MODEL",
 			vehMake: codemodel,
 
-			loginUserId: "RAVI",
+			loginUserId: "VICKY",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -159,7 +171,6 @@ export default function HomePage({ detailspage, setDetailspage }) {
 			});
 	}, [codemodel]);
 
-	console.log("detailspage == ", detailspage);
 
 	const handleSelectChange = (event) => {
 		setSelectedItem(event.target.value);
@@ -197,14 +208,14 @@ export default function HomePage({ detailspage, setDetailspage }) {
 			const data = {
 				brandCode: "UC",
 				countryCode: "IN",
-				companyId: "SUSHIL",
+				companyId: "RAJPUT",
 				budgetFrom: 0,
 				budgetTo: 0,
 				vehBrandCode: "",
 				vehModelCode: "",
 				vehFuel: "",
 				loginCompanyID: "ORBIT",
-				loginUserId: "SULTAN",
+				loginUserId: "VICKY",
 				loginIpAddress: "192.168.10.32",
 			};
 
@@ -219,8 +230,6 @@ export default function HomePage({ detailspage, setDetailspage }) {
 					const responseData = await response.json();
 					setStockdata(responseData?.UsedCarVehStockDetail);
 					setMethu(responseData?.UsedCarVehStockDetail);
-
-					// setDemo(responseData?.UsedCarVehStockDetail);
 				} else {
 					throw new Error(
 						`Request failed with status code: ${response.status}`()
@@ -233,13 +242,21 @@ export default function HomePage({ detailspage, setDetailspage }) {
 
 		fetchData();
 	}, []);
-	console.log(detailspage, "asdfbkjl;");
-	const singleProducthandle = (uniqueSerial) => {
+	
+
+	let { paramData } = useParams();
+
+	const singleProducthandle = (uniqueSerial, vehOdometer) => {
 		const product = stockdata.find(
-			(item) => item.uniqueSerial === uniqueSerial
+			(item) => item.uniqueSerial === uniqueSerial,
+			(item) => item.vehOdometer === vehOdometer
+		);
+
+		navigate(
+			`/detailsparticular/${product.uniqueSerial}/${product.vehOdometer}`
 		);
 		setSelectedProduct(product);
-		setDetailspage((product) => !product);
+		setDetailspage((prevDetailspage) => !prevDetailspage);
 	};
 
 	const fetchData = async () => {
@@ -255,14 +272,14 @@ export default function HomePage({ detailspage, setDetailspage }) {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "RAJPUT",
 			budgetFrom: minRange,
 			budgetTo: maxRange,
 			vehBrandCode: selectedItem,
 			vehModelCode: selectmodel,
 			vehFuel: "",
-			loginCompanyID: "ORBIT",
-			loginUserId: "SULTAN",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
 			loginIpAddress: "192.168.10.32",
 		};
 
@@ -295,12 +312,11 @@ export default function HomePage({ detailspage, setDetailspage }) {
 	};
 
 	const reSet = () => {
-		console.log("i am runing");
 
 		setDemo(stockdata);
 	};
 
-	// console.log(filterDataCars, "filterDataCars");
+	
 
 	const reloadPage = () => {
 		window.location.reload(false);
@@ -432,505 +448,2013 @@ export default function HomePage({ detailspage, setDetailspage }) {
 		setMinRange("");
 		setMaxRange("");
 		setStockdata(methu);
-		console.log("clear filtering data....");
+	};
+
+	const fetchData1 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: "",
+			budgetTo: "",
+			vehBrandCode: "HYUNDAI",
+			vehModelCode: "",
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+	const fetchData2 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: "",
+			budgetTo: "",
+			vehBrandCode: "MARUTI",
+
+			vehModelCode: "",
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData3 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: "",
+			budgetTo: "",
+			vehBrandCode: "HONDA",
+			vehModelCode: "",
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData4 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: "",
+			budgetTo: "",
+			vehBrandCode: "TATA",
+			vehModelCode: "",
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData5 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: "",
+			budgetTo: "",
+			vehBrandCode: "MAHINDRA",
+			vehModelCode: "",
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData6 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "RENAULT",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData7 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "TOYOTA",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData8 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "FORD",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData9 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "KIA",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData10 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "NISSAN",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData11 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "MG",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData12 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "MERC",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+	const fetchData13 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "AUDI",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+	const fetchData14 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "BMW",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+	const fetchData15 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "VOLVO",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const fetchData18 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "VW",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const filterDataCars18 = (e) => {
+		e.preventDefault();
+		fetchData18();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+	const filterDataCars1 = (e) => {
+		e.preventDefault();
+		fetchData1();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+	const filterDataCars2 = (e) => {
+		e.preventDefault();
+		fetchData2();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+	const filterDataCars3 = (e) => {
+		e.preventDefault();
+		fetchData3();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+	const filterDataCars4 = (e) => {
+		e.preventDefault();
+		fetchData4();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+	const filterDataCars5 = (e) => {
+		e.preventDefault();
+		fetchData5();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+	const filterDataCars6 = (e) => {
+		e.preventDefault();
+		fetchData6();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+	const filterDataCars7 = (e) => {
+		e.preventDefault();
+		fetchData7();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars8 = (e) => {
+		e.preventDefault();
+		fetchData8();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars9 = (e) => {
+		e.preventDefault();
+		fetchData9();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars10 = (e) => {
+		e.preventDefault();
+		fetchData10();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars11 = (e) => {
+		e.preventDefault();
+		fetchData11();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars12 = (e) => {
+		e.preventDefault();
+		fetchData12();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars13 = (e) => {
+		e.preventDefault();
+		fetchData13();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars14 = (e) => {
+		e.preventDefault();
+		fetchData14();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const filterDataCars15 = (e) => {
+		e.preventDefault();
+		fetchData15();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
+	};
+
+	const fetchData16 = async () => {
+		const url =
+			"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+		const headers = {
+			ApplicationMode: "ONLINE",
+			EnvironmentType: "DEMO",
+			BrandCode: "UC",
+			CountryCode: "IN",
+			"Content-Type": "application/json",
+		};
+		const data = {
+			brandCode: "UC",
+			countryCode: "IN",
+			companyId: "RAJPUT",
+			budgetFrom: minRange,
+			budgetTo: maxRange,
+			vehBrandCode: "VW",
+			vehModelCode: selectmodel,
+			vehFuel: "",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
+			loginIpAddress: "192.168.10.32",
+		};
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				setSearchResults(responseData?.UsedCarVehStockDetail);
+				setDemo(responseData?.UsedCarVehStockDetail);
+
+				setShowdata(responseData?.UsedCarVehStockDetail);
+			} else {
+				throw new Error(`Request failed with status code: ${response.status}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const filterDataCars16 = (e) => {
+		e.preventDefault();
+		fetchData1();
+
+		searchResults.map((item) => console.log(item.uniqueSerial, "uniqueserial"));
 	};
 
 	return (
 		<div className=''>
+			<Navbar onHomeClick={handleHomeClick} />
+			<Socalmedia />
+
 			<PageScrollTop />
 
-			{detailspage === false ? (
-				<>
-					<div>
-						<div
-							className='m-home'
-							data-scrolling-animations='true'
-							data-equal-height='.b-auto__main-item'>
-							{/* Loader */}
+			<>
+				<div>
+					<div
+						className='m-home'
+						data-scrolling-animations='true'
+						data-equal-height='.b-auto__main-item'>
+						<section class='jk-slider'>
+							<div
+								id='carousel-example'
+								class='carousel slide'
+								data-ride='carousel'>
+								<ol class='carousel-indicators'>
+									<li
+										data-target='#carousel-example'
+										data-slide-to='0'
+										class='active'></li>
+									<li data-target='#carousel-example' data-slide-to='1'></li>
+									<li data-target='#carousel-example' data-slide-to='2'></li>
+									<li data-target='#carousel-example' data-slide-to='3'></li>
+									<li data-target='#carousel-example' data-slide-to='4'></li>
+								</ol>
 
-							{/* Loader end */}
-
-							{/* slider  */}
-							<section className='b-slider hidden-xs'>
-								<div
-									id='carouselExampleFade'
-									className='carousel slide carousel-fade'
-									data-bs-ride='carousel'>
-									<div className='carousel-inner'>
-										<div className='carousel-item active'>
-											<img
-												style={{ marginTop: "39px" }}
-												src='media/main-slider/sushil-cars2.png'
-												className='d-block w-100'
-												alt='...'
-											/>
-										</div>
-									</div>
-								</div>
-							</section>
-
-							<section className='b-slider visible-xs'>
-								<div
-									id='carouselExampleFade'
-									className='carousel slide carousel-fade'
-									data-bs-ride='carousel'>
-									<div className='carousel-inner'>
-										<div className='carousel-item active'>
-											<img
-												id='imglogop'
-												style={{ marginTop: "100px" }}
-												src='media/main-slider/sushil-cars.jpg'
-												className='d-block w-100'
-												alt='...'
-											/>
-										</div>
-									</div>
-								</div>
-							</section>
-
-							{/* filter form search bar */}
-							<section className='b-search' id='ser_hit1'>
-								<div className='container'>
-									<div className='row'>
-										<div
-											className='b-search__main'
-											style={{
-												marginTop: "-6px",
-												borderRadius: "30px",
-												backgroundColor: "white",
-											}}>
-											<h4 onClick={reloadPage}>Search Your Dream Car</h4>
-											<form
-												id='form1'
-												className='b-search__main-form'
-												onSubmit={filterDataCars}>
-												<div className='row'>
-													<div className=' col-md-12 col-xs-12'>
-														<div>
-															<div
-																className='col-xs-12 col-md-3 col-lg-3'
-																id='searchdata'>
-																<Select
-																	className='selectdataf'
-																	value={selectedItem}
-																	onChange={handleSelectChange}
-																	displayEmpty>
-																	<MenuItem value='' className='selectoption'>
-																		Select Make
-																	</MenuItem>
-																	{data.map((item, index) => (
-																		<MenuItem
-																			className='selectoption'
-																			key={index}
-																			value={item.code}>
-																			{item.description}
-																		</MenuItem>
-																	))}
-																</Select>
-
-																<div class='col-xs-12 col-md-3 col-lg-3'></div>
-															</div>
-															<div
-																className='col-xs-12 col-md-3 col-lg-3'
-																id='searchdata'>
-																<Select
-																	className='selectdataf'
-																	value={selectmodel}
-																	onChange={handleSelectChange3}
-																	displayEmpty
-																	inputProps={{
-																		"aria-label": "Without label",
-																	}}>
-																	<MenuItem value='' className='selectoption'>
-																		Select Model
-																	</MenuItem>
-																	{model.map((item, index) => (
-																		<MenuItem
-																			className='selectoption'
-																			key={index}
-																			value={item.code}>
-																			{item.description}
-																		</MenuItem>
-																	))}
-																</Select>
-															</div>
-
-															<div
-																className='col-xs-12 col-md-3 col-lg-3 '
-																id='searchdata'>
-																<Select
-																	className='selectdataf'
-																	value={minRange}
-																	onChange={handleSelectChangeminprize}
-																	displayEmpty
-																	inputProps={{
-																		"aria-label": "Without label",
-																	}}>
-																	<MenuItem value='' className='selectoption'>
-																		Select Min Price
-																	</MenuItem>
-																	{Amountdatamin.map((item, index) => (
-																		<MenuItem
-																			className='selectoption'
-																			key={index}
-																			value={item.id}>
-																			{item.img}
-																		</MenuItem>
-																	))}
-																</Select>
-															</div>
-
-															<div
-																className='col-xs-12 col-md-3 col-lg-3'
-																id='searchdata'>
-																<Select
-																	className='selectdataf'
-																	value={maxRange}
-																	onChange={handleSelectChangemaxnprize}
-																	displayEmpty
-																	inputProps={{
-																		"aria-label": "Without label",
-																	}}>
-																	<MenuItem value='' className='selectoption'>
-																		Select Max Price
-																	</MenuItem>
-																	{Amountdatamax.map((item, index) => (
-																		<MenuItem
-																			className='selectoption'
-																			key={index}
-																			value={item.id}>
-																			{item.img}
-																		</MenuItem>
-																	))}
-																</Select>
-															</div>
-														</div>
-													</div>
-													<div className='col-md-12 col-xs-12'>
-														<div className='b-search__main-form-submit '>
-															<button
-																style={{
-																	backgroundColor: "#f76d2b",
-																	textAlign: "center",
-																}}
-																type='submit'
-																id='searcgbtn'
-																className='  btn btn-lg'>
-																<span
+								<div class='carousel-inner'>
+									<div class='serc_sec1'>
+										<div class='container'>
+											<div class='row'>
+												<div class='col-md-12'>
+													<section className='b-search' id='search_sect'>
+														<div className='container'>
+															<div className='row'>
+																<div
+																	className='b-search__main'
 																	style={{
-																		backgroundColor: "#f76d2b",
+																		marginTop: "0px",
+																		borderRadius: "30px",
 																	}}>
-																	Search
-																</span>
-															</button>
+																	{/* <span className='sins_tx'>Since 1980</span>
+																	<h4 onClick={reloadPage}>
+																		RAJPUT
+																		<span className='mtr_spn'> MOTORS</span>
+																	</h4>
+																	<p>
+																		Your Trusted Partner for New and Pre-Owned
+																		Cars
+																	</p> */}
 
-															<button
-																style={{
-																	marginLeft: "40px",
-																	backgroundColor: "#555555",
-																	textAlign: "start",
-																	color: "white",
-																}}
-																id='searcgbtn'
-																onClick={reset}
-																type='reset'
-																className='btn    btn-lg'>
-																<span>Reset</span>
-															</button>
+																	<form
+																		id='form1'
+																		className='b-search__main-form'
+																		onSubmit={filterDataCars}>
+																		<div className='row'>
+																			<div className=' col-md-12 col-xs-12'>
+																				<div>
+																					<div
+																						className='col-xs-12 col-md-3 col-lg-3'
+																						id='searchdata'>
+																						<Select
+																							className='selectdataf'
+																							value={selectedItem}
+																							onChange={handleSelectChange}
+																							displayEmpty>
+																							<MenuItem
+																								value=''
+																								className='selectoption'>
+																								Select Make
+																							</MenuItem>
+																							{data.map((item, index) => (
+																								<MenuItem
+																									className='selectoption'
+																									key={index}
+																									value={item.code}>
+																									{item.description}
+																								</MenuItem>
+																							))}
+																						</Select>
+
+																						<div class='col-xs-12 col-md-3 col-lg-3'></div>
+																					</div>
+																					<div
+																						className='col-xs-12 col-md-3 col-lg-3'
+																						id='searchdata'>
+																						<Select
+																							className='selectdataf'
+																							value={selectmodel}
+																							onChange={handleSelectChange3}
+																							displayEmpty
+																							inputProps={{
+																								"aria-label": "Without label",
+																							}}>
+																							<MenuItem
+																								value=''
+																								className='selectoption'>
+																								Select Model
+																							</MenuItem>
+																							{model.map((item, index) => (
+																								<MenuItem
+																									className='selectoption'
+																									key={index}
+																									value={item.code}>
+																									{item.description}
+																								</MenuItem>
+																							))}
+																						</Select>
+																					</div>
+
+																					<div
+																						className='col-xs-12 col-md-3 col-lg-3 '
+																						id='searchdata'>
+																						<Select
+																							className='selectdataf'
+																							value={minRange}
+																							onChange={
+																								handleSelectChangeminprize
+																							}
+																							displayEmpty
+																							inputProps={{
+																								"aria-label": "Without label",
+																							}}>
+																							<MenuItem
+																								value=''
+																								className='selectoption'>
+																								Select Min Price
+																							</MenuItem>
+																							{Amountdatamin.map(
+																								(item, index) => (
+																									<MenuItem
+																										className='selectoption'
+																										key={index}
+																										value={item.id}>
+																										{item.img}
+																									</MenuItem>
+																								)
+																							)}
+																						</Select>
+																					</div>
+
+																					<div
+																						className='col-xs-12 col-md-3 col-lg-3'
+																						id='searchdata'>
+																						<Select
+																							className='selectdataf'
+																							value={maxRange}
+																							onChange={
+																								handleSelectChangemaxnprize
+																							}
+																							displayEmpty
+																							inputProps={{
+																								"aria-label": "Without label",
+																							}}>
+																							<MenuItem
+																								value=''
+																								className='selectoption'>
+																								Select Max Price
+																							</MenuItem>
+																							{Amountdatamax.map(
+																								(item, index) => (
+																									<MenuItem
+																										className='selectoption'
+																										key={index}
+																										value={item.id}>
+																										{item.img}
+																									</MenuItem>
+																								)
+																							)}
+																						</Select>
+																					</div>
+																				</div>
+																			</div>
+																			<div className='col-md-12 col-xs-12'>
+																				<div className='b-search__main-form-submit '>
+																					<button
+																						style={{
+																							backgroundColor: "#7d0000",
+																							textAlign: "center",
+																						}}
+																						type='submit'
+																						id='searcgbtn'
+																						className='  btn btn-lg'>
+																						<span
+																							style={{
+																								backgroundColor: "#7d0000",
+																							}}>
+																							Search
+																						</span>
+																					</button>
+
+																					<button
+																						style={{
+																							marginLeft: "40px",
+																							backgroundColor: "#696969",
+																							textAlign: "start",
+																							color: "white",
+																						}}
+																						id='searcgbtn'
+																						onClick={reset}
+																						type='reset'
+																						className='btn    btn-lg'>
+																						<span>Reset</span>
+																					</button>
+																				</div>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
 														</div>
-													</div>
+													</section>
 												</div>
-											</form>
+											</div>
+										</div>
+									</div>
+
+									<div class='item active '>
+										<a href='#'>
+											<div className='d1'></div>
+										</a>
+										<div class='hero'>
+											<hgroup> </hgroup>
+										</div>
+									</div>
+
+									<div class='item sl2'>
+										<a href='#'>
+											<div className='d6'></div>
+										</a>
+										<div class='hero'>
+											<hgroup></hgroup>
+										</div>
+									</div>
+
+									<div class='item sl2'>
+										<a href='#'>
+											<div className='d2'></div>
+										</a>
+										<div class='hero'>
+											<hgroup></hgroup>
+										</div>
+									</div>
+									<div class='item'>
+										<a href='#'>
+											<div className='d3'></div>
+										</a>
+										<div class='hero'>
+											<hgroup></hgroup>
+										</div>
+									</div>
+
+									<div class='item'>
+										<a href='#'>
+											<div className='d4'></div>
+										</a>
+										<div class='hero'>
+											<hgroup></hgroup>
+										</div>
+									</div>
+
+									<div class='item'>
+										<a href='#'>
+											<div className='d5'></div>
+										</a>
+										<div class='hero'>
+											<hgroup></hgroup>
 										</div>
 									</div>
 								</div>
-							</section>
 
-							{/* Render the list of products */}
+								<a
+									class='left carousel-control'
+									href='#carousel-example'
+									data-slide='prev'>
+									<span
+										class='glyphicon fa fa-angle-left lft_aro'
+										style={{ marginLeft: "50%" }}></span>
+								</a>
 
-							{showdata === false ? (
-								<>
-									{/* vechile Stock home data on sale section */}
+								<a
+									class='right carousel-control'
+									href='#carousel-example'
+									data-slide='next'>
+									<span class='glyphicon fa fa-angle-right lft_aro'></span>
+								</a>
+							</div>
+						</section>
 
-									<section className='b-homeAuto  hidden-xs  '>
-										<div className='container'>
-											<div className='col-xs-12   visible-xs-horizental-scroll'>
-												<div className='b-homeAuto__latest'>
-													<h5
-														className='s-titleBg '
-														style={{ fontFamily: "Segoe UI" }}>
-														GIVING OUR CUSTOMERS BEST DEALS
-													</h5>
-													<br />
+						<div className='serc_mobile'>
+							<div class='col-md-12'>
+								<section className='b-search' id='search_sect'>
+									<div className='container'>
+										<div className='row'>
+											<div
+												className='b-search__main serc_pos'
+												style={{
+													marginTop: "0px",
+													borderRadius: "30px",
+													backgroundColor: "white",
+												}}>
+												<h4 onClick={reloadPage}>RAJPUT MOTORS</h4>
 
-													<h2
-														className='s-title'
-														// '0.9s'
-														style={{ fontFamily: "Segoe UI" }}>
-														LATEST VEHICLES SUGGESTED FOR YOU
-													</h2>
+												<form
+													id='form1'
+													className='b-search__main-form'
+													onSubmit={filterDataCars}>
+													<div className='row'>
+														<div className=' col-md-12 col-xs-12'>
+															<div>
+																<div
+																	className='col-xs-12 col-md-3 col-lg-3'
+																	id='searchdata'>
+																	<Select
+																		className='selectdataf'
+																		value={selectedItem}
+																		onChange={handleSelectChange}
+																		displayEmpty>
+																		<MenuItem value='' className='selectoption'>
+																			Select Make
+																		</MenuItem>
+																		{data.map((item, index) => (
+																			<MenuItem
+																				className='selectoption'
+																				key={index}
+																				value={item.code}>
+																				{item.description}
+																			</MenuItem>
+																		))}
+																	</Select>
 
-													<div className='bag_clr1' id='cardrow'>
-														<Row xs={12} md={4} id='cardrow'>
-															{stockdata.length === 0 ? (
-																<>
-																	<div
-																		className='loader hidden-xs'
-																		style={{ marginLeft: "600px" }}>
-																		<PageScrollTop />
-																		<ReactLoading
-																			type='spin'
-																			color='#f76d2b'
-																			height={200}
-																			width={100}
-																		/>
-																	</div>
+																	<div class='col-xs-12 col-md-3 col-lg-3'></div>
+																</div>
+																<div
+																	className='col-xs-12 col-md-3 col-lg-3'
+																	id='searchdata'>
+																	<Select
+																		className='selectdataf'
+																		value={selectmodel}
+																		onChange={handleSelectChange3}
+																		displayEmpty
+																		inputProps={{
+																			"aria-label": "Without label",
+																		}}>
+																		<MenuItem value='' className='selectoption'>
+																			Select Model
+																		</MenuItem>
+																		{model.map((item, index) => (
+																			<MenuItem
+																				className='selectoption'
+																				key={index}
+																				value={item.code}>
+																				{item.description}
+																			</MenuItem>
+																		))}
+																	</Select>
+																</div>
 
-																	<div className='loader visible-xs'>
-																		<ReactLoading
-																			style={{ marginLeft: "-300px" }}
-																			type='spin'
-																			color='#f76d2b'
-																			height={200}
-																			width={50}
-																		/>
-																	</div>
-																</>
-															) : (
-																<>
-																	{stockdata
-																		?.filter(
-																			(item) =>
-																				item.programCode ===
-																				"SHORT_LIST_WEBSITE_HOME_PAGE"
-																		)
+																<div
+																	className='col-xs-12 col-md-3 col-lg-3 '
+																	id='searchdata'>
+																	<Select
+																		className='selectdataf'
+																		value={minRange}
+																		onChange={handleSelectChangeminprize}
+																		displayEmpty
+																		inputProps={{
+																			"aria-label": "Without label",
+																		}}>
+																		<MenuItem value='' className='selectoption'>
+																			Select Min Price
+																		</MenuItem>
+																		{Amountdatamin.map((item, index) => (
+																			<MenuItem
+																				className='selectoption'
+																				key={index}
+																				value={item.id}>
+																				{item.img}
+																			</MenuItem>
+																		))}
+																	</Select>
+																</div>
 
-																		.map((item) => (
-																			<div key={item.uniqueSerial} id='cardrow'>
-																				<Col>
-																					<div
-																						onClick={() => {
-																							singleProducthandle(
-																								item.uniqueSerial
-																							);
-																							setHomepage(true);
-																						}}
-																						className=' card2 b-auto__main-item hidden-xs '>
-																						<img
+																<div
+																	className='col-xs-12 col-md-3 col-lg-3'
+																	id='searchdata'>
+																	<Select
+																		className='selectdataf'
+																		value={maxRange}
+																		onChange={handleSelectChangemaxnprize}
+																		displayEmpty
+																		inputProps={{
+																			"aria-label": "Without label",
+																		}}>
+																		<MenuItem value='' className='selectoption'>
+																			Select Max Price
+																		</MenuItem>
+																		{Amountdatamax.map((item, index) => (
+																			<MenuItem
+																				className='selectoption'
+																				key={index}
+																				value={item.id}>
+																				{item.img}
+																			</MenuItem>
+																		))}
+																	</Select>
+																</div>
+															</div>
+														</div>
+														<div className='col-md-12 col-xs-12'>
+															<div className='b-search__main-form-submit '>
+																<button
+																	style={{
+																		backgroundColor: "#7d0000",
+																		textAlign: "center",
+																	}}
+																	type='submit'
+																	id='searcgbtn'
+																	className='  btn btn-lg'>
+																	<span
+																		style={{
+																			backgroundColor: "#7d0000",
+																		}}>
+																		Search
+																	</span>
+																</button>
+
+																<button
+																	style={{
+																		marginLeft: "40px",
+																		backgroundColor: "#696969",
+																		textAlign: "start",
+																		color: "white",
+																	}}
+																	id='searcgbtn'
+																	onClick={reset}
+																	type='reset'
+																	className='btn    btn-lg'>
+																	<span>Reset</span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+
+						{/* filter form search bar */}
+
+						{showdata === false ? (
+							<>
+								{/* vechile Stock home data on sale section */}
+
+								<section
+									className='b-homeAuto  hidden-xs  '
+									style={{ marginTop: "0" }}>
+									<div className='container'>
+										<div className='col-xs-12   visible-xs-horizental-scroll'>
+											<div className='b-homeAuto__latest'>
+												<h5
+													className='s-titleBg '
+													style={{ fontFamily: "Segoe UI" }}>
+													GIVING OUR CUSTOMERS BEST DEALS
+												</h5>
+												<br />
+
+												<h2
+													className='s-title tx_clr'
+													// '0.9s'
+													style={{ fontFamily: "Segoe UI" }}>
+													Discover the Perfect Car
+												</h2>
+
+												<div className='bag_clr1' id='cardrow'>
+													<Row xs={12} md={4} id='cardrow'>
+														{stockdata.length === 0 ? (
+															<>
+																<div
+																	className='loader hidden-xs'
+																	style={{ marginLeft: "600px" }}>
+																	<PageScrollTop />
+																	<ReactLoading
+																		type='spin'
+																		color='#7d0000'
+																		height={200}
+																		width={100}
+																	/>
+																</div>
+
+																<div className='loader visible-xs'>
+																	<ReactLoading
+																		style={{ marginLeft: "-300px" }}
+																		type='spin'
+																		color='#7d0000'
+																		height={200}
+																		width={50}
+																	/>
+																</div>
+															</>
+														) : (
+															<>
+																{stockdata
+																	?.filter(
+																		(item) =>
+																			item.programCode ===
+																			"SHORT_LIST_WEBSITE_HOME_PAGE"
+																	)
+
+																	.map((item) => (
+																		<div
+																			class='cd_wd5'
+																			key={item.uniqueSerial}
+																			id='cardrow'>
+																			<Col>
+																				<div
+																					onClick={() => {
+																						singleProducthandle(
+																							item.uniqueSerial
+																						);
+																						setHomepage(true);
+																					}}
+																					className=' card2 b-auto__main-item hidden-xs '>
+																					{item?.modelImages.length === 0 ? (
+																						<>
+																							<img
+																								className=' img-responsive center-block'
+																								src='images/logo/defaulimag.png'
+																								style={{
+																									aspectRatio: "2/2",
+																									width: "100%",
+																								}}
+																							/>
+																						</>
+																					) : (
+																						<>
+																							<img
+																								style={{
+																									aspectRatio: "2/2",
+																									width: "100%",
+																								}}
+																								className=' img-responsive center-block'
+																								src={
+																									item?.modelImages.length >
+																										0 &&
+																									item?.modelImages[0].uri
+																								}
+																								alt='nissan'
+																							/>
+
+																							{item?.bookingFlag === "Y" ? (
+																								<>
+																									<div className='bokd_pic'>
+																										<img
+																											className=''
+																											src='images/booked.png'
+																										/>
+																									</div>
+																								</>
+																							) : (
+																								<p
+																									className='newtext2'
+																									style={{ color: "white" }}>
+																									<i class='fa fa-check-circle ver_icn'></i>{" "}
+																									<></>
+																								</p>
+																							)}
+																							{/* <div className='bokd_pic'>
+																								<img
+																									className=''
+																									src='images/booked.png'
+																								/>
+																							</div> */}
+																						</>
+																					)}
+																					<div class='desi_tx'>
+																						<div
+																							className=' d-flex b-items__cars-one-info-title dis_tx1'
 																							style={{
-																								aspectRatio: "2/2",
-																								width: "100%",
-																							}}
-																							className=' img-responsive center-block'
+																								fontSize: "16px",
+																								marginLeft: "0px",
+																								marginTop: "10px",
+																							}}>
+																							{" "}
+																							<li class='desi_ret1'>
+																								{item.vehManufactureYear}{" "}
+																							</li>
+																							<li
+																								class='desi_ret1'
+																								style={{ marginLeft: "5px" }}>
+																								{" "}
+																								{item.vehBrandCode}
+																							</li>{" "}
+																							<li
+																								class='desi_ret1'
+																								style={{ marginLeft: "5px" }}>
+																								{item.vehModelCode}{" "}
+																							</li>
+																						</div>
+																					</div>
+
+																					<div class='rate_ts_mn'>
+																						<ul>
+																							<li>{item.vehOdometer} KMS</li>
+
+																							<li>{item.exteriorColor}</li>
+																							<li>{item.vehFuelCode}</li>
+																							<li>{item.transmissionDesc}</li>
+																						</ul>
+																					</div>
+																					<span
+																						style={{
+																							marginLeft: "20px",
+																						}}
+																						className='d-flex ml-6'>
+																						<i className=''></i>{" "}
+																						<div
+																							className='b-items__cars-one-info-title pric1'
+																							style={{ fontSize: "21px" }}>
+																							<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+																							{item.vehSellPriceRecommended}
+																						</div>
+																					</span>
+																				</div>
+																				{/* phone View */}
+
+																				<div
+																					style={{ borderRadius: "20px" }}
+																					onClick={() =>
+																						singleProducthandle(
+																							item.uniqueSerial
+																						)
+																					}
+																					className='  visible-xs'>
+																					<div className=''>
+																						<div className=''>
+																							<img
+																								style={{
+																									marginLeft: "10px",
+																									height: "165px",
+																									aspectRatio: " 2 / 2",
+																									width: "70%",
+																									borderRadius: "10px",
+																								}}
+																								className=' img-responsive center-block '
+																								src={
+																									item?.modelImages.length >
+																										0 &&
+																									item?.modelImages[0].uri
+																								}
+																								alt='nissan'
+																							/>
+																						</div>
+																						<div className=''>
+																							<div
+																								className=' d-flex b-items__cars-one-info-title'
+																								style={{
+																									fontSize: "16px",
+																									marginLeft: "20px",
+																									marginTop: "5px",
+																								}}>
+																								{" "}
+																								<li>
+																									{item.vehManufactureYear}{" "}
+																								</li>
+																								<li
+																									style={{
+																										marginLeft: "5px",
+																									}}>
+																									{" "}
+																									{item.vehBrandCode}
+																								</li>{" "}
+																								<li
+																									style={{
+																										marginLeft: "5px",
+																									}}>
+																									{item.vehModelCode}{" "}
+																								</li>
+																							</div>
+																							<br />
+
+																							<div
+																								className='d-flex'
+																								style={{
+																									marginTop: "-20px",
+																								}}>
+																								<ul className='d-flex'>
+																									<li className='b'>
+																										{item.vehOdometer}
+																									</li>
+
+																									<li
+																										className=''
+																										style={{
+																											marginLeft: "15px",
+																										}}>
+																										{item.exteriorColor}
+																									</li>
+																									<li
+																										className=''
+																										style={{
+																											marginLeft: "15px",
+																										}}>
+																										{item.vehFuelCode}
+																									</li>
+
+																									<li
+																										className=''
+																										style={{
+																											marginLeft: "15px",
+																										}}>
+																										{item.transmissionDesc}
+																									</li>
+																								</ul>
+																							</div>
+
+																							<span
+																								style={{
+																									marginLeft: "20px",
+																									marginTop: "-5px",
+																								}}
+																								className='d-flex ml-6'>
+																								<i className=''></i>{" "}
+																								<div
+																									className='b-items__cars-one-info-title'
+																									style={{
+																										fontSize: "15px",
+																									}}>
+																									Rs{" "}
+																									{item.vehSellPriceRecommended}
+																								</div>
+																							</span>
+																						</div>
+																					</div>
+																				</div>
+																			</Col>
+																		</div>
+																	))}
+															</>
+														)}
+													</Row>
+
+													{/* testing details */}
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className='clearfix'></div>
+								</section>
+								{/* phone view */}
+
+								<section
+									className='b-homeAuto   visible-xs'
+									style={{ marginTop: "0px" }}>
+									<div className='container'>
+										<div className=''>
+											<div className='b-homeAuto__latest'>
+												<h5
+													className='s-titleBg '
+													style={{ fontFamily: "Segoe UI" }}>
+													GIVING OUR CUSTOMERS BEST DEALS
+												</h5>
+												<br />
+
+												<h2
+													className='s-title'
+													// '0.9s'
+													style={{ fontFamily: "Segoe UI" }}>
+													LATEST VEHICLES ON SALE
+												</h2>
+
+												<div className='row cd_full1' id='cardrow'>
+													{/* testing details */}
+													{stockdata
+														?.filter(
+															(item) =>
+																item.programCode ===
+																"SHORT_LIST_WEBSITE_HOME_PAGE"
+														)
+
+														.map((item) => (
+															<div className='vehicles_mn'>
+																<div key={item.uniqueSerial}>
+																	<div>
+																		{/* phone View */}
+
+																		<div
+																			style={{ borderRadius: "20px" }}
+																			onClick={() =>
+																				singleProducthandle(item.uniqueSerial)
+																			}
+																			className='  visible-xs'>
+																			<div className=''>
+																				<div className='moble_res1'>
+																					{item?.modelImages.length === 0 ? (
+																						<>
+																							<img
+																								className=' img-responsive center-block'
+																								src='images/logo/defaulimag.png'
+																								style={{
+																									marginLeft: "0px",
+
+																									aspectRatio: " 3/4",
+																									width: "100%",
+																									maxHeight: "230px",
+																									objectFit: "cover",
+																									borderRadius: "10px",
+																								}}
+																							/>
+																						</>
+																					) : (
+																						<>
+																							<img
+																								style={{
+																									marginLeft: "0px",
+
+																									aspectRatio: " 3/4",
+																									width: "100%",
+																									maxHeight: "230px",
+																									objectFit: "cover",
+																									borderRadius: "10px",
+																								}}
+																								className=' img-responsive center-block '
+																								src={
+																									item?.modelImages.length >
+																										0 &&
+																									item?.modelImages[0].uri
+																								}
+																								alt='nissan'
+																							/>
+
+																							{item?.bookingFlag === "Y" ? (
+																								<>
+																									<div className='bokd_pic'>
+																										<img
+																											className=''
+																											src='images/booked.png'
+																										/>
+																									</div>
+																								</>
+																							) : (
+																								<p
+																									className='newtext2'
+																									style={{ color: "white" }}>
+																									<i class='fa fa-check-circle ver_icn'></i>{" "}
+																									<></>
+																								</p>
+																							)}
+																						</>
+																					)}
+																				</div>
+																				<div className=''>
+																					<div
+																						className=' d-flex b-items__cars-one-info-title  '
+																						style={{
+																							fontSize: "16px",
+																							marginLeft: "5px",
+																							marginTop: "5px",
+																						}}>
+																						{" "}
+																						<div class='desi_tx'>
+																							<ul>
+																								<li>
+																									{item.vehManufactureYear}{" "}
+																								</li>
+																								<li
+																									style={{
+																										marginLeft: "5px",
+																									}}>
+																									{" "}
+																									{item.vehBrandCode}
+																								</li>{" "}
+																								<li
+																									style={{
+																										marginLeft: "5px",
+																									}}>
+																									{item.vehModelCode}{" "}
+																								</li>
+																							</ul>
+																						</div>
+																					</div>
+																					<br />
+
+																					<div
+																						className='d-flex'
+																						style={{
+																							marginTop: "-20px",
+																							marginLeft: "-16px",
+																						}}>
+																						<ul className='d-flex clr_ull1'>
+																							<li className='b'>
+																								{item.vehOdometer}
+																							</li>
+
+																							<li
+																								className=''
+																								style={{
+																									marginLeft: "5px",
+																								}}>
+																								{item.exteriorColor}
+																							</li>
+																							<li
+																								className=''
+																								style={{
+																									marginLeft: "5px",
+																								}}>
+																								{item.vehFuelCode}
+																							</li>
+
+																							<li
+																								className=''
+																								style={{
+																									marginLeft: "5px",
+																								}}>
+																								{item.transmissionDesc}
+																							</li>
+																						</ul>
+																					</div>
+
+																					<span
+																						style={{
+																							marginLeft: "10px",
+																							marginTop: "-5px",
+																						}}
+																						className='d-flex ml-6'>
+																						<i className=''></i>{" "}
+																						<div
+																							className='b-items__cars-one-info-title rt_wd2'
+																							style={{ fontSize: "15px" }}>
+																							<i class='fa fa-rupee'></i>{" "}
+																							{item.vehSellPriceRecommended}
+																						</div>
+																					</span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														))}
+												</div>
+												<br />
+											</div>
+										</div>
+									</div>
+									<div className='clearfix'></div>
+								</section>
+							</>
+						) : (
+							<>
+								{/* Search Stock data on sale section */}
+
+								<section
+									className='b-homeAuto hidden-xs'
+									style={{ marginTop: "0px" }}>
+									<div className='container'>
+										<div className='col-xs-12   visible-xs-horizental-scroll'>
+											<div className='b-homeAuto__latest'>
+												<h5
+													className='s-titleBg  '
+													style={{ fontFamily: "Segoe UI" }}>
+													GIVING OUR CUSTOMERS BEST DEALS
+												</h5>
+												<br />
+
+												<h2
+													className='s-title  '
+													style={{ fontFamily: "Segoe UI" }}>
+													LATEST VEHICLES ON SALE Search
+												</h2>
+
+												<div className=' bag_clr1' id='cardrow'>
+													<Row xs={12} md={4} id='cardrow'>
+														{demo.length === 0 ? (
+															<div className='notdatafound23'>
+																<h2>Vehicle Not Available</h2>
+															</div>
+														) : (
+															<>
+																{demo?.map((item) => (
+																	<div
+																		class='cd_wd5'
+																		key={item.uniqueSerial}
+																		id='cardrow'>
+																		<Col>
+																			<div
+																				onClick={() =>
+																					singleProducthandle(item.uniqueSerial)
+																				}
+																				className=' card2 b-auto__main-item '>
+																				{item?.modelImages.length === 0 ? (
+																					<>
+																						<img
+																							style={{ width: "100%" }}
+																							className='  img-responsive center-block'
+																							src='images/logo/defaulimag.png'
+																							alt='nissan'
+																						/>
+																					</>
+																				) : (
+																					<>
+																						<img
+																							style={{ width: "100%" }}
+																							className='  img-responsive center-block'
 																							src={
 																								item?.modelImages.length > 0 &&
 																								item?.modelImages[0].uri
 																							}
 																							alt='nissan'
 																						/>
-																						<div
-																							className=' d-flex b-items__cars-one-info-title'
-																							style={{
-																								fontSize: "16px",
-																								marginLeft: "20px",
-																								marginTop: "10px",
-																							}}>
-																							{" "}
-																							<div>
-																								{item.vehManufactureYear}{" "}
-																							</div>
-																							<div
-																								style={{ marginLeft: "5px" }}>
-																								{" "}
-																								{item.vehBrandCode}
-																							</div>{" "}
-																							<div
-																								style={{ marginLeft: "5px" }}>
-																								{item.vehModelCode}{" "}
-																							</div>
-																						</div>
+																						{item?.bookingFlag === "Y" ? (
+																							<>
+																								<div className='bokd_pic'>
+																									<img
+																										className=''
+																										src='images/booked.png'
+																									/>
+																								</div>
+																							</>
+																						) : (
+																							<p
+																								className='newtext2'
+																								style={{ color: "white" }}>
+																								<i class='fa fa-check-circle ver_icn'></i>{" "}
+																								<></>
+																							</p>
+																						)}
+																					</>
+																				)}
 
-																						<div class='rate_ts_mn'>
-																							<ul>
-																								<li>{item.vehOdometer} KMS</li>
-																								<li>{item.exteriorColor}</li>
-																								<li>{item.vehFuelCode}</li>
-																								<li>{item.transmissionDesc}</li>
-																							</ul>
-																						</div>
-																						<span
-																							style={{
-																								marginLeft: "20px",
-																							}}
-																							className='d-flex ml-6'>
-																							<i className=''></i>{" "}
-																							<div
-																								className='b-items__cars-one-info-title'
-																								style={{ fontSize: "21px" }}>
-																								<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
-																								{item.vehSellPriceRecommended}
-																							</div>
-																						</span>
-																					</div>
-																					{/* phone View */}
-
+																				<div class='desi_tx'>
 																					<div
-																						style={{ borderRadius: "20px" }}
-																						onClick={() =>
-																							singleProducthandle(
-																								item.uniqueSerial
-																							)
-																						}
-																						className='  visible-xs'>
-																						<div className=''>
-																							<div className=''>
-																								<img
-																									style={{
-																										marginLeft: "10px",
-																										height: "165px",
-																										aspectRatio: " 2 / 2",
-																										width: "70%",
-																										borderRadius: "10px",
-																									}}
-																									className=' img-responsive center-block '
-																									src={
-																										item?.modelImages.length >
-																											0 &&
-																										item?.modelImages[0].uri
-																									}
-																									alt='nissan'
-																								/>
-																							</div>
-																							<div className=''>
-																								<div
-																									className=' d-flex b-items__cars-one-info-title'
-																									style={{
-																										fontSize: "16px",
-																										marginLeft: "20px",
-																										marginTop: "5px",
-																									}}>
-																									{" "}
-																									<div>
-																										{item.vehManufactureYear}{" "}
-																									</div>
-																									<div
-																										style={{
-																											marginLeft: "5px",
-																										}}>
-																										{" "}
-																										{item.vehBrandCode}
-																									</div>{" "}
-																									<div
-																										style={{
-																											marginLeft: "5px",
-																										}}>
-																										{item.vehModelCode}{" "}
-																									</div>
-																								</div>
-																								<br />
-
-																								<div
-																									className='d-flex'
-																									style={{
-																										marginTop: "-20px",
-																									}}>
-																									<ul className='d-flex'>
-																										<div className='b'>
-																											{item.vehOdometer}
-																										</div>
-
-																										<div
-																											className=''
-																											style={{
-																												marginLeft: "15px",
-																											}}>
-																											{item.exteriorColor}
-																										</div>
-																										<div
-																											className=''
-																											style={{
-																												marginLeft: "15px",
-																											}}>
-																											{item.vehFuelCode}
-																										</div>
-
-																										<div
-																											className=''
-																											style={{
-																												marginLeft: "15px",
-																											}}>
-																											{item.transmissionDesc}
-																										</div>
-																									</ul>
-																								</div>
-
-																								<span
-																									style={{
-																										marginLeft: "20px",
-																										marginTop: "-5px",
-																									}}
-																									className='d-flex ml-6'>
-																									<i className=''></i>{" "}
-																									<div
-																										className='b-items__cars-one-info-title'
-																										style={{
-																											fontSize: "15px",
-																										}}>
-																										Rs{" "}
-																										{
-																											item.vehSellPriceRecommended
-																										}
-																									</div>
-																								</span>
-																							</div>
-																						</div>
+																						className=' d-flex b-items__cars-one-info-title dis_tx1'
+																						style={{
+																							fontSize: "16px",
+																							marginLeft: "20px",
+																						}}>
+																						{" "}
+																						<li>{item.vehManufactureYear} </li>
+																						<li style={{ marginLeft: "5px" }}>
+																							{" "}
+																							{item.vehBrandCode}
+																						</li>{" "}
+																						<li style={{ marginLeft: "5px" }}>
+																							{item.vehModelCode}{" "}
+																						</li>
 																					</div>
-																				</Col>
-																			</div>
-																		))}
-																</>
-															)}
-														</Row>
+																				</div>
 
-														{/* testing details */}
-													</div>
+																				<div class='rate_ts_mn'>
+																					<ul>
+																						<li>{item.vehOdometer} KMS</li>
+																						<li>{item.exteriorColor}</li>
+																						<li>{item.vehFuelCode}</li>
+																						<li>{item.transmissionDesc}</li>
+																					</ul>
+																				</div>
+
+																				<span
+																					style={{
+																						marginLeft: "20px",
+																					}}
+																					className='d-flex ml-6'>
+																					<i className=''></i>{" "}
+																					<div
+																						className='b-items__cars-one-info-title'
+																						style={{ fontSize: "18px" }}>
+																						<i class='fa fa-rupee'></i>{" "}
+																						{item.vehSellPriceRecommended}
+																					</div>
+																				</span>
+																			</div>
+																		</Col>
+																	</div>
+																))}
+															</>
+														)}
+													</Row>
+
+													{/* testing details */}
 												</div>
 											</div>
 										</div>
-										<div className='clearfix'></div>
-									</section>
-									{/* phone view */}
-									<section
-										className='b-homeAuto   visible-xs'
-										style={{ marginTop: "-38px" }}>
-										<div className='container'>
-											<div className=''>
-												<div className='b-homeAuto__latest'>
-													<h5
-														className='s-titleBg '
-														style={{ fontFamily: "Segoe UI" }}>
-														GIVING OUR CUSTOMERS BEST DEALS
-													</h5>
-													<br />
+									</div>
+									<div className='clearfix'></div>
+								</section>
 
-													<h2
-														className='s-title'
-														// '0.9s'
-														style={{ fontFamily: "Segoe UI" }}>
-														LATEST VEHICLES ON SALE
-													</h2>
+								{/* phone View */}
 
-													<div className='row' id='cardrow'>
-														{/* testing details */}
-														{stockdata
-															?.filter(
-																(item) =>
-																	item.programCode ===
-																	"SHORT_LIST_WEBSITE_HOME_PAGE"
-															)
+								<section
+									className='b-homeAuto   visible-xs'
+									style={{ marginTop: "-38px" }}>
+									<div className='container'>
+										<div className=''>
+											<div className='b-homeAuto__latest'>
+												<h5
+													className='s-titleBg '
+													style={{ fontFamily: "Segoe UI" }}>
+													GIVING OUR CUSTOMERS BEST DEALS
+												</h5>
+												<br />
 
-															.map((item) => (
-																<div className='vehicles_mn'>
+												<h2
+													className='s-title'
+													// '0.9s'
+													style={{ fontFamily: "Segoe UI" }}>
+													LATEST VEHICLES ON SALE
+												</h2>
+
+												<div className='row cd_full1' id='cardrow'>
+													{demo.length === 0 ? (
+														<div className='notdatafound23'>
+															<h2>vehicle Not Available</h2>
+														</div>
+													) : (
+														<>
+															{demo?.map((item) => (
+																<div
+																	className=' bag_clr2'
+																	style={{
+																		width: "80%",
+																		borderRadius: "15px",
+																		marginLeft: "15px",
+																		height: "70%",
+																		padding: "2px",
+																	}}>
 																	<div key={item.uniqueSerial}>
 																		<div>
 																			{/* phone View */}
@@ -943,23 +2467,62 @@ export default function HomePage({ detailspage, setDetailspage }) {
 																				className='  visible-xs'>
 																				<div className=''>
 																					<div className=''>
-																						<img
-																							style={{
-																								marginLeft: "1px",
+																						{item?.modelImages.length === 0 ? (
+																							<>
+																								<img
+																									style={{
+																										marginLeft: "0px",
 
-																								aspectRatio: " 3/4",
-																								width: "100%",
-																								maxHeight: "230px",
-																								objectFit: "cover",
-																								borderRadius: "10px",
-																							}}
-																							className=' img-responsive center-block '
-																							src={
-																								item?.modelImages.length > 0 &&
-																								item?.modelImages[0].uri
-																							}
-																							alt='nissan'
-																						/>
+																										aspectRatio: " 3/4",
+																										width: "100%",
+																										maxHeight: "230px",
+																										objectFit: "cover",
+																										borderRadius: "10px",
+																									}}
+																									className=' img-responsive center-block '
+																									src='images/logo/defaulimag.png'
+																									alt='nissan'
+																								/>
+																							</>
+																						) : (
+																							<>
+																								<img
+																									style={{
+																										marginLeft: "0px",
+
+																										aspectRatio: " 3/4",
+																										width: "100%",
+																										maxHeight: "230px",
+																										objectFit: "cover",
+																										borderRadius: "10px",
+																									}}
+																									className=' img-responsive center-block '
+																									src={
+																										item?.modelImages.length >
+																											0 &&
+																										item?.modelImages[0].uri
+																									}
+																									alt='nissan'
+																								/>
+																								{item?.bookingFlag === "Y" ? (
+																									<>
+																										<div className='bokd_pic'>
+																											<img
+																												className=''
+																												src='images/booked.png'
+																											/>
+																										</div>
+																									</>
+																								) : (
+																									<p
+																										className='newtext2'
+																										style={{ color: "white" }}>
+																										<i class='fa fa-check-circle ver_icn'></i>{" "}
+																										<></>
+																									</p>
+																								)}
+																							</>
+																						)}
 																					</div>
 																					<div className=''>
 																						<div
@@ -970,17 +2533,25 @@ export default function HomePage({ detailspage, setDetailspage }) {
 																								marginTop: "5px",
 																							}}>
 																							{" "}
-																							<div>
-																								{item.vehManufactureYear}{" "}
-																							</div>
-																							<div
-																								style={{ marginLeft: "5px" }}>
-																								{" "}
-																								{item.vehBrandCode}
-																							</div>{" "}
-																							<div
-																								style={{ marginLeft: "5px" }}>
-																								{item.vehModelCode}{" "}
+																							<div class='desi_tx'>
+																								<ul>
+																									<li>
+																										{item.vehManufactureYear}{" "}
+																									</li>
+																									<li
+																										style={{
+																											marginLeft: "5px",
+																										}}>
+																										{" "}
+																										{item.vehBrandCode}
+																									</li>{" "}
+																									<li
+																										style={{
+																											marginLeft: "5px",
+																										}}>
+																										{item.vehModelCode}{" "}
+																									</li>
+																								</ul>
 																							</div>
 																						</div>
 																						<br />
@@ -991,33 +2562,33 @@ export default function HomePage({ detailspage, setDetailspage }) {
 																								marginTop: "-20px",
 																								marginLeft: "-16px",
 																							}}>
-																							<ul className='d-flex'>
-																								<div className='b'>
+																							<ul className='d-flex clr_ull1'>
+																								<li className='b'>
 																									{item.vehOdometer}
-																								</div>
+																								</li>
 
-																								<div
+																								<li
 																									className=''
 																									style={{
 																										marginLeft: "5px",
 																									}}>
 																									{item.exteriorColor}
-																								</div>
-																								<div
+																								</li>
+																								<li
 																									className=''
 																									style={{
 																										marginLeft: "5px",
 																									}}>
 																									{item.vehFuelCode}
-																								</div>
+																								</li>
 
-																								<div
+																								<li
 																									className=''
 																									style={{
 																										marginLeft: "5px",
 																									}}>
 																									{item.transmissionDesc}
-																								</div>
+																								</li>
 																							</ul>
 																						</div>
 
@@ -1042,526 +2613,606 @@ export default function HomePage({ detailspage, setDetailspage }) {
 																	</div>
 																</div>
 															))}
-													</div>
-													<br />
+														</>
+													)}
 												</div>
+												<br />
 											</div>
 										</div>
-										<div className='clearfix'></div>
-									</section>
-								</>
-							) : (
-								<>
-									{/* Search Stock data on sale section */}
+									</div>
+									<div className='clearfix'></div>
+								</section>
+							</>
+						)}
 
-									<section
-										className='b-homeAuto hidden-xs'
-										style={{ marginTop: "-38px" }}>
-										<div className='container'>
-											<div className='col-xs-12   visible-xs-horizental-scroll'>
-												<div className='b-homeAuto__latest'>
-													<h5
-														className='s-titleBg  '
-														style={{ fontFamily: "Segoe UI" }}>
-														GIVING OUR CUSTOMERS BEST DEALS
-													</h5>
-													<br />
+						<div class='brand_mn'>
+							<div class='container'>
+								<h2 class='s-title wow zoomInUp brd_padg bard_padd'>
+									Explore Popular Brands
+								</h2>
 
-													<h2
-														className='s-title  '
-														style={{ fontFamily: "Segoe UI" }}>
-														LATEST VEHICLES ON SALE Search
-													</h2>
-
-													<div className=' bag_clr1' id='cardrow'>
-														<Row xs={12} md={4} id='cardrow'>
-															{demo.length === 0 ? (
-																<div className='notdatafound'>
-																	<p>vehicle Not Available</p>
-																	<img
-																		src='https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?size=626&ext=jpg'
-																		alt='imph'
-																	/>
-																</div>
-															) : (
-																<>
-																	{demo?.map((item) => (
-																		<div key={item.uniqueSerial} id='cardrow'>
-																			<Col>
-																				<div
-																					onClick={() =>
-																						singleProducthandle(
-																							item.uniqueSerial
-																						)
-																					}
-																					className=' card2 b-auto__main-item '>
-																					<img
-																						style={{ width: "100%" }}
-																						className='  img-responsive center-block'
-																						src={
-																							item?.modelImages.length > 0 &&
-																							item?.modelImages[0].uri
-																						}
-																						alt='nissan'
-																					/>
-
-																					<div
-																						className=' d-flex b-items__cars-one-info-title'
-																						style={{
-																							fontSize: "16px",
-																							marginLeft: "20px",
-																						}}>
-																						{" "}
-																						<div>
-																							{item.vehManufactureYear}{" "}
-																						</div>
-																						<div style={{ marginLeft: "5px" }}>
-																							{" "}
-																							{item.vehBrandCode}
-																						</div>{" "}
-																						<div style={{ marginLeft: "5px" }}>
-																							{item.vehModelCode}{" "}
-																						</div>
-																					</div>
-
-																					<div class='rate_ts_mn'>
-																						<ul>
-																							<li>{item.vehOdometer} KMS</li>
-																							<li>{item.exteriorColor}</li>
-																							<li>{item.vehFuelCode}</li>
-																							<li>{item.transmissionDesc}</li>
-																						</ul>
-																					</div>
-
-																					<span
-																						style={{
-																							marginLeft: "20px",
-																						}}
-																						className='d-flex ml-6'>
-																						<i className=''></i>{" "}
-																						<div
-																							className='b-items__cars-one-info-title'
-																							style={{ fontSize: "18px" }}>
-																							<i class='fa fa-rupee'></i>{" "}
-																							{item.vehSellPriceRecommended}
-																						</div>
-																					</span>
-																				</div>
-																			</Col>
-																		</div>
-																	))}
-																</>
-															)}
-														</Row>
-
-														{/* testing details */}
+								<ul>
+									{data
+										?.filter((item) => item.code === "HYUNDAI")
+										.map((item, index) => (
+											<li key={index} onClick={filterDataCars1}>
+												<a
+													href=''
+													class='PopularBrands__brand styles__forGTM'
+													data-category='popular_brands'
+													data-label='hyundai'
+													data-index='50+'>
+													<div class='PopularBrands__content'>
+														<img className='' src='images/logo/br1.png' />
+														<p
+															value={selectedItem}
+															onChange={handleSelectChange}>
+															{item.description}
+														</p>
 													</div>
-												</div>
-											</div>
-										</div>
-										<div className='clearfix'></div>
-									</section>
-
-									{/* phone View */}
-
-									<section
-										className='b-homeAuto   visible-xs'
-										style={{ marginTop: "-38px" }}>
-										<div className='container'>
-											<div className=''>
-												<div className='b-homeAuto__latest'>
-													<h5
-														className='s-titleBg '
-														style={{ fontFamily: "Segoe UI" }}>
-														GIVING OUR CUSTOMERS BEST DEALS
-													</h5>
-													<br />
-
-													<h2
-														className='s-title'
-														// '0.9s'
-														style={{ fontFamily: "Segoe UI" }}>
-														LATEST VEHICLES ON SALE
-													</h2>
-
-													<div className='row' id='cardrow'>
-														{demo.length === 0 ? (
-															<div className='notdatafound'>
-																<p>vehicle Not Available</p>
-																<img
-																	src='https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?size=626&ext=jpg'
-																	alt='imph'
-																/>
-															</div>
-														) : (
-															<>
-																{demo?.map((item) => (
-																	<div
-																		className=''
-																		style={{
-																			width: "70%",
-																			borderRadius: "15px",
-																			marginLeft: "15px",
-																			height: "70%",
-																			padding: "2px",
-																			border: "1px solid black",
-																		}}>
-																		<div key={item.uniqueSerial}>
-																			<div>
-																				{/* phone View */}
-
-																				<div
-																					style={{ borderRadius: "20px" }}
-																					onClick={() =>
-																						singleProducthandle(
-																							item.uniqueSerial
-																						)
-																					}
-																					className='  visible-xs'>
-																					<div className=''>
-																						<div className=''>
-																							<img
-																								style={{
-																									marginLeft: "1px",
-
-																									aspectRatio: " 3/4",
-																									width: "100%",
-																									maxHeight: "230px",
-																									objectFit: "cover",
-																									borderRadius: "10px",
-																								}}
-																								className=' img-responsive center-block '
-																								src={
-																									item?.modelImages.length >
-																										0 &&
-																									item?.modelImages[0].uri
-																								}
-																								alt='nissan'
-																							/>
-																						</div>
-																						<div className=''>
-																							<div
-																								className=' d-flex b-items__cars-one-info-title'
-																								style={{
-																									fontSize: "16px",
-																									marginLeft: "5px",
-																									marginTop: "5px",
-																								}}>
-																								{" "}
-																								<div>
-																									{item.vehManufactureYear}{" "}
-																								</div>
-																								<div
-																									style={{ marginLeft: "5px" }}>
-																									{" "}
-																									{item.vehBrandCode}
-																								</div>{" "}
-																								<div
-																									style={{ marginLeft: "5px" }}>
-																									{item.vehModelCode}{" "}
-																								</div>
-																							</div>
-																							<br />
-
-																							<div
-																								className='d-flex'
-																								style={{
-																									marginTop: "-20px",
-																									marginLeft: "-16px",
-																								}}>
-																								<ul className='d-flex'>
-																									<div className='b'>
-																										{item.vehOdometer}
-																									</div>
-
-																									<div
-																										className=''
-																										style={{
-																											marginLeft: "5px",
-																										}}>
-																										{item.exteriorColor}
-																									</div>
-																									<div
-																										className=''
-																										style={{
-																											marginLeft: "5px",
-																										}}>
-																										{item.vehFuelCode}
-																									</div>
-
-																									<div
-																										className=''
-																										style={{
-																											marginLeft: "5px",
-																										}}>
-																										{item.transmissionDesc}
-																									</div>
-																								</ul>
-																							</div>
-
-																							<span
-																								style={{
-																									marginLeft: "10px",
-																									marginTop: "-5px",
-																								}}
-																								className='d-flex ml-6'>
-																								<i className=''></i>{" "}
-																								<div
-																									className='b-items__cars-one-info-title'
-																									style={{ fontSize: "15px" }}>
-																									<i class='fa fa-rupee'></i>{" "}
-																									{item.vehSellPriceRecommended}
-																								</div>
-																							</span>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																))}
-															</>
-														)}
-													</div>
-													<br />
-												</div>
-											</div>
-										</div>
-										<div className='clearfix'></div>
-									</section>
-								</>
-							)}
-
-							<div class='service_sec_mn'>
-								<div class='container'>
-									<div class='row'>
-										<div class='col-md-3 col-sm-6'>
-											<div class='serviceBox'>
-												<a href='#/carloans'>
-													<div class='service-icon'></div>
 												</a>
-												<h3 class='title'>Auto Loans</h3>
-												<p class='description'>Low Rates and Fast Approvals</p>
-											</div>
-										</div>
+											</li>
+										))}
+									{data
+										?.filter((item) => item.code === "MARUTI")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars2}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br2.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
 
-										<div class='col-md-3 col-sm-6'>
-											<div class='serviceBox purple'>
-												<a href='#/insurence'>
-													<div class='service-icon'></div>
-												</a>
-												<h3 class='title'>Insurance</h3>
-												<p class='description'>
-													A Day Without Insurance is Like a Day Without Sunshine
-												</p>
-											</div>
-										</div>
+									{data
+										?.filter((item) => item.code === "HONDA")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars3}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br3.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+									{data
+										?.filter((item) => item.code === "TATA")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars4}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br4.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
 
-										<div class='col-md-3 col-sm-6'>
-											<div class='serviceBox green'>
-												<div class='service-icon'></div>
-												<h3 class='title'>Customer Requirements</h3>
-												<p class='description'>
-													Customer-centric products for customer-centric people
-												</p>
-											</div>
-										</div>
+									{data
+										?.filter((item) => item.code === "MAHINDRA")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars5}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br5.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
 
-										<div class='col-md-3 col-sm-6'>
-											<div class='serviceBox red'>
-												<a href='#/emical'>
-													{" "}
-													<div class='service-icon'></div>
-												</a>
-												<h3 class='title'>Emi calculator</h3>
-												<p class='description'>Low Rates and Fast Approvals</p>
+									{data
+										?.filter((item) => item.code === "RENAULT")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars6}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br6.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+
+									{data
+										?.filter((item) => item.code === "TOYOTA")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars7}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br7.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+
+									{data
+										?.filter((item) => item.code === "FORD")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars8}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br8.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+
+									{data
+										?.filter((item) => item.code === "KIA")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars9}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br9.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+									{data
+										?.filter((item) => item.code === "NISSAN")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars10}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br10.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+									{data
+										?.filter((item) => item.code === "VW")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars16}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br11.png' />
+															<p>Volkswagen</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+									{data
+										?.filter((item) => item.code === "MG")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars11}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/br12.png' />
+															<p>{item.description} Motors</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+									{data
+										?.filter((item) => item.code === "MERC")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars12}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/merc.jpg' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+
+									{data
+										?.filter((item) => item.code === "AUDI")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars13}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/audi.jpg' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+									{data
+										?.filter((item) => item.code === "BMW")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars14}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/bmw.jpg' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+									{data
+										?.filter((item) => item.code === "VOLVO")
+										.map((item, index) => (
+											<a href=''>
+												{" "}
+												<li onClick={filterDataCars15}>
+													<a
+														class='PopularBrands__brand styles__forGTM'
+														data-category='popular_brands'
+														data-label='hyundai'
+														data-index='50+'>
+														<div class='PopularBrands__content'>
+															<img className='' src='images/logo/volvo.png' />
+															<p>{item.description}</p>
+														</div>
+													</a>
+												</li>
+											</a>
+										))}
+								</ul>
+							</div>
+						</div>
+
+						<section class='about'>
+							<div class='container'>
+								<div class='box-container'>
+									<img className='' src='images/About.png' />
+									<div class='content'>
+										<div class='text'>
+											<div class='heading'>
+												<span>know about us</span>
 											</div>
+											<h3>We make your drive memorable.</h3>
+											<p>
+												Rajput Motor Pvt Ltd is more than just a car dealership;
+												it's a trusted partner in your automotive journey. We
+												invite you to visit our showroom and experience the
+												Rajput Motor difference.
+											</p>
 										</div>
 									</div>
 								</div>
 							</div>
+						</section>
 
-							{/* Exclusive offers slider */}
-							<section className='b-featured hidden-xs'>
-								<div className='container-fluid'>
-									<h2 className='s-title ex_tx'>Exclusive Offers</h2>
+						<section className='b-featured hidden-xs'>
+							<div className='container-fluid'>
+								<div className='container'>
+									<div className='pupler_tx'>
+										<h5
+											className='s-titleBg '
+											style={{ fontFamily: "Segoe UI" }}>
+											Drive away with a great deal today
+										</h5>
+										<br />
 
-									<div className='carousel-wrapper'>
-										<Carousel breakPoints={breakPoints}>
-											{stockdata
-												?.filter(
-													(item) =>
-														item.programCode ===
-														"SHORT_LIST_WEBSITE_EXCLUSIVE_OFFERS"
-												)
-												.map((item) => (
-													<div key={item.uniqueSerial}>
-														<div>
-															<div
-																onClick={() =>
-																	singleProducthandle(item.uniqueSerial)
-																}
-																className=' card3 b-auto__main-item1 '>
-																<img
-																	style={{
-																		aspectRatio: "/2",
-																		width: "100%",
-																	}}
-																	// className='hidden-xs '
-																	src={
-																		item?.modelImages.length > 0 &&
-																		item?.modelImages[0].uri
-																	}
-																	alt='nissan'
-																/>
+										<h2
+											className='s-title tx_clr cr_clr1'
+											// '0.9s'
+											style={{ fontFamily: "Segoe UI" }}>
+											Popular Listings
+										</h2>
+									</div>
+								</div>
+
+								<div className='carousel-wrapper'>
+									<Carousel breakPoints={breakPoints}>
+										{stockdata
+											?.filter(
+												(item) =>
+													item.programCode ===
+													"SHORT_LIST_WEBSITE_EXCLUSIVE_OFFERS"
+											)
+											.map((item) => (
+												<div key={item.uniqueSerial}>
+													<div>
+														<div
+															onClick={() =>
+																singleProducthandle(item.uniqueSerial)
+															}
+															className=' card3 b-auto__main-item1 '>
+															{item?.modelImages.length === 0 ? (
+																<>
+																	{" "}
+																	<img
+																		src='images/logo/defaulimag.png'
+																		style={{
+																			aspectRatio: "/2",
+																			width: "100%",
+																		}}
+																	/>
+																</>
+															) : (
+																<>
+																	{item?.modelImages.some(
+																		(image) => image.imageName === "Front"
+																	) && (
+																		<img
+																			style={{
+																				aspectRatio: "/2",
+																				width: "100%",
+																			}}
+																			// className='hidden-xs '
+																			src={
+																				item?.modelImages.find(
+																					(image) => image.imageName === "Front"
+																				)?.uri
+																			}
+																			alt='nissan'
+																		/>
+																	)}
+																</>
+															)}
+															<div class='desi_tx2'>
 																<div
-																	className=' d-flex b-items__cars-one-info-title  hidden-xs '
+																	className=' d-flex b-items__cars-one-info-title  hidden-xs dis_tx1'
 																	style={{
 																		fontSize: "16px",
 																		marginLeft: "20px",
 																		color: "white",
 																	}}>
 																	{" "}
-																	<div>{item.vehManufactureYear} </div>
-																	<div style={{ marginLeft: "5px" }}>
+																	<li class='desi_ret2'>
+																		{item.vehManufactureYear}{" "}
+																	</li>
+																	<li
+																		class='desi_ret2'
+																		style={{ marginLeft: "0px" }}>
 																		{" "}
 																		{item.vehBrandCode}
-																	</div>{" "}
-																	<div style={{ marginLeft: "5px" }}>
+																	</li>{" "}
+																	<li
+																		class='desi_ret2'
+																		style={{ marginLeft: "0px" }}>
 																		{item.vehModelCode}{" "}
-																	</div>
+																	</li>
 																</div>
+															</div>
+															<div
+																id='textitem'
+																className='d-flex  hidden-xs'
+																style={{
+																	marginTop: "-4px",
+																	color: "white",
+																}}>
+																<ul
+																	className='d-flex tx_uper'
+																	style={{ fontSize: "" }}>
+																	<li className='b'>{item.vehOdometer} kms</li>
+
+																	<li
+																		className=''
+																		style={{ marginLeft: "15px" }}>
+																		{item.exteriorColor}
+																	</li>
+																	<li
+																		className=''
+																		style={{ marginLeft: "15px" }}>
+																		{item.vehFuelCode}
+																	</li>
+
+																	<li
+																		className=''
+																		style={{ marginLeft: "15px" }}>
+																		{item.transmissionDesc}
+																	</li>
+																</ul>
+															</div>
+															<span
+																style={{
+																	marginLeft: "20px",
+																	color: "white",
+																}}
+																className='d-flex ml-6  hidden-xs'>
+																<i className=''></i>{" "}
 																<div
-																	id='textitem'
-																	className='d-flex  hidden-xs'
+																	className='b-items__cars-one-info-title'
 																	style={{
-																		marginTop: "-4px",
+																		fontSize: "21px",
 																		color: "white",
 																	}}>
-																	<ul
-																		className='d-flex'
-																		style={{ fontSize: "" }}>
-																		<div className='b'>
-																			{item.vehOdometer} kms
-																		</div>
-
-																		<div
-																			className=''
-																			style={{ marginLeft: "15px" }}>
-																			{item.exteriorColor}
-																		</div>
-																		<div
-																			className=''
-																			style={{ marginLeft: "15px" }}>
-																			{item.vehFuelCode}
-																		</div>
-
-																		<div
-																			className=''
-																			style={{ marginLeft: "15px" }}>
-																			{item.transmissionDesc}
-																		</div>
-																	</ul>
+																	<i class='fa fa-rupee'></i>{" "}
+																	{item.vehSellPriceRecommended}
 																</div>
-																<span
-																	style={{
-																		marginLeft: "20px",
-																		color: "white",
-																	}}
-																	className='d-flex ml-6  hidden-xs'>
-																	<i className=''></i>{" "}
-																	<div
-																		className='b-items__cars-one-info-title'
-																		style={{
-																			fontSize: "21px",
-																			color: "white",
-																		}}>
-																		<i class='fa fa-rupee'></i>{" "}
-																		{item.vehSellPriceRecommended}
-																	</div>
-																</span>
-																<div
-																	className='visible-xs'
-																	style={{ marginLeft: "5px", color: "white" }}>
-																	{" "}
-																	{item.vehBrandCode}
-																</div>{" "}
-															</div>
+															</span>
+															<div
+																className='visible-xs'
+																style={{ marginLeft: "5px", color: "white" }}>
+																{" "}
+																{item.vehBrandCode}
+															</div>{" "}
 														</div>
 													</div>
-												))}
-										</Carousel>
-									</div>
-
-									{/* slide checking */}
+												</div>
+											))}
+									</Carousel>
 								</div>
-							</section>
 
-							{/* phone View Show */}
-							<section className='b-featured visible-xs'>
-								<div className='container-fluid'>
-									<h2 className='s-title '>Exclusive Offers </h2>
+								{/* slide checking */}
+							</div>
+						</section>
 
-									<div
-										id='carouselExampleIndicators'
-										class='carousel slide'
-										data-ride='carousel'>
-										<ol class=''></ol>
-										<div class='carousel-inner'>
-											<div class='carousel-item active'>
-												<div className='row' id='cardrow'>
-													{/* testing details */}
-													{stockdata
-														?.filter(
-															(item) =>
-																item.programCode ===
-																"SHORT_LIST_WEBSITE_EXCLUSIVE_OFFERS"
-														)
+						<section className='b-featured visible-xs'>
+							<div className='container-fluid'>
+								<h2 className='s-title tx_clr cr_clr1'>Popular Listings </h2>
 
-														.map((item) => (
-															<div
-																className=''
-																style={{
-																	width: "70%",
-																	borderRadius: "15px",
-																	marginLeft: "15px",
-																	height: "70%",
-																	padding: "2px",
-																	border: "1px solid black",
-																}}>
-																<div key={item.uniqueSerial}>
-																	<div>
-																		{/* phone View */}
+								<div
+									id='carouselExampleIndicators'
+									class='carousel slide'
+									data-ride='carousel'>
+									<ol class=''></ol>
+									<div class='carousel-inner'>
+										<div class='carousel-item active'>
+											<div className='row ' id='cardrow'>
+												{/* testing details */}
+												{stockdata
+													?.filter(
+														(item) =>
+															item.programCode ===
+															"SHORT_LIST_WEBSITE_EXCLUSIVE_OFFERS"
+													)
 
-																		<div
-																			style={{ borderRadius: "20px" }}
-																			onClick={() =>
-																				singleProducthandle(item.uniqueSerial)
-																			}
-																			className='  visible-xs clr_mol1'>
+													.map((item) => (
+														<div
+															className=''
+															style={{
+																width: "80%",
+																borderRadius: "15px",
+																marginLeft: "15px",
+																height: "70%",
+																padding: "2px",
+															}}>
+															<div key={item.uniqueSerial}>
+																<div>
+																	{/* phone View */}
+
+																	<div
+																		style={{ borderRadius: "20px" }}
+																		onClick={() =>
+																			singleProducthandle(item.uniqueSerial)
+																		}
+																		className='  visible-xs clr_mol1'>
+																		<div className=''>
 																			<div className=''>
-																				<div className=''>
-																					<img
-																						style={{
-																							marginLeft: "1px",
+																				{item?.modelImages.length === 0 ? (
+																					<>
+																						<img
+																							style={{
+																								marginLeft: "0px",
 
-																							aspectRatio: " 3/4",
-																							width: "100%",
-																							maxHeight: "230px",
-																							objectFit: "cover",
-																							borderRadius: "10px",
-																						}}
-																						className=' img-responsive center-block '
-																						src={
-																							item?.modelImages.length > 0 &&
-																							item?.modelImages[0].uri
-																						}
-																						alt='nissan'
-																					/>
-																				</div>
-																				<div className=''>
+																								aspectRatio: " 3/4",
+																								width: "100%",
+																								maxHeight: "230px",
+																								objectFit: "cover",
+																								borderRadius: "10px",
+																							}}
+																							className=' img-responsive center-block '
+																							src='images/logo/defaulimag.png'
+																							alt='nissan'
+																						/>
+																					</>
+																				) : (
+																					<>
+																						<img
+																							style={{
+																								marginLeft: "0px",
+
+																								aspectRatio: " 3/4",
+																								width: "100%",
+																								maxHeight: "230px",
+																								objectFit: "cover",
+																								borderRadius: "10px",
+																							}}
+																							className=' img-responsive center-block '
+																							src={
+																								item?.modelImages.length > 0 &&
+																								item?.modelImages[0].uri
+																							}
+																							alt='nissan'
+																						/>
+																					</>
+																				)}
+																			</div>
+																			<div className=''>
+																				<div class='desi_tx2'>
 																					<div
-																						className=' d-flex b-items__cars-one-info-title'
+																						className=' d-flex b-items__cars-one-info-title dis_tx1'
 																						style={{
 																							fontSize: "16px",
 																							marginLeft: "5px",
@@ -1569,340 +3220,298 @@ export default function HomePage({ detailspage, setDetailspage }) {
 																							color: "white",
 																						}}>
 																						{" "}
-																						<div>
+																						<li class='desi_ret2'>
 																							{item.vehManufactureYear}{" "}
-																						</div>
-																						<div style={{ marginLeft: "5px" }}>
+																						</li>
+																						<li
+																							class='desi_ret2'
+																							style={{ marginLeft: "5px" }}>
 																							{" "}
 																							{item.vehBrandCode}
-																						</div>{" "}
-																						<div style={{ marginLeft: "5px" }}>
+																						</li>{" "}
+																						<li
+																							class='desi_ret2'
+																							style={{ marginLeft: "5px" }}>
 																							{item.vehModelCode}{" "}
-																						</div>
+																						</li>
 																					</div>
-																					<br />
+																				</div>
 
-																					<div
-																						className='d-flex'
-																						style={{
-																							marginTop: "-20px",
-																							marginLeft: "-16px",
-																							color: "white",
-																						}}>
+																				<br />
+
+																				<div
+																					className='d-flex tx_uper'
+																					style={{
+																						marginTop: "-20px",
+																						marginLeft: "-16px",
+																						color: "white",
+																					}}>
+																					<div className='slid_lii'>
 																						<ul className='d-flex'>
-																							<div className='b'>
+																							<li className='b'>
 																								{item.vehOdometer}
-																							</div>
+																							</li>
 
-																							<div
+																							<li
 																								className=''
 																								style={{
-																									marginLeft: "5px",
+																									marginLeft: "0px",
 																								}}>
 																								{item.exteriorColor}
-																							</div>
-																							<div
+																							</li>
+																							<li
 																								className=''
 																								style={{
-																									marginLeft: "5px",
+																									marginLeft: "0px",
 																								}}>
 																								{item.vehFuelCode}
-																							</div>
+																							</li>
 
-																							<div
+																							<li
 																								className=''
 																								style={{
-																									marginLeft: "5px",
+																									marginLeft: "0px",
 																								}}>
 																								{item.transmissionDesc}
-																							</div>
+																							</li>
 																						</ul>
 																					</div>
-
-																					<span
-																						style={{
-																							marginLeft: "10px",
-																							marginTop: "-5px",
-																						}}
-																						className='d-flex ml-6'>
-																						<i className=''></i>{" "}
-																						<div
-																							className='b-items__cars-one-info-title'
-																							style={{
-																								fontSize: "15px",
-																								color: "white",
-																							}}>
-																							<i class='fa fa-rupee'></i>{" "}
-																							{item.vehSellPriceRecommended}
-																						</div>
-																					</span>
 																				</div>
+
+																				<span
+																					style={{
+																						marginLeft: "10px",
+																						marginTop: "-5px",
+																					}}
+																					className='d-flex ml-6'>
+																					<i className=''></i>{" "}
+																					<div
+																						className='b-items__cars-one-info-title'
+																						style={{
+																							fontSize: "15px",
+																							color: "white",
+																						}}>
+																						<i class='fa fa-rupee'></i>{" "}
+																						{item.vehSellPriceRecommended}
+																					</div>
+																				</span>
 																			</div>
 																		</div>
 																	</div>
 																</div>
 															</div>
-														))}
-												</div>
-											</div>
-											<div class='carousel-item'>
-												<img
-													class='d-block w-100'
-													src='...'
-													alt='Second slide'
-												/>
-											</div>
-											<div class='carousel-item'>
-												<img
-													class='d-block w-100'
-													src='...'
-													alt='Third slide'
-												/>
-											</div>
-										</div>
-									</div>
-
-									{/* slide checking */}
-								</div>
-							</section>
-
-							{/* 
-
-
-WELCOME TO SUSHIL CARS  section */}
-
-							{/* switch to go mobile */}
-							<section className='b-count sms-sec'>
-								<div className='container'>
-									<div className='row'>
-										<div
-											className='col-md-6 col-xs-12 percent-blocks sms-main'
-											data-waypoint-scroll='true'>
-											<div className='row'>
-												<div className='col-md-10'>
-													<div className='sms-sec__item'>
-														<div
-															className='getng_t_text wow  '
-															style={{
-																visibility: "visible",
-
-																animationDelay: "0s",
-															}}>
-															<p className=''>
-																Switch to the fast lane. Go mobile Switch to the
-																fast lane. Go mobile
-															</p>
-
-															<p className=''></p>
-
-															<span>
-																Download our app and let your mobile assistence
-																do all the hard work
-															</span>
 														</div>
-
-														<div
-															className='getng_btns wow hidden-xs  '
-															style={{
-																visibility: "visible",
-
-																animationDelay: "0.3s",
-															}}>
-															<a target='_blank' className='apkbtn'>
-																<img
-																	className='lazy'
-																	alt='apk btn 1'
-																	src='assets/app-logo/google-play-logo.png'
-																	style={{ display: "inline-block" }}
-																/>
-															</a>
-
-															<a target='_blank' className='apkbtn'>
-																<img
-																	className='lazy'
-																	alt='apk btn 2'
-																	src='assets/app-logo/apple-app-store-logo.png'
-																	style={{ display: "inline-block" }}
-																/>
-															</a>
-														</div>
-
-														<div
-															className='getng_btns wow  visible-xs  row'
-															style={{
-																visibility: "visible",
-
-																animationDelay: "0.3s",
-															}}>
-															<a target='_blank' className='apkbtn '>
-																<img
-																	className='lazy'
-																	alt='apk btn 1'
-																	src='assets/app-logo/google-play-logo.png'
-																	style={{ display: "inline-block" }}
-																/>
-															</a>
-
-															<a
-																style={{
-																	marginLeft: "180px",
-
-																	marginTop: "-30px",
-																}}
-																target='_blank'
-																className='apkbtn'>
-																<img
-																	style={{ marginTop: "-96px" }}
-																	className='lazy'
-																	alt='apk btn 2'
-																	src='assets/app-logo/apple-app-store-logo.png'
-																/>
-															</a>
-														</div>
-													</div>
-												</div>
+													))}
 											</div>
 										</div>
 									</div>
 								</div>
-							</section>
-							<section className='b-asks'>
-								<div className='container'>
-									<div className='row'>
-										<div className='col-md-6 col-sm-10 col-sm-offset-1 col-md-offset-0 col-xs-12'>
-											<div className='b-asks__first wow '>
-												<div className='b-asks__first-circle'>
-													<span className='fa fa-search'></span>
+
+								{/* slide checking */}
+							</div>
+						</section>
+
+						<div className='container'>
+							<div className='row'>
+								<div className='col-md-6'>
+									<div class='info-group block-table block-table_md'>
+										<div class='info-group__section'>
+											<section class='b-info b-info_mod-a area-bg area-bg_op_80 area-bg_prim parallax'>
+												<h2 class='b-info__title'>
+													<strong class='b-info__title_lg'>
+														ARE YOU LOOKING FOR A CAR?
+													</strong>
+												</h2>
+												<div class='b-info__desc'>
+													Search Our Inventory With Thousands Of Cars And More
+													Cars Are Adding On Daily Basis
 												</div>
-												<Link to='/detailsdata' className='b-asks__first-info'>
-													<h2>ARE YOU LOOKING FOR A CAR?</h2>{" "}
-													<p>
-														Search Our Inventory With Thousands Of Cars And More
-														Cars Are Adding On Daily Basis
-													</p>
+												<Link to='/detailsdata' className='btn btn-white'>
+													{" "}
+													Click for More{" "}
 												</Link>
-												<div className='b-asks__first-arrow'>
-													<Link to='/detailsdata'>
-														<span className='fa fa-angle-right'></span>
-													</Link>
-												</div>
-											</div>
+											</section>
 										</div>
-										<div className='col-md-6 col-sm-10 col-sm-offset-1 col-xs-12 col-md-offset-0'>
-											<div className='b-asks__first m-second wow '>
-												<div className='b-asks__first-circle'>
-													<span className='fa fa-rupee'></span>
-												</div>
-												<Link to='/salecar' className='b-asks__first-info'>
-													<h2 style={{ color: "white" }}>
+									</div>
+								</div>
+
+								<div className='col-md-6'>
+									<div class='info-group block-table block-table_md'>
+										<section class='b-info b-info_mod-b area-bg area-bg_op_80 area-bg_dark-2 parallax'>
+											<div class='area-bg__inner'>
+												<h2 class='b-info__title'>
+													<strong class='b-info__title_lg'>
 														DO YOU WANT TO SELL A CAR?
-													</h2>
-													<p>
-														Search Our Inventory With Thousands Of Cars And More
-														Cars Are Adding On Daily Basis
-													</p>
+													</strong>
+												</h2>
+												<div class='b-info__desc'>
+													{" "}
+													Simply fill out a form with all the necessary
+													information and we'll take care of the rest.
+												</div>
+												<Link to='/salecar' className='btn btn-white'>
+													{" "}
+													Click for More{" "}
 												</Link>
-												<div className='b-asks__first-arrow'>
-													<Link to='/salecar'>
-														<span className='fa fa-angle-right'></span>
-													</Link>
-												</div>
 											</div>
-										</div>
+										</section>
 									</div>
 								</div>
-							</section>
-							<section className='b-count'>
-								<div className='container'>
-									<div className='row'>
-										<div
-											className='col-md-11 col-xs-12 percent-blocks m-main'
-											data-waypoint-scroll='true'>
-											<div className='row'>
-												<div className='col-sm-4 col-xs-6'>
-													<div className='b-count__item'>
-														<div className='b-count__item-circle'>
-															<Link to='/detailsdata'>
-																<span className='fa fa-car'></span>
-															</Link>
-														</div>
-														<div className='chart' data-percent='5000'>
-															<h2 className='percent'>200</h2>
-														</div>
-														<h5>vehicles in stock</h5>
-													</div>
-												</div>
-												<div className='col-sm-4 col-xs-6'>
-													<div className='b-count__item'>
-														<div className='b-count__item-circle'>
-															<span className='fa fa-users'></span>
-														</div>
-														<div className='chart' data-percent='3100'>
-															<h2 className='percent'>3100</h2>
-														</div>
-														<h5>HAPPY CUSTOMER REVIEWS</h5>
-													</div>
-												</div>
-												<div className='col-sm-4 col-xs-6'>
-													<div className='b-count__item'>
-														<div className='b-count__item-circle'>
-															<span className='fa fa-building-o'></span>
-														</div>
-														<div className='chart' data-percent='500'>
-															<h2 className='percent'>2</h2>
-														</div>
-														<h5>DEALER BRANCHES</h5>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-							<section className='b-brands s-shadow'>
-								<div className='container'>
-									<h5 className='s-titleBg wow zoomInUp'>FIND OUT MORE</h5>
-									<br />
-									<h2 className='s-title wow zoomInUp brd_padg'>
-										BRANDS WE OFFER
-									</h2>
-									<div className=''>
-										<div className='b-brands__brand wow rotateIn'>
-											<img src='media/brands/bmwLogo.png' alt='brand' />
-										</div>
-										<div className='b-brands__brand wow rotateIn'>
-											<img src='media/brands/kia.png' alt='brand' />
-										</div>
-										<div className='b-brands__brand wow rotateIn'>
-											<img src='media/brands/volvo.png' alt='brand' />
-										</div>
-										<div className='b-brands__brand wow rotateIn'>
-											<img src='media/brands/mercLogo.png' alt='brand' />
-										</div>
-										<div className='b-brands__brand wow rotateIn'>
-											<img src='media/brands/audiLogo.png' alt='brand' />
-										</div>
-										<div className='b-brands__brand wow rotateIn'>
-											<img src='media/brands/honda.png' alt='brand' />
-										</div>
-										<div className='b-brands__brand wow rotateIn'>
-											<img src='media/brands/mg.png' alt='brand' />
-										</div>
-									</div>
-								</div>
-							</section>
+							</div>
 						</div>
+
+						<section className='gallery_mn gallery_mn2'>
+							<div className='container'>
+								<div className='row'>
+									<div className='gallery_pic'>
+										<h4>Gallery</h4>
+										<div className='gallery_wd row'>
+											<div class='col-md-8 col-sm-6 col-xs-12 gr_wd2'>
+												<img className='' src='images/gallery/g6.jpg' />
+											</div>
+											<div class='col-md-4 col-sm-6 col-xs-12 gr_wd2'>
+												<img className='' src='images/gallery/g27.jpg' />
+											</div>
+											<div class='col-md-4 col-sm-6 col-xs-12'>
+												<img className='' src='images/gallery/g3.png' />
+											</div>
+											<div class='col-md-4 col-sm-6 col-xs-12'>
+												<img className='' src='images/gallery/g4.png' />
+											</div>
+
+											<div class='col-md-4 col-sm-6 col-xs-12'>
+												<img className='' src='images/gallery/g5.png' />
+											</div>
+										</div>
+									</div>
+
+									<div className='view_btn'>
+										<Link to='/gellery'>View More</Link>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<section class='section section-xl bg-gray-800'>
+							<div class='container'>
+								<div class='row row-50 row-lg-80 justify-content-center align-items-center align-items-lg-start text-start'>
+									<div class='col-md-7 text-center coun_mng'>
+										<img className='sli_pic2' src='images/slider_count.jpg' />
+
+										<div class='text-width-extra-small wow fadeInUp'>
+											<h3 class='title-decoration-lines-left'>
+												42+ Years of Experience
+											</h3>
+											<p class='text-gray-500 text-down'>
+												With more than 42+ years of experience, our team offers
+												quality pre owend car services
+											</p>
+											<div class='view_btn'>
+												<Link to='/detailsdata'>Find a car</Link>
+											</div>
+										</div>
+									</div>
+
+									<div class='col-md-5 text-center'>
+										<div class='row justify-content-center border-2-column'>
+											<div class='col-9 col-sm-6'>
+												<div class='counter-amy'>
+													<div class='counter-amy-number'>
+														<span class='counter animated'>
+															<span class='fa fa-car icn_sz2'></span> 200
+														</span>
+													</div>
+													<h6 class='counter-amy-title'>VEHICLES IN STOCK</h6>
+												</div>
+											</div>
+											<div class='col-9 col-sm-6'>
+												<div class='counter-amy'>
+													<div class='counter-amy-number'>
+														<span class='counter animated'>
+															<span class='fa fa-users icn_sz2'></span> 3100
+														</span>
+													</div>
+													<h6 class='counter-amy-title'>
+														HAPPY CUSTOMER REVIEWS
+													</h6>
+												</div>
+											</div>
+											<div class='col-9 col-sm-6'>
+												<div class='counter-amy'>
+													<div class='counter-amy-number'>
+														<span class='counter animated'>
+															<span class='fa fa-building-o icn_sz2'></span> 2
+														</span>
+													</div>
+													<h6 class='counter-amy-title'>DEALER BRANCHES</h6>
+												</div>
+											</div>
+											<div class='col-9 col-sm-6'>
+												<div class='counter-amy'>
+													<div class='counter-amy-number'>
+														<span class='counter animated'>16</span>
+													</div>
+													<h6 class='counter-amy-title'>BRANDS</h6>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class='col-lg-6 col-xl-12 align-self-center'>
+										<div class='row row-30 justify-content-center'>
+											<div class='col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft'></div>
+											<div
+												class='col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft'
+												data-wow-delay='.1s'></div>
+											<div
+												class='col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft'
+												data-wow-delay='.2s'></div>
+											<div
+												class='col-sm-6 col-md-5 col-lg-6 col-xl-3 wow fadeInLeft'
+												data-wow-delay='.3s'></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<section className='b-brands s-shadow'>
+							<div className='container'>
+								<h2 className='s-title wow zoomInUp brd_padg'>
+									BRANDS WE OFFER
+								</h2>
+
+								<div className='brnd_bdr '>
+									<div className='b-brands__brand wow fadeIn'>
+										<img src='images/logo/mg.jpg' alt='brand' />
+									</div>
+									<div className='b-brands__brand wow rotateIn'>
+										<img src='images/logo/kia.png' alt='brand' />
+									</div>
+									<div className='b-brands__brand wow rotateIn'>
+										<img src='images/logo/volvo.png' alt='brand' />
+									</div>
+									<div className='b-brands__brand wow rotateIn'>
+										<img src='images/logo/merc.jpg' alt='brand' />
+									</div>
+									<div className='b-brands__brand wow rotateIn'>
+										<img src='images/logo/audi.jpg' alt='brand' />
+									</div>
+									<div className='b-brands__brand wow rotateIn'>
+										<img src='images/logo/hunda.jpg' alt='brand' />
+									</div>
+
+									<div className='b-brands__brand wow rotateIn'>
+										<img src='images/logo/bmw.jpg' alt='brand' />
+									</div>
+								</div>
+							</div>
+						</section>
 					</div>
-				</>
-			) : (
-				<>
-					{selectedProduct ? (
-						<Details selectedProduct={selectedProduct} />
-					) : (
-						<div></div>
-					)}
-				</>
-			)}
+				</div>
+			</>
+
+			<Footer />
 		</div>
 	);
 }

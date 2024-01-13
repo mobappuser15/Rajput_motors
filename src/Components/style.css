@@ -321,3 +321,8 @@ input[type="range"]:focus {
 #rangSlide {
 	padding-left: 0px;
 }
+
+
+.header_pos2 {
+    display: -webkit-box !important;
+}

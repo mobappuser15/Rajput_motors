@@ -93,17 +93,16 @@
 }
 
 .b-detail__main-aside-desc-title {
-	margin: 0 0 10px 0;
-	padding-left: 15px;
-	border-left: 3px solid #eeeeee;
-	font: 300 13px "Open Sans", sans-serif;
+	margin: 0 0 0px 0;
+	padding-left: 0px;
+	font: 300 14px "Open Sans", sans-serif;
+	font-weight: 500;
 }
 
 .b-detail__main-aside-desc-value {
-	margin: 0 0 10px 0;
-	padding-left: 15px;
-	border-left: 3px solid #eeeeee;
-	font: 600 13px "Open Sans", sans-serif;
+	margin: 0 0 0px 0;
+	padding-left: 0px;
+	font: 600 14px "Open Sans", sans-serif;
 }
 
 .b-detail__main-aside-about-call {
@@ -145,8 +144,12 @@
 }
 
 .b-detail__main-aside-about-form {
-	padding: 40px 28px;
+	padding: 20px 28px;
 	margin-bottom: 60px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 8px;
+    border-radius: 5px;
+	width: 100%;
+    float: left;
 }
 
 .b-detail__main-aside-about-form-links {
@@ -186,12 +189,12 @@
 .b-detail__main-aside form select {
 	display: block;
 	width: 100%;
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 	padding: 15px 20px;
 	font: 400 10px "Open Sans", sans-serif;
 	border: 1px solid #eeeeee;
 	/* text-transform: uppercase; */
-	border-radius: 30px;
+	border-radius: 5px;
 }
 
 .b-detail__main-aside form textarea {
@@ -441,13 +444,18 @@
 /* Brands */
 
 .b-brands {
-	padding: 90px 0 120px 0;
-	text-align: center;
+	padding: 40px 0 90px 0;
+    text-align: center;
 }
 
 .b-brands__brand {
-	margin: 0 30px;
-	display: inline-block;
+	margin: 0 10px;
+    display: inline-block;
+    width: 140px !important;
+    border: solid 1px #b1b0b0;
+    padding: 5px 22px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
+    border-radius: 4px;
 }
 
 /* B Detail New*/

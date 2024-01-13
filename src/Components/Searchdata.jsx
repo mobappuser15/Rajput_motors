@@ -14,7 +14,7 @@
 // // 					countryCode: "IN",
 // // 					searchValue: "9999999999",
 // // 					searchKey: "M",
-// // 					dlrCompanyId: "SUSHIL",
+// // 					dlrCompanyId: "CARZ",
 // // 					loginUserId: "MAMTA",
 // // 					loginIpAddress: "180.151.78.50",
 // // 				},
@@ -122,9 +122,9 @@ const MyComponent = () => {
 					{
 						brandCode: "UC",
 						countryCode: "IN",
-						companyId: "SUSHIL",
+						companyId: "CARZ",
 						calledBy: "MAKE",
-						loginUserId: "RAVI",
+						loginUserId: "MANISH",
 						loginIpAddress: "180.151.78.50",
 					},
 					{
@@ -139,7 +139,6 @@ const MyComponent = () => {
 				);
 
 				setData(response.data);
-				console.log(response.data, "check ");
 			} catch (error) {
 				setError(error);
 			}
@@ -156,9 +155,9 @@ const MyComponent = () => {
 					{
 						brandCode: "UC",
 						countryCode: "IN",
-						companyId: "SUSHIL",
+						companyId: "CARZ",
 						calledBy: "SOURCE",
-						loginUserId: "RAVI",
+						loginUserId: "MANISH",
 						loginIpAddress: "180.151.78.50",
 					},
 					{
@@ -173,7 +172,6 @@ const MyComponent = () => {
 				);
 
 				setSource(response.data);
-				console.log(response.data, "check Source ");
 			} catch (error) {
 				setError(error);
 			}

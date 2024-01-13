@@ -17,7 +17,7 @@ const Gellery = () => {
 			const data = {
 				brandCode: "UC",
 				countryCode: "IN",
-				companyId: "SUSHIL",
+				companyId: "CARZ",
 				budgetFrom: 0,
 				budgetTo: 2000000,
 				vehBrandCode: "ALL",
@@ -37,7 +37,6 @@ const Gellery = () => {
 
 				if (response.ok) {
 					const responseData = await response.json();
-					console.log("Response Data:", responseData);
 					setStockdata(responseData);
 				} else {
 					throw new Error(

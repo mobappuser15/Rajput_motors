@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./detail.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Carousel from "react-elastic-carousel";
 import Item from "./Item";
 import toast from "react-hot-toast";
 import PageScrollTop from "./PageScrollTop";
-// import Modal from "react-modal";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const breakPoints = [
 	{ width: 1, itemsToShow: 1 },
@@ -14,7 +15,13 @@ const breakPoints = [
 	{ width: 1200, itemsToShow: 3 },
 ];
 
+const breakPointss = [
+	{ width: 768, itemsToShow: 2 },
+	{ width: 1200, itemsToShow: 2 },
+];
+
 function Details({ selectedProduct }) {
+	const { uniquekey, vehOdometer } = useParams();
 	const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [stockdata, setStockdata] = useState([]);
@@ -36,6 +43,12 @@ function Details({ selectedProduct }) {
 	const [captchaError, setCaptchaError] = useState("");
 	const [modalOpen, setModalOpen] = useState(false);
 	const [captchaValid, setCaptchaValid] = useState(false);
+	const [inputValue, setInputValue] = useState("");
+	const [fomshow, setformshow] = useState(false);
+
+	const showform = () => {
+		setformshow(!fomshow);
+	};
 
 	const generateNumbers = () => {
 		setNum1(Math.floor(Math.random() * 10));
@@ -49,18 +62,69 @@ function Details({ selectedProduct }) {
 		setCaptchaValid(false); // Clear captcha validation
 	};
 
-	const handleSubmit = () => {
+	useEffect(() => {
+		const fetchData = async () => {
+			const url =
+				"https://mobile.orbitsys.com/OrbitsysSmbApiDemo/UsedCar/GetUsedCarVehStockDetail";
+			const headers = {
+				ApplicationMode: "ONLINE",
+				EnvironmentType: "DEMO",
+				BrandCode: "UC",
+				CountryCode: "IN",
+				"Content-Type": "application/json",
+			};
+			const data = {
+				brandCode: "UC",
+				countryCode: "IN",
+				companyId: "RAJPUT",
+				budgetFrom: 0,
+				budgetTo: 0,
+				vehBrandCode: "",
+				vehModelCode: "",
+				vehFuel: "",
+				loginCompanyID: "ORBIT",
+				loginUserId: "VICKY",
+				loginIpAddress: "192.168.10.32",
+			};
+
+			try {
+				const response = await fetch(url, {
+					method: "POST",
+					headers: headers,
+					body: JSON.stringify(data),
+				});
+
+				if (response.ok) {
+					const responseData = await response.json();
+					responseData.UsedCarVehStockDetail.map((item) => {
+						item.uniqueSerial == uniquekey && setStockdata(item);
+					});
+				} else {
+					throw new Error(
+						`Request failed with status code: ${response.status}`()
+					);
+				}
+			} catch (error) {
+				console.error("Error:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		let formIsValid = true;
 
 		if (mobile.length !== 10) {
-			setMobileError("Mobile number must be exactly 10 digits");
+			setMobileError("Please enter 10 digit mobile number");
 			formIsValid = false;
 		} else {
 			setMobileError("");
 		}
 
 		if (pincode.length !== 6) {
-			setPincodeError("Pincode must be exactly 6 digits");
+			setPincodeError("Please enter Pincode");
 			formIsValid = false;
 		} else {
 			setPincodeError("");
@@ -78,37 +142,26 @@ function Details({ selectedProduct }) {
 			setModalOpen(true);
 		}
 	};
-	console.log(handleSubmit, "handleSubmit");
 
 	const handleImageClick = (image) => {
-		// setSelectedImage(image);
 		setIsModalOpen(image);
-	};
-
-	const closeModal = () => {
-		setSelectedImage(null);
-		setModalOpen(false);
 	};
 
 	const navigate = useNavigate();
 
-	//
-
 	const reloadPage = () => {
 		window.location.reload();
-		// toast.success("Page  Loading ! ");
 	};
 
 	const HandleDataSave = (e) => {
 		e.preventDefault();
-		// const isValid = isFormValid();
 
 		const Datasecond = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
-			branchCode: "GGN01",
-			prospectLocation: "GGN01",
+			companyId: "RAJPUT",
+			branchCode: "FBD01",
+			prospectLocation: "FBD01",
 			title: "",
 			entity: "I",
 			firstName: contactName,
@@ -135,23 +188,23 @@ function Details({ selectedProduct }) {
 			dealType: "OEM_SELECT",
 			approveFlag: "N",
 			corporateComment: "",
-			salesperson: "E20003", //API - create method to be implemented
+			salesperson: "E20003",
 			projectedClosureDate: "2020-11-15",
 			hour: "2020-11-10T14:57:54.853Z",
 			demoVehModel: "",
 			demoVehVariant: "",
 			demoVehChassisNo: "",
-			make: selectedProduct.vehBrandCode, //stock API make 1  ------   make
-			subModel: selectedProduct.vehVariantCode, //stock API submodel 2  ----- varient
-			model: selectedProduct.vehModelCode, //stock API mode 3     ---- model
+			make: stockdata.vehBrandCode,
+			subModel: stockdata.vehVariantCode,
+			model: stockdata.vehModelCode,
 			qty: 1,
-			color: selectedProduct.exteriorColor, //stock API make exterior color 4
+			color: stockdata.exteriorColor,
 			interiorColor: "STD",
 			style: "STD",
-			my: selectedProduct.vehManufactureYear, //Manufacuring year 5
-			vy: selectedProduct.vehManufactureYear, //Manufacuring year 6
+			my: stockdata.vehManufactureYear,
+			vy: stockdata.vehManufactureYear,
 			ActiveRate: "HOT",
-			userId: "Sultan",
+			userId: "VICKY",
 			slotMins: "2020-11-10T14:30:00.853Z",
 			slotCount: 1,
 			valueString:
@@ -181,17 +234,53 @@ function Details({ selectedProduct }) {
 				navigate("/");
 			})
 			.catch((error) => {
-				// Handle API call errors
 				console.error("Error:", error);
-				// You might want to show an error message here
 			});
-		closeModal();
 	};
+
+	const handleInputChange = (event) => {
+		const newValue = event.target.value;
+		const numericValue = newValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+
+		if (numericValue.length <= 10) {
+			setmobile(numericValue);
+			setMobileError("");
+		}
+	};
+
+	const handleInputChange1 = (event) => {
+		const newValue1 = event.target.value;
+		const numericValue1 = newValue1.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+
+		if (numericValue1.length <= 6) {
+			setpincode(numericValue1);
+			setMobileError("");
+			setPincodeError("");
+		}
+	};
+
+	const isMobile =
+		/iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+			navigator.userAgent
+		);
+
+	let whatsappLink;
+	if (isMobile) {
+		// Mobile device
+		whatsappLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+			`Hi Rajput Motors, I want to know more about ${window.location.href}`
+		)}`;
+	} else {
+		// Desktop
+		whatsappLink = `https://web.whatsapp.com/send?text=${encodeURIComponent(
+			`Hi Rajput Motors, I want to know more about ${window.location.href}`
+		)}`;
+	}
 
 	return (
 		<>
 			<PageScrollTop />
-			{/* top image half */}
+			<Navbar />
 			<div
 				style={{ position: "top" }}
 				className='m-listTableTwo'
@@ -211,331 +300,286 @@ function Details({ selectedProduct }) {
 							Home
 						</Link>
 						<span className='fa fa-angle-right'></span>
-						<a className='b-breadCumbs__page m-active'>Detail</a>
+						<a className='b-breadCumbs__page m-active'>Details</a>
 					</div>
 				</div>
-
-				{/* test slider */}
-
 				<div className='carousel-wrapper cor_mn'>
 					<Carousel breakPoints={breakPoints}>
-						{selectedProduct?.modelImages.map((item) => (
-							<div key={item.uniqueSerial}>
-								<a
-									id='slider_img'
-									class=' '
-									href='#'
-									data-toggle='modal'
-									data-title={item.uri}
-									data-target='#image-gallery'>
-									<img
-										className=' card '
-										src={item.uri}
-										onClick={(e) => setZoom(item.uri)}
-										alt='Another alt text'
-										style={{ aspectRatio: "4/4" }}
-									/>
-								</a>
-
-								<div class=''>
-									<div class='row'>
-										<div
-											class='modal fade'
-											id='image-gallery'
-											tabindex='-1'
-											role='dialog'
-											aria-labelledby='myModalLabel'
-											aria-hidden='true'>
-											<div class='modal-dialog modal-lg mdl_wd'>
-												<div class='modal-content'>
-													<div class='modal-header'>
-														<h4
-															class='modal-title'
-															id='image-gallery-title'></h4>
-														<button
-															type='button'
-															class='close'
-															data-dismiss='modal'>
-															<span aria-hidden='true'>×</span>
-															<span class='sr-only'>Close</span>
-														</button>
-													</div>
-
-													<section className='b-slider'>
-														<div
-															id='carouselExampleFade'
-															class='carousel slide carousel-fade'
-															data-bs-ride='carousel'>
-															<div class='carousel-inner'>
-																{selectedProduct?.modelImages.map((item) => (
-																	<div
-																		class='carousel-item active'
-																		key={item.uniqueSerial}>
-																		<img
-																			src={zoom}
-																			alt='...'
-																			className='card'
-																		/>
-																	</div>
-																))}
-															</div>
-														</div>
-													</section>
-
-													<div class='modal-footer'></div>
-												</div>
-											</div>
-										</div>
-									</div>
+						{stockdata.modelImages &&
+							stockdata.modelImages.map((item, index) => (
+								<div key={item.uniqueSerial}>
+									<a
+										id='slider_img'
+										className='' // Use className instead of class
+										href='#'
+										data-toggle='modal'
+										data-title={item.uri}
+										data-target='#image-gallery'>
+										<img
+											className='card'
+											src={item.uri}
+											onClick={(e) => {
+												setZoom(index);
+											}}
+											alt='Another alt text'
+											style={{ aspectRatio: "4/4" }}
+										/>
+									</a>
 								</div>
-							</div>
-						))}
+							))}
 					</Carousel>
 				</div>
 
-				{/* cars image slider model */}
+				<div class=''>
+					<div class='row'>
+						<div
+							class='modal fade bac_bg_clr '
+							id='image-gallery'
+							tabindex='-1'
+							role='dialog'
+							aria-labelledby='myModalLabel'
+							aria-hidden='true'>
+							<div class='modal-dialog modal-lg mdl_wd'>
+								<div class='modal-content bdl_cl_non'>
+									<div class='modal-header hd_pd2'>
+										<h4 class='modal-title' id='image-gallery-title'></h4>
+										<button
+											type='button'
+											class='close cls_btn'
+											data-dismiss='modal'>
+											<span aria-hidden='true'>×</span>
+											<span class='sr-only'>Close</span>
+										</button>
+									</div>
 
+									<section className='b-slider'>
+										<div
+											id='carouselExampleFade'
+											class='carousel slide carousel-fade'
+											data-bs-ride='carousel'>
+											<Carousel breakPointss={breakPointss}>
+												{stockdata.modelImages &&
+													stockdata.modelImages.map((item, i) => (
+														<div
+															className={"carousel-item active"}
+															key={item.uniqueSerial}>
+															{zoom != 0 ? (
+																<>
+																	<img
+																		src={[zoom].uri}
+																		alt='...'
+																		className=''
+																	/>
+																	<>{setZoom(0)}</>
+																</>
+															) : (
+																<>
+																	<img src={item.uri} alt='...' className='' />
+																</>
+															)}
+														</div>
+													))}
+											</Carousel>
+										</div>
+									</section>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<section className='b-detail s-shadow'>
 					<div className='container'>
-						<div className='b-detail__main'>
+						<div className='b-detail__main bac_clr_mn'>
 							<div className=''>
-								<div className='col-md-8 col-xs-12'>
+								<div className='col-md-12 col-xs-12'>
 									<div className='b-detail__main-info'>
 										<div
 											className='b-detail__main-info-images wow '
 											data-wow-delay='0.5s'>
 											<div className='row m-smallPadding'>
-												{selectedProduct ? (
-													<div className='col-xs-10'>
-														<div className=''>
-															<h1>{selectedProduct.vehBrandCode}</h1>
-														</div>
+												<div className='col-xs-12'>
+													<div className=''>
+														<h1>
+															{stockdata.vehBrandCode}
+															<a href={whatsappLink} target='_blank'>
+																<i
+																	id='whatsup_icon'
+																	className='fa fa-whatsapp fa-2x'>
+																	{" "}
+																</i>
+															</a>{" "}
+															<p className='wts_tx2'>
+																Enquire more on WhatsApp
+															</p>
+														</h1>
+													</div>
 
-														<aside className='b-detail__main-aside'>
-															<div
-																className='b-detail__main-aside-desc wow '
-																data-wow-delay='0.5s'>
-																<h2
-																	className='s-titleDet'
-																	style={{ marginTop: "40px" }}>
-																	Description
-																</h2>
+													<aside className='b-detail__main-aside'>
+														<div
+															className='b-detail__main-aside-desc wow '
+															data-wow-delay='0.5s'>
+															<h2
+																className='s-titleDet'
+																style={{ marginTop: "40px" }}>
+																Description
+															</h2>
 
-																<div className='row'>
-																	<div className='col-6'>
+															<div className='detl_mn'>
+																<ul>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Make
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehBrandCode}
+																			{stockdata.vehBrandCode}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Model
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehModelCode}
+																			{stockdata.vehModelCode}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
+																		<h4 className='b-detail__main-aside-desc-title'>
+																			Model
+																		</h4>
+																	</li>
+																	<li>
+																		<p className='b-detail__main-aside-desc-value'>
+																			{stockdata.vehModelCode}
+																		</p>
+																	</li>
+
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Fuel Code
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehFuelCode}
+																			{stockdata.vehFuelCode}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Variant Code
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehVariantCode}
+																			{stockdata.vehVariantCode}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Variant Description
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehVariantDesc}
+																			{stockdata.vehVariantDesc}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Exterior Color
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.exteriorColor}
+																			{stockdata.exteriorColor}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Prize
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehSellPriceRecommended}
+																			{stockdata.vehSellPriceRecommended}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Transmission
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.transmissionDesc}
+																			{stockdata.transmissionDesc}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Kilometres
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehOdometer} KM
+																			{stockdata.vehOdometer} KM
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Owner Serial No.
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehOwnerSerial}
+																			{stockdata.vehOwnerSerial}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
 																			Manufacture Year
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehManufactureYear}
+																			{stockdata.vehManufactureYear}
 																		</p>
-																	</div>
-																</div>
+																	</li>
 
-																<div className='row'>
-																	<div className='col-6'>
+																	<li>
 																		<h4 className='b-detail__main-aside-desc-title'>
-																			Manufacture Month
+																			Registration No.
 																		</h4>
-																	</div>
-																	<div className='col-6'>
+																	</li>
+																	<li>
 																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehManufactureMonth}
+																			{stockdata.VehRegn1}
 																		</p>
-																	</div>
-																</div>
-
-																<div className='row'>
-																	<div className='col-6'>
-																		<h4 className='b-detail__main-aside-desc-title'>
-																			Registration Date
-																		</h4>
-																	</div>
-																	<div className='col-6'>
-																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehRegnDate &&
-																				new Date(
-																					selectedProduct.vehRegnDate
-																				).toLocaleDateString("en-US", {
-																					weekday: "long",
-																					year: "numeric",
-																					month: "long",
-																					day: "numeric",
-																				})}
-																		</p>
-																	</div>
-																</div>
-
-																<div className='row'>
-																	<div className='col-6'>
-																		<h4 className='b-detail__main-aside-desc-title'>
-																			Registration Year
-																		</h4>
-																	</div>
-																	<div className='col-6'>
-																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehRegnYear}
-																		</p>
-																	</div>
-																</div>
-
-																<div className='row'>
-																	<div className='col-6'>
-																		<h4 className='b-detail__main-aside-desc-title'>
-																			Registration Month
-																		</h4>
-																	</div>
-																	<div className='col-6'>
-																		<p className='b-detail__main-aside-desc-value'>
-																			{selectedProduct.vehRegnMonth}
-																		</p>
-																	</div>
-																</div>
+																	</li>
+																</ul>
 															</div>
-														</aside>
-													</div>
-												) : (
-													<>no data</>
-												)}
+														</div>
+													</aside>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 
 								<div className=''>
-									<div className='col-md-4 col-xs-12'>
+									<div className='col-md-12 col-xs-12 en_pdg'>
 										<aside className='b-detail__main-aside'>
 											<div
 												className='b-detail__main-aside-desc wow zoomInUp'
@@ -545,206 +589,254 @@ function Details({ selectedProduct }) {
 												</h2>
 												<div className='b-detail__main-aside-about-call'>
 													<span className='fa fa-phone'></span>
-													<div>92509 22333</div>
+													<div> +91 9871888833</div>
 													<p>Call the seller 24/7 and they would help you.</p>
 												</div>
-												<div className='b-detail__main-aside-about-seller'>
+												<div className='b-detail__main-aside-about-seller dtl_clr1'>
 													<p>Seller Info</p>
 												</div>
 												<div className='b-detail__main-aside-about-form'>
 													<div className='b-detail__main-aside-about-form-links'>
+														{/* <button class="btn_call form_display" onClick ={showform}>Reserve Now</button>  */}
+
+														<button
+															class='btn_call form_display'
+															onClick={showform}>
+															Reserve Now
+														</button>
+
+														<a
+															class='btn_wht'
+															href='https://api.whatsapp.com/send/?phone=9871888833&text= Hello RAJPUT Gallery+Team%2C+I+would+like+to+know+more&type=phone_number&app_absent=0'
+															target='_blank'>
+															Whatsapp
+														</a>
+
 														<a
 															href='#'
-															className='j-tab m-active s-lineDownCenter'
+															className='j-tab m-active s-lineDownCenter in_siz'
 															data-to='#form1'>
 															GENERAL INQUIRY
 														</a>
 													</div>
-													<form id='form1' style={{ fontSize: "15px" }}>
-														Name <span style={{ color: "red" }}>*</span>
-														<input
-															className='phone_number'
-															type='text'
-															placeholder='Please Enter Name'
-															name='contactName'
-															onChange={(e) => setcontactName(e.target.value)}
-														/>
-														Email <span style={{ color: "red" }}>*</span>
-														<input
-															className='phone_number'
-															type='email'
-															placeholder=' Please Enter Email Id'
-															onChange={(e) => setemail(e.target.value)}
-															name='email'
-														/>
-														Mobile No. <span style={{ color: "red" }}>*</span>
-														<input
-															className='phone_number'
-															type='number'
-															placeholder='Please Enter Phone No.'
-															name='mobile'
-															onChange={(e) => {
-																setmobile(e.target.value);
-																setMobileError(""); // Clear the error when the user starts typing
-															}}
-														/>
-														{mobileError && (
-															<span style={{ color: "red" }}>
-																{mobileError}
-															</span>
-														)}
-														<br />
-														Pincode <span style={{ color: "red" }}>*</span>
-														<input
-															className='phone_number'
-															type='number'
-															placeholder=' Please Enter Pincode'
-															name='pincode'
-															onChange={(e) => {
-																setpincode(e.target.value);
-																setPincodeError(""); // Clear the error when the user starts typing
-															}}
-														/>
-														{pincodeError && (
-															<span style={{ color: "red" }}>
-																{pincodeError}
-															</span>
-														)}
-														<form>
-															<span
-																className='d-flex'
-																style={{
-																	fontWeight: "600",
-																	marginTop: "-25px",
-																	height: "26px",
-																	color: "green",
-																}}>
-																<span
-																	style={{
-																		fontSize: "25px",
-																		marginLeft: "20px",
-																		marginTop: "20px",
-																		color: "red",
-																		fontWeight: "800px ",
-																	}}>
-																	{num1} + {num2} = ?
-																</span>
-																<i
-																	style={{
-																		marginLeft: "20px",
-																		marginTop: "30px",
-																	}}
-																	onClick={resetCaptcha}
-																	class='fa fa-refresh fa-2x'
-																	aria-hidden='true'></i>
-															</span>
-
-															<label
-																style={{
-																	color: "black",
-																	marginTop: "10px",
-																}}></label>
-															<div className='' style={{ marginTop: "-30px" }}>
-																Captcha <span style={{ color: "red" }}>*</span>
+													{fomshow && (
+														<form
+															class='form_display'
+															id='form1'
+															style={{ fontSize: "15px" }}>
+															<div class='col-md-6 col-sm-6 col-xs-12'>
+																Name <span style={{ color: "red" }}>*</span>
 																<input
 																	className='phone_number'
-																	placeholder='Please Enter Captcha'
-																	type='number'
-																	value={userAnswer}
-																	onChange={(event) =>
-																		setUserAnswer(event.target.value)
-																	}></input>
+																	type='text'
+																	placeholder='Please Enter Name'
+																	name='contactName'
+																	onChange={(e) =>
+																		setcontactName(e.target.value)
+																	}
+																/>
 															</div>
-														</form>
-														{captchaValid && (
-															<span style={{ color: "red" }}>
-																{captchaValid}
-															</span>
-														)}
-														<button
-															id=''
-															style={{ backgroundColor: "#f76d2b" }}
-															type='button'
-															data-toggle='modal'
-															onClick={handleSubmit}
-															href='#ignismyModal'
-															className='btn m-btn'>
-															RAISE ENQUIRY
-															<span
-																id='arrowiconbtn'
-																className='fa fa-ticket fa-5x'></span>
-														</button>
-														{/* popup message */}
-														{!mobileError && captchaValid && (
-															<div className=''>
-																<div className='row'>
+
+															<div class='col-md-6 col-sm-6 col-xs-12'>
+																Email <span style={{ color: "red" }}>*</span>
+																<input
+																	className='phone_number'
+																	type='email'
+																	placeholder=' Please Enter Email Id'
+																	onChange={(e) => setemail(e.target.value)}
+																	name='email'
+																/>
+															</div>
+
+															<div class='col-md-6 col-sm-6 col-xs-12'>
+																Mobile No.{" "}
+																<span style={{ color: "red" }}>*</span>
+																<input
+																	className='phone_number'
+																	type='text'
+																	placeholder='Please Enter Phone No.'
+																	name='mobile'
+																	value={mobile}
+																	onChange={handleInputChange}
+																/>
+																{mobileError && (
+																	<span style={{ color: "red" }}>
+																		{mobileError}
+																	</span>
+																)}
+															</div>
+
+															<div class='col-md-6 col-sm-6 col-xs-12'>
+																Pincode <span style={{ color: "red" }}>*</span>
+																<input
+																	className='phone_number'
+																	type='text'
+																	placeholder=' Please Enter Pincode'
+																	name='pincode'
+																	value={pincode}
+																	onChange={
+																		// 	(e) => {
+																		// 	setpincode(e.target.value);
+																		// 	setPincodeError(""); // Clear the error when the user starts typing
+																		// }
+
+																		handleInputChange1
+																	}
+																/>
+																{pincodeError && (
+																	<span style={{ color: "red" }}>
+																		{pincodeError}
+																	</span>
+																)}
+															</div>
+
+															<form>
+																<div class='col-md-6 col-sm-6 col-xs-12'>
+																	<span
+																		className='d-flex'
+																		style={{
+																			fontWeight: "600",
+																			marginTop: "0",
+																			height: "15px",
+																			color: "green",
+																		}}>
+																		<span
+																			style={{
+																				fontSize: "25px",
+																				marginLeft: "5px",
+																				marginTop: "20px",
+																				color: "red",
+																				fontWeight: "800px ",
+																			}}>
+																			{num1} + {num2} = ?
+																		</span>
+																		<i
+																			style={{
+																				marginLeft: "15px",
+																				marginTop: "30px",
+																				fontSize: "19px",
+																			}}
+																			onClick={resetCaptcha}
+																			class='fa fa-refresh fa-2x'
+																			aria-hidden='true'></i>
+																	</span>
+																</div>
+
+																<label
+																	style={{
+																		color: "black",
+																		marginTop: "10px",
+																	}}></label>
+																<div class='col-md-6 col-sm-6 col-xs-12'>
 																	<div
-																		className='modal fade'
-																		id='ignismyModal'
-																		role='dialog'>
+																		className=''
+																		style={{ marginTop: "-30px" }}>
+																		Captcha{" "}
+																		<span style={{ color: "red" }}>*</span>
+																		<input
+																			className='phone_number'
+																			placeholder='Please Enter Captcha'
+																			type='number'
+																			value={userAnswer}
+																			onChange={(event) =>
+																				setUserAnswer(event.target.value)
+																			}></input>
+																	</div>
+																</div>
+															</form>
+
+															{captchaValid && (
+																<span style={{ color: "red" }}>
+																	{captchaValid}
+																</span>
+															)}
+															<button
+																id='inq_btn'
+																style={{
+																	backgroundColor: "#c1272d Color:#fff",
+																}}
+																type='button'
+																data-toggle='modal'
+																onClick={handleSubmit}
+																href='#ignismyModal'
+																className='btn m-btn'>
+																RAISE ENQUIRY
+																<span
+																	id='arrowiconbtn'
+																	className='fa fa-ticket fa-5x'></span>
+															</button>
+															{/* popup message */}
+															{!mobileError && captchaValid && (
+																<div className=''>
+																	<div className='row'>
 																		<div
-																			className='modal-dialog mod_top_spc'
-																			style={{ margingTop: "90px" }}>
-																			<div className='modal-content'>
-																				<div className='modal-header mdl_hd'>
-																					<button
-																						type='button'
-																						className='close cls_btn'
-																						data-dismiss='modal'
-																						aria-label=''>
-																						<span>×</span>
-																					</button>
-																					<hr />
-																				</div>
+																			className='modal fade'
+																			id='ignismyModal'
+																			role='dialog'>
+																			<div
+																				className='modal-dialog mod_top_spc'
+																				style={{ margingTop: "90px" }}>
+																				<div className='modal-content'>
+																					<div className='modal-header mdl_hd'>
+																						<button
+																							type='button'
+																							className='close cls_btn'
+																							data-dismiss='modal'
+																							aria-label=''>
+																							<span>×</span>
+																						</button>
+																						<hr />
+																					</div>
 
-																				<div className='modal-body'>
-																					<div className='thank-you-pop'>
-																						<img
-																							style={{
-																								width: "50px",
-																								marginLeft: "200px",
-																							}}
-																							src='http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png'
-																							alt=''
-																						/>
-																						<h4
-																							style={{
-																								marginTop: "10px",
-																								marginLeft: "150px",
-																							}}>
-																							Are you sure to raise enquiry?
-																						</h4>
-																						<p></p>
-																						<div className='d-flex flx_mn_btn '>
-																							<button
-																								onClick={HandleDataSave}
+																					<div className='modal-body'>
+																						<div className='thank-you-pop'>
+																							<img
 																								style={{
-																									backgroundColor: "#f76d2b",
-																									width: "60px",
-																									color: "white",
-																									fontSize: "15px",
-																									margin: "5px",
+																									width: "50px",
+																									marginLeft: "200px",
 																								}}
-																								type='submit'
-																								className='btn'
-																								data-dismiss='modal'>
-																								Yes
-																							</button>
+																								src='http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png'
+																								alt=''
+																							/>
+																							<h4
+																								style={{
+																									marginTop: "10px",
+																									marginLeft: "150px",
+																								}}>
+																								Are you sure to raise enquiry?
+																							</h4>
+																							<p></p>
+																							<div className='d-flex flx_mn_btn '>
+																								<button
+																									onClick={HandleDataSave}
+																									style={{
+																										backgroundColor: " green",
+																										width: "60px",
+																										color: "white",
+																										fontSize: "15px",
+																										margin: "5px",
+																									}}
+																									type='submit'
+																									className='btn'
+																									data-dismiss='modal'>
+																									Yes
+																								</button>
 
-																							<button
-																								style={{
-																									backgroundColor: "green",
-																									width: "60px",
-																									color: "white",
-																									fontSize: "15px",
-																									margin: "5px",
-																								}}
-																								type='button'
-																								className='close no_btn'
-																								data-dismiss='modal'
-																								aria-label=''>
-																								No
-																							</button>
+																								<button
+																									style={{
+																										backgroundColor: "#c1272d",
+																										width: "60px",
+																										color: "white",
+																										fontSize: "15px",
+																										margin: "5px",
+																									}}
+																									type='button'
+																									className='close no_btn'
+																									data-dismiss='modal'
+																									aria-label=''>
+																									No
+																								</button>
+																							</div>
 																						</div>
 																					</div>
 																				</div>
@@ -752,9 +844,9 @@ function Details({ selectedProduct }) {
 																		</div>
 																	</div>
 																</div>
-															</div>
-														)}
-													</form>
+															)}
+														</form>
+													)}
 												</div>
 											</div>
 										</aside>
@@ -764,35 +856,7 @@ function Details({ selectedProduct }) {
 						</div>
 					</div>
 				</section>
-			</div>
-
-			<div className='b-features'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-md-9 col-md-offset-3 col-xs-6 col-xs-offset-6'>
-							<ul className='b-features__items'>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Low Prices, No Haggling
-								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Largest Car Dealership
-								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Multipoint Safety Check
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+				<Footer />
 			</div>
 		</>
 	);

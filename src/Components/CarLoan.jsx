@@ -2,10 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ScrollTop from "./ScrollTop";
 import PageScrollTop from "./PageScrollTop";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
+import Socalmedia from "./Socalmedia";
 
 const CarLoan = () => {
 	return (
 		<>
+			<Navbar />
+			<Socalmedia />
 			<PageScrollTop />
 			<div
 				className='m-detail'
@@ -80,7 +85,6 @@ const CarLoan = () => {
 					<a className='b-breadCumbs__page m-active'>Car Loan</a>
 				</div>
 			</div>
-			{/* brand details */}
 
 			<section class='b-brands s-shadow'>
 				<div class='container'>
@@ -114,35 +118,9 @@ const CarLoan = () => {
 				</div>
 			</section>
 			{/* footer top section */}
-			<div className='b-features'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-md-9 col-md-offset-3 col-xs-6 col-xs-offset-6'>
-							<ul className='b-features__items'>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Low Prices, No Haggling
-								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Largest Car Dealership
-								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Multipoint Safety Check
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+
 			{/* footer section  */}
+			<Footer />
 		</>
 	);
 };

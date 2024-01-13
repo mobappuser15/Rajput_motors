@@ -6,6 +6,10 @@ import styled from "./Item";
 import ScrollTop from "./ScrollTop";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import PageScrollTop from "./PageScrollTop";
+import Navbar from "./Navbar";
+import Socalmedia from "./Socalmedia";
+import Footer from "./Footer";
 
 const Submit2 = () => {
 	const [statelist, setStateList] = useState([]);
@@ -41,10 +45,10 @@ const Submit2 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "STATE",
 
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -65,7 +69,6 @@ const Submit2 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData.generalMasterList[0].generalList;
 				setStateList(generalList);
-				console.log(generalList, "state list data");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -85,11 +88,11 @@ const Submit2 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "CITY",
 			stateCode: code,
 
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -110,7 +113,6 @@ const Submit2 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData.generalMasterList[0].generalList;
 				setCity(generalList);
-				console.log(jsonData, "json");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -170,8 +172,8 @@ const Submit2 = () => {
 		const Datasecond = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
-			branchCode: "GGN01",
+			companyId: "RAJPUT",
+			branchCode: "FBD01",
 			uniqueSerial: "0",
 			mobile: mobile,
 			email: email,
@@ -189,14 +191,23 @@ const Submit2 = () => {
 			regnPart4: "",
 			regn1: PropsData.regn1,
 			regn2: "",
+
+			Kms: PropsData.Kms,
 			vehicleRegnNo: "",
 			mfdYear: PropsData.mfdYear,
 			fuel: PropsData.fuel,
 			regnState: selectedstate,
 			regnCity: selectcity,
+			NOCTYPELIST: [
+				{
+					ID: "0",
+					TYPE: "",
+					VALIDUPTO: "",
+				},
+			],
 
-			loginCompanyID: "SUSHIL",
-			loginUserId: "RAVI",
+			loginCompanyID: "RAJPUT",
+			loginUserId: "VICKY",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -219,7 +230,6 @@ const Submit2 = () => {
 				toast.success(data.result);
 				navigate("/");
 				// Handle the response data here
-				console.log("Response:", data);
 			})
 			.catch((error) => {
 				// Handle any errors
@@ -227,13 +237,24 @@ const Submit2 = () => {
 				console.error("Error:", error);
 			});
 
-		console.log(Datasecond, "secontdata");
+	};
+
+	const handleInputChange = (event) => {
+		const newValue = event.target.value;
+		const numericValue = newValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+
+		if (numericValue.length <= 10) {
+			setmobile(numericValue);
+			// setMobileError("");
+		}
 	};
 
 	return (
 		<div>
+			<Navbar />
+			<Socalmedia />
 			{/* header section */}
-			<ScrollTop />
+			<PageScrollTop />
 
 			<div className='m-submit1' data-scrolling-animations='true'>
 				<section className='b-pageHeader'>
@@ -259,7 +280,7 @@ const Submit2 = () => {
 				<div className='container'>
 					<div className='form_clr'>
 						<div className='row'>
-							<div className='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
+							{/* <div className='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
 								<aside className='b-submit__aside'>
 									<div className='b-submit__aside-step m-active '>
 										<h3>Step 1</h3>
@@ -283,14 +304,41 @@ const Submit2 = () => {
 											</div>
 											<div className='b-submit__aside-step-inner-info'>
 												<h4>Contact Details</h4>
-												<p>Choose vehicle specifications</p>
+												<p>Update your contact details</p>
 												<div className='b-submit__aside-step-inner-info-triangle'></div>
 											</div>
 										</div>
 									</div>
 								</aside>
-							</div>
-							<div className='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
+							</div> */}
+
+							<div className='col-lg-12 col-md-12 '>
+								<aside className='b-submit__aside sub_mn'>
+									<div class='b-submit__aside-step m-active sub_wd'>
+										<div class='b-submit__aside-step-inner m-active clearfix bac_non'>
+											<div class='b-submit__aside-step-inner-icon stp1'>
+												<h4>1</h4>
+											</div>
+											<div class='b-submit__aside-step-inner-info stp_tx'>
+												<h4>Step</h4>
+											</div>
+											<hr class='v-divider'></hr>
+										</div>
+									</div>
+
+									<div className='b-submit__aside-step m-active sub_wd'>
+										<div class='b-submit__aside-step-inner m-active clearfix bac_non'>
+											<div class='b-submit__aside-step-inner-icon stp1'>
+												<h4>2</h4>
+											</div>
+											<div class='b-submit__aside-step-inner-info stp_tx'>
+												<h4>Step</h4>
+											</div>
+											<hr class='v-divider div_non'></hr>
+										</div>
+									</div>
+								</aside>
+
 								<div className='b-submit__main'>
 									<form className='s-submit'>
 										<div className='b-submit__main-contacts  sum_pding'>
@@ -299,7 +347,7 @@ const Submit2 = () => {
 											</div>
 
 											<div className='row'>
-												<div className='col-md-6 col-xs-12'>
+												<div className='col-md-6'>
 													<div className='b-submit__main-element'>
 														<label style={{ color: "black" }}>
 															Name <span>*</span>
@@ -312,7 +360,7 @@ const Submit2 = () => {
 														/>
 													</div>
 												</div>
-												<div className='col-md-6 col-xs-12'>
+												<div className='col-md-6'>
 													<div className='b-submit__main-element'>
 														<label style={{ color: "black" }}>
 															Email Id <span>*</span>
@@ -328,7 +376,7 @@ const Submit2 = () => {
 											</div>
 
 											<div className='row'>
-												<div className='col-md-6 col-xs-12'>
+												<div className='col-md-6'>
 													<div className='b-submit__main-element'>
 														<label style={{ color: "black" }}>
 															Enter Your Phone Number <span>*</span>
@@ -336,8 +384,9 @@ const Submit2 = () => {
 														<input
 															type='text'
 															name='mobile'
+															value={mobile}
 															placeholder='Please Enter Mobile No.'
-															onChange={(e) => setmobile(e.target.value)}
+															onChange={handleInputChange}
 														/>
 														{mobileError && (
 															<span style={{ color: "red" }}>
@@ -346,7 +395,7 @@ const Submit2 = () => {
 														)}
 													</div>
 												</div>
-												<div className='col-md-6 col-xs-12'>
+												<div className='col-md-6'>
 													<div className='b-submit__main-element '>
 														<label style={{ color: "black" }}>
 															State <span>*</span>
@@ -374,7 +423,7 @@ const Submit2 = () => {
 												</div>
 											</div>
 											<div className='row'>
-												<div className='col-md-6 col-xs-12'>
+												<div className='col-md-6'>
 													<div className='b-submit__main-element '>
 														<label style={{ color: "black" }}>
 															City <span>*</span>
@@ -400,11 +449,11 @@ const Submit2 = () => {
 														</div>
 													</div>
 												</div>
-												<div className='col-md-6 col-xs-12'>
+												<div className='col-md-6'>
 													<div className='b-submit__main-element '>
 														<form>
 															<span
-																className='d-flex'
+																className='d-flex pad_cap1'
 																style={{
 																	fontWeight: "600",
 																	marginTop: "-20px",
@@ -415,7 +464,7 @@ const Submit2 = () => {
 																	style={{
 																		fontSize: "25px",
 																		marginLeft: "20px",
-																		marginTop: "20px",
+
 																		color: "red",
 																		fontWeight: "800px ",
 																	}}>
@@ -425,18 +474,16 @@ const Submit2 = () => {
 																<i
 																	style={{
 																		marginLeft: "20px",
-																		marginTop: "30px",
+																		marginTop: "10px",
 																	}}
 																	onClick={resetCaptcha}
 																	class='fa fa-refresh fa-1x'
 																	aria-hidden='true'></i>
-															</span>
 
-															<label
-																style={{
-																	color: "black",
-																	mrginTop: "-70px",
-																}}></label>
+																<span style={{ color: "red" }}>*</span>
+															</span>
+															<br />
+
 															<div className='d-flex'>
 																<input
 																	className='s-relative'
@@ -446,8 +493,6 @@ const Submit2 = () => {
 																	onChange={(event) =>
 																		setUserAnswer(event.target.value)
 																	}></input>
-
-																<span style={{ color: "red" }}>*</span>
 															</div>
 														</form>
 
@@ -463,15 +508,15 @@ const Submit2 = () => {
 											<div className='btn_wd1'>
 												<Link to='/salecar'>
 													<button
-														id='procedbtn22'
+														id='procedbtn33 '
 														style={{
-															backgroundColor: "#f76d2b",
+															backgroundColor: "#000 !important",
 															color: "white",
 															marginTop: "30px",
 														}}
 														type='submit'
-														className='btn m-btn pull-right  btn-danger'>
-														Click to &amp; Back
+														className='btn m-btn pull-right  btn-danger back_btn'>
+														Go Back
 														<span
 															id='arrowiconbtn'
 															className='fa fa-arrow-left'></span>
@@ -487,7 +532,7 @@ const Submit2 = () => {
 													data-toggle='modal'
 													href='#ignismyModal'
 													className='btn m-btn pull-right  btn-danger'>
-													Click to &amp; Raise Request
+													Click to Raise Request
 													<span
 														id='arrowiconbtn'
 														className='fa fa-check'></span>
@@ -540,7 +585,7 @@ const Submit2 = () => {
 																						<button
 																							onClick={handleSaveData}
 																							style={{
-																								backgroundColor: "#f76d2b",
+																								backgroundColor: "#008000",
 																								width: "60px",
 																								color: "white",
 																								fontSize: "15px",
@@ -554,7 +599,7 @@ const Submit2 = () => {
 
 																						<button
 																							style={{
-																								backgroundColor: "green",
+																								backgroundColor: "#7d0000",
 																								width: "60px",
 																								color: "white",
 																								fontSize: "15px",
@@ -585,6 +630,7 @@ const Submit2 = () => {
 					</div>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

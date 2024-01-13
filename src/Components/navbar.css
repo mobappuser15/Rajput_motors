@@ -2,18 +2,20 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 100px;
+	height: auto;
 	padding: 0 2rem;
-	background-color: #222;
+	background-color: #fff;
 	color: white;
 	font-size: 16px;
 	padding-left: 54px;
 	font-family: "Open Sans", sans-serif;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 15px;
+    
 }
 
 nav a {
-	margin: 0 2rem;
-	color: white;
+	margin: 0 15px;
+	color: #fff;
 	text-decoration: none;
 }
 
@@ -23,9 +25,9 @@ nav a:hover {
 
 a:hover,
 a:focus {
-	color: #f76d2b;
-	text-decoration: none;
-	/* border-bottom: 3px solid #f76d2b; */
+	color: #a3a3a3;
+    text-decoration: none;
+   
 }
 
 header .nav-btn {
@@ -43,17 +45,18 @@ header .nav-btn {
 @media only screen and (max-width: 560px) {
 	header {
 		align-items: center;
-		background-color: #222;
+		background-color: #fff;
 		color: #fff;
 		display: flex;
 		font-family: "Open Sans", sans-serif;
 		font-size: 16px;
 		height: auto;
 		justify-content: space-between;
-		padding: 8px 0px 8px 15px;
+		padding: 4px 0px 4px 7px;
 	}
 	.fixed-top img {
-		width: 55%;
+		width: 30%;
+		padding-left: 10px;
 	}
 	header .nav-btn {
 		background: transparent;
@@ -67,6 +70,7 @@ header .nav-btn {
 		padding: 5px;
 		position: absolute;
 		right: 21px;
+		top: 3px;
 	}
 }
 
@@ -113,5 +117,5 @@ header .nav-btn {
 
 .icon_rt {
 	padding-right: 45px;
-	margin-top: -32px;
+	
 }

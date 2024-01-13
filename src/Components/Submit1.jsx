@@ -7,6 +7,9 @@ import ScrollTop from "./ScrollTop";
 import PageScrollTop from "./PageScrollTop";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import Socalmedia from "./Socalmedia";
 
 const Submit1 = () => {
 	const [num1, setNum1] = useState(1);
@@ -28,6 +31,8 @@ const Submit1 = () => {
 	const [extirecolor, setExtirearColor] = useState([]);
 	const [fueldata, setFuelData] = useState([]);
 	const [transmission, setTransmission] = useState([]);
+	const [registration, setregistration] = useState("");
+	const [odometr, setodometr] = useState("");
 
 	const [selectedItem, setSelectedItem] = useState("");
 	const [resourcedata, setResoucedata] = useState("");
@@ -68,9 +73,9 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "MAKE",
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -91,8 +96,7 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setData(generalList);
-				console.log(generalList, "checkmakelist");
-				console.log(jsonData, "jsondata");
+				
 			})
 			.catch((error) => {
 				console.error(error);
@@ -113,11 +117,11 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "MODEL",
 			vehMake: codemodel,
 
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -138,7 +142,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setModel(generalList);
-				console.log(generalList, "MODELLIST");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -158,9 +161,9 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "LEAD_TYPE",
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -181,7 +184,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setDatatype(generalList);
-				console.log(generalList, "LEAD LIST");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -201,13 +203,13 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 
 			calledBy: "VARIANT",
 			vehMake: codemodel,
 			vehModel: codemake,
 
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -228,7 +230,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setVarient(generalList);
-				console.log(generalList, "varient list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -248,9 +249,9 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "MF_YEAR",
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -271,7 +272,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setVechileYear(generalList);
-				// // console.log(generalList, "year list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -291,9 +291,9 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "MONTH",
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -314,7 +314,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setVechileMonth(generalList);
-				// // console.log(generalList, "month list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -334,9 +333,9 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "FUEL",
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -357,7 +356,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setFuelData(generalList);
-				// // console.log(generalList, "fuel list data");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -377,9 +375,9 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "TRANSMISSION",
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -400,7 +398,6 @@ const Submit1 = () => {
 			.then((jsonData) => {
 				const generalList = jsonData?.generalMasterList[0].generalList;
 				setTransmission(generalList);
-				// // console.log(generalList, "transmission list");
 			})
 			.catch((error) => {
 				console.error(error);
@@ -421,12 +418,12 @@ const Submit1 = () => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "CARZ",
 			calledBy: "EXT_COLOR",
 
 			vehMake: codemodel,
 			vehModel: codemake,
-			loginUserId: "RAVI",
+			loginUserId: "MANISH",
 			loginIpAddress: "180.151.78.50",
 		};
 
@@ -464,9 +461,7 @@ const Submit1 = () => {
 	const handleSelectChange3 = (event) => {
 		setSelectmodel(event.target.value);
 		setcodemake(event.target.value);
-		// // // console.log(setcodemake, "setcodemake");
-
-		// // console.log(event.target.value, "check con");
+		
 	};
 	const handleSelectChange4 = (event) => {
 		setSelectFuel(event.target.value);
@@ -505,12 +500,13 @@ const Submit1 = () => {
 				regn1: selecttype,
 				mfdYear: selectmfy,
 				fuel: selectfuel,
+				Kms: odometr,
+				regn1: registration,
 			};
 
 			localStorage.setItem("data", JSON.stringify(AllData));
 			navigate("/submit2");
 
-			console.log(AllData, "Form is valid. Proceed to the next step.");
 		} else {
 			// Show validation error message or prevent the form from proceeding
 			console.log("Please fill all required fields.");
@@ -519,13 +515,8 @@ const Submit1 = () => {
 	};
 
 	function isFormValid() {
-		// Perform validation checks for all the required fields
-		// Return true if all required fields are filled, otherwise false
 		const isValid =
 			selectedItem.trim() !== "" &&
-			// selectverient.trim() !== "" &&
-			// Add validation checks for other required fields here
-			// For example:
 			selectmfy.trim() !== "" &&
 			selectfuel.trim() !== "" &&
 			selecttransmission.trim() !== "" &&
@@ -549,9 +540,17 @@ const Submit1 = () => {
 
 		return isValid;
 	}
+	const handleInputChangeReg = (event) => {
+		let inputValue = event.target.value;
 
+		if (inputValue.length <= 6) {
+			setregistration(inputValue.toUpperCase());
+		}
+	};
 	return (
 		<div style={{ margingTop: "40px" }}>
+			<Navbar />
+			<Socalmedia />
 			<PageScrollTop />
 			{/* header section */}
 			<div class='m-submit1' data-scrolling-animations='true'>
@@ -578,37 +577,33 @@ const Submit1 = () => {
 				<div class='container'>
 					<div class='form_clr'>
 						<div class='row'>
-							<div class='col-lg-3 col-md-4 col-sm-5 col-xs-6'>
-								<aside class='b-submit__aside'>
-									<div class='b-submit__aside-step m-active  '>
-										<h3>Step 1</h3>
-										<div class='b-submit__aside-step-inner m-active clearfix'>
-											<div class='b-submit__aside-step-inner-icon'>
-												<span class='fa fa-car'></span>
+							<div class='col-lg-12 col-md-12 col-xs-12'>
+								<aside class='b-submit__aside sub_mn'>
+									<div class='b-submit__aside-step m-active sub_wd'>
+										<div class='b-submit__aside-step-inner m-active clearfix bac_non'>
+											<div class='b-submit__aside-step-inner-icon stp1'>
+												<h4>1</h4>
 											</div>
-											<div class='b-submit__aside-step-inner-info'>
-												<h4>Add YOUR Vehicle</h4>
-												<p>Select your vehicle &amp; add info</p>
-												<div class='b-submit__aside-step-inner-info-triangle'></div>
+											<div class='b-submit__aside-step-inner-info stp_tx'>
+												<h4>Step</h4>
 											</div>
+											<hr class='v-divider'></hr>
 										</div>
 									</div>
-									<div class='b-submit__aside-step  '>
-										<h3>Step 2</h3>
-										<div class='b-submit__aside-step-inner clearfix'>
-											<div class='b-submit__aside-step-inner-icon'>
-												<span class='fa fa-user'></span>
+
+									<div class='b-submit__aside-step sub_wd'>
+										<div class='b-submit__aside-step-inner m-active clearfix bac_non'>
+											<div class='b-submit__aside-step-inner-icon stp1 stp2_clr'>
+												<h4>2</h4>
 											</div>
-											<div class='b-submit__aside-step-inner-info'>
-												<h4>Contact details</h4>
-												<p>Update Your Contact Details</p>
+											<div class='b-submit__aside-step-inner-info stp_tx'>
+												<h4>Step</h4>
 											</div>
+											<hr class='v-divider div_non'></hr>
 										</div>
 									</div>
 								</aside>
-							</div>
 
-							<div class='col-lg-9 col-md-8 col-sm-7 col-xs-6'>
 								<div class='b-submit__main'>
 									<div class='s-headerSubmit s-lineDownLeft  '>
 										<h2 class=''>Add Your Vehicle Details</h2>
@@ -617,7 +612,7 @@ const Submit1 = () => {
 
 									<form class='s-submit clearfix' onSubmit={handleSaveData}>
 										<div class='row'>
-											<div class='col-md-6 col-xs-12'>
+											<div class='col-md-6'>
 												<div class='b-submit__main-element  '>
 													<label style={{ color: "black" }}>
 														Make <span>*</span>
@@ -766,8 +761,20 @@ const Submit1 = () => {
 														)}
 													</div>
 												</div>
+
+												<div className='b-submit__main-element'>
+													<label style={{ color: "black" }}>
+														Odometer <span>*</span>
+													</label>
+													<input
+														type='text'
+														placeholder='Please Enter Odometer'
+														name='odometr'
+														onChange={(e) => setodometr(e.target.value)}
+													/>
+												</div>
 											</div>
-											<div class='col-md-6 col-xs-12'>
+											<div class='col-md-6'>
 												<div class='b-submit__main-element hidden-xs '>
 													<label style={{ color: "black" }}>
 														Model <span>*</span>
@@ -868,7 +875,7 @@ const Submit1 = () => {
 															onChange={handleSelectChange5}
 															displayEmpty>
 															<MenuItem className='selectoption' value=''>
-																Select Month{" "}
+																Select Transmission{" "}
 															</MenuItem>
 															{transmission.map((item, index) => (
 																<MenuItem
@@ -887,6 +894,17 @@ const Submit1 = () => {
 														)}
 													</div>
 												</div>
+												<label style={{ color: "black" }}>
+													Registration No. <span>*</span>
+												</label>
+												<input
+													required=''
+													placeholder='Registration No.'
+													type='text'
+													value={registration}
+													onChange={handleInputChangeReg}
+													className='admintextbox'
+												/>
 
 												<button
 													id='procedbtn'
@@ -907,6 +925,7 @@ const Submit1 = () => {
 					</div>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

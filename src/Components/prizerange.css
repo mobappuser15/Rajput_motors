@@ -14,9 +14,9 @@
 	width: 20px;
 	height: 20px;
 	/* cursor: pointer; */
-	background-color: #f76d2b;
+	background-color: #7d0000;
 	border-radius: 50%;
-	border: 2px solid black;
+	border: 2px solid #c6c6c6;
 	top: -22px;
 }
 
@@ -25,16 +25,18 @@
 }
 
 .prizetext {
-	font-size: 13px;
-	padding: 10px;
-	text-align: center;
-	width: 100%;
-	margin-left: 0px;
-	/* margin-top: 10px; */
+	font-size: 18px;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 5px !important;
+    display: inline-block;
 }
 
 .prise_mn {
 	width: 100%;
+	margin-top: -17px;
 }
 
 .rsarr {
@@ -44,7 +46,9 @@
 @media screen and (max-width: 480px) {
 	.prise_mn {
 		width: 100%;
-		background: #000;
+		background: url(/public/images/search_cr.jpg) left top no-repeat !important;
+    background-size: cover !important;
+    transform: none;
 		display: inline-block;
 		margin-bottom: 20px;
 		margin-top: -14px;

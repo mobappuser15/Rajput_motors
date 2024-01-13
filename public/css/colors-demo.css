@@ -91,8 +91,8 @@ a.btn.m-btn.m-pay:hover,
 .b-compare__links a.btn.m-btn span.fa,
 .b-items__aside-sell-info a.btn.m-btn:hover span.fa
 {
-    background-color:#f76d2b;
-    fill: #f76d2b;
+    background-color:#7d0000;
+    fill: #7d0000;
 }
 
 /* Color 1*/
@@ -141,8 +141,8 @@ a.btn.m-btn.m-pay:hover,
 .b-items__pagination-main > span.m-active a,
 .b-items__pagination-main > span:hover a
 {
-    color:#f76d2b;
-    fill:#f76d2b;
+    color:#7d0000;
+    fill:#7d0000;
 }
 
 /* Border Color */
@@ -176,7 +176,7 @@ a.btn.m-btn.m-pay:hover,
 .b-auto__main-nav li:hover:before,
 .b-auto__main-nav li.active:before
 {
-    border-color:#f76d2b;
+    border-color:#7d0000;
 }
 
 
@@ -405,7 +405,7 @@ a.btn.m-btn.m-pay:hover,
 .s-form button[type='submit']:hover,
 .s-submit button.btn.m-btn:hover
 {
-    background-color: #000000;
+    background-color: #7d0000;
 }
 
 
@@ -599,7 +599,7 @@ select.m-select + span.fa,
 .b-submit__main-file label.btn.m-btn,
 .b-submit__main-contacts-select
 {
-    color:#F76D2B;
+    color:#7d0000;
 }
 
 
@@ -656,8 +656,11 @@ a.btn.m-btn.m-pay,
 }
 
 .b-items__cars-one-info-title{
-	
-	color: black;
+    font-size: 17px !important;
+    color: #333333;
+    text-transform: unset;
+    padding-bottom: 8px;
+    
 }
 
 .navbar-nav-menu li a{

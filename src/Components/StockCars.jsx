@@ -14,13 +14,17 @@ import PageScrollTop from "./PageScrollTop";
 import ReactLoading from "react-loading";
 import Pagination from "./Pagination";
 import Navbar from "./Navbar";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 import { Typography, makeStyles, TablePagination } from "@material-ui/core";
+import Socalmedia from "./Socalmedia";
+import Footer from "./Footer";
 
 const MIN = 50000;
 const MAX = 6000000;
 
-const StockCars = ({ detailspage, setDetailspage }) => {
+const StockCars = ({ detailspage, setDetailspage, refreshData }) => {
 	const [openfueltype, setOpenfueltype] = useState(false);
 	const [stockdata, setStockdata] = useState([]);
 	const [selectedProduct, setSelectedProduct] = useState(null);
@@ -49,12 +53,12 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 	const [typedata, setDatatype] = useState([]);
 	// const [detailspage, setdetailspage] = useState(false);
 	const [methu, setMethu] = useState([]);
-
+	const [refreshing, setRefreshing] = useState(false);
 	const [prizevalue, setprizevalue] = useState([MIN, MAX]);
 
 	const [currentpage, setCurrentPage] = useState(1);
 	var [homepage, setHomepage] = useState(false);
-	const itemsperpage = 18;
+	const itemsperpage = 15;
 	const totalItems = demo.length;
 	const totalPage = Math.ceil(totalItems / itemsperpage);
 
@@ -65,7 +69,6 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 	const Startindex = (currentpage - 1) * itemsperpage;
 	const EndIndex = Startindex + itemsperpage;
 	var currentData = stockdata.slice(Startindex, EndIndex);
-	console.log(currentData, "currentData....");
 
 	// All Stock Show
 	useEffect(() => {
@@ -82,14 +85,14 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 			const data = {
 				brandCode: "UC",
 				countryCode: "IN",
-				companyId: "SUSHIL",
+				companyId: "RAJPUT",
 				budgetFrom: 0,
 				budgetTo: 0,
 				vehBrandCode: "",
 				vehModelCode: "",
 				vehFuel: "",
 				loginCompanyID: "ORBIT",
-				loginUserId: "SULTAN",
+				loginUserId: "Manish",
 				loginIpAddress: "192.168.10.32",
 			};
 
@@ -121,14 +124,17 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 		fetchData();
 	}, []);
 
-	const singleProducthandle = (uniqueSerial) => {
+	const singleProducthandle = (uniqueSerial, vehOdometer) => {
 		const product = stockdata.find(
-			(item) => item.uniqueSerial === uniqueSerial
+			(item) => item.uniqueSerial === uniqueSerial,
+			(item) => item.vehOdometer === vehOdometer
 		);
 
+		navigate(
+			`/detailsparticular/${product.uniqueSerial}/${product.vehOdometer}`
+		);
 		setSelectedProduct(product);
-		// navigate("/details");
-		setDetailspage((product) => !product);
+		setDetailspage((prevDetailspage) => !prevDetailspage);
 	};
 
 	// make list
@@ -145,7 +151,7 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "RAJPUT",
 			calledBy: "MAKE",
 			loginUserId: "RAVI",
 			loginIpAddress: "180.151.78.50",
@@ -188,7 +194,7 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "RAJPUT",
 			calledBy: "MODEL",
 			vehMake: codemodel,
 
@@ -233,7 +239,7 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "RAJPUT",
 			calledBy: "FUEL",
 			loginUserId: "RAVI",
 			loginIpAddress: "180.151.78.50",
@@ -291,7 +297,7 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 		const data = {
 			brandCode: "UC",
 			countryCode: "IN",
-			companyId: "SUSHIL",
+			companyId: "RAJPUT",
 			budgetFrom: prizevalue[0],
 			budgetTo: prizevalue[1],
 			vehBrandCode: selectedItem,
@@ -299,7 +305,7 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 			vehVariantDesc: selectverient,
 			vehFuel: selectfuel,
 			loginCompanyID: "ORBIT",
-			loginUserId: "SULTAN",
+			loginUserId: "Manish",
 			loginIpAddress: "192.168.10.32",
 		};
 
@@ -332,7 +338,6 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 
 	const reloadPage = () => {
 		window.location.reload(false);
-		console.log("refersh data");
 	};
 
 	const reset = (currentData) => {
@@ -341,354 +346,422 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 		setSelectmodel("");
 
 		setStockdata(methu);
-		// const currentData = stockdata.slice(Startindex, EndIndex);
-		console.log("clear filter datannnn,,...");
+	};
+
+	const handleHomeClick = () => {
+		setDetailspage(false);
 	};
 	return (
 		<>
+			<Navbar onHomeClick={handleHomeClick} />
+			<Socalmedia />
 			<PageScrollTop />
-			{detailspage === false ? (
-				<div>
-					{/* body stucture */}
-					<div
-						className='m-listTableTwo'
-						data-scrolling-animations='true'
-						data-equal-height='.b-items__cell'>
-						<div id='page-preloader'>
-							<span className='spinner'></span>
+
+			<div>
+				{/* body stucture */}
+				<div
+					className='m-listTableTwo'
+					data-scrolling-animations='true'
+					data-equal-height='.b-items__cell'>
+					<div id='page-preloader'>
+						<span className='spinner'></span>
+					</div>
+
+					<section className='b-pageHeader'>
+						<div className='container'>
+							<h1 className=''>Vehicle Stock</h1>
+
+							{/* Add total counter stock number  */}
 						</div>
+					</section>
 
-						<section className='b-pageHeader'>
-							<div className='container'>
-								<h1 className=''>Auto Listings</h1>
-
-								{/* Add total counter stock number  */}
-
-								<div className='b-pageHeader__search  '>
-									{showdata === false ? (
-										<>
-											<span>Total Number of Cars {totalItems} </span>
-										</>
-									) : (
-										<>
-											<span>Total Number of Search Cars {demo.length} </span>
-										</>
-									)}
-								</div>
-							</div>
-						</section>
-
-						<div className='b-breadCumbs s-shadow'>
-							<div className='container '>
-								<Link to='/' className='b-breadCumbs__page'>
-									Home
-								</Link>
-								<span className='fa fa-angle-right'></span>
-								<a className='b-breadCumbs__page m-active'>Buy Car</a>
-
-								<div
-									className='b-pageHeader__search visible-xs  '
-									style={{
-										marginTop: "-20px",
-										color: "white",
-										padding: "3px",
-										marginLeft: "187px",
-									}}>
-									{showdata === false ? (
-										<>
-											<span>Total Number of Cars {totalItems} </span>
-										</>
-									) : (
-										<>
-											<span>Total Number of Search Cars {demo.length} </span>
-										</>
-									)}
-								</div>
-							</div>
-						</div>
-
-						{/* filter section */}
-
-						{/* body details cars */}
-						<div className='row' id='wid_siz'>
-							<div className='drup_mn1 visible-xs '>
-								<div className='prise_mn'>
-									<ul id='cardrow'>
-										<li>
-											<select
-												id='selectdata2'
-												class=''
-												value={selectedItem}
-												onChange={handleSelectChange}>
-												<option value=''>Brand</option>
-												{data.map((item, index) => (
-													<option key={index} value={item.code}>
-														{item.description}
-													</option>
-												))}
-											</select>
-										</li>
-										<li>
-											<select
-												id='selectdata2'
-												class=''
-												value={selectmodel}
-												onChange={handleSelectChange3}>
-												<option value=''> Model </option>
-												{model.map((item, index) => (
-													<option key={index} value={item.code}>
-														{item.description}
-													</option>
-												))}
-											</select>
-										</li>
-
-										<li>
-											<select
-												id='selectdata2'
-												class=''
-												value={selectfuel}
-												onChange={handleSelectChange4}>
-												<option value=''> Fuel-type</option>
-												{fueldata.map((item, index) => (
-													<option key={index} value={item.code}>
-														{item.description}
-													</option>
-												))}
-											</select>
-										</li>
-									</ul>
-									<div className='prizetext'>
-										<div className='textprize' style={{ color: "white" }}>
-											<span>{prizevalue[0]}</span>
-											<span className='rsarr'>
-												<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
-											</span>{" "}
-											-<span> {prizevalue[1]}</span>
-											<span className='rsarr'>
-												<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
-											</span>
-										</div>
-									</div>
-
-									<div onClick={handleSaveData}>
-										<Slider
-											className={"prizeslider"}
-											onChange={setprizevalue}
-											value={prizevalue}
-											min={MIN}
-											max={MAX}
-										/>
-									</div>
-
-									<div
-										className='filterbutton visible-xs'
-										style={{ margin: "10px 20px 10px 60px" }}>
-										<button
-											id='filter_buton'
-											className=' btn-sm'
-											onClick={handleSaveData}>
-											Search
-										</button>
-										<button
-											id='filter_buton'
-											className=' btn-sm'
-											onClick={reloadPage}
-											type='reset'>
-											Reset
-										</button>
-									</div>
-								</div>
+					<div className='b-breadCumbs s-shadow'>
+						<div className='container '>
+							<div className='b-pageHeader__search  '>
+								{showdata === false ? (
+									<>
+										<span className='list_num1'>
+											Total Number of Cars {totalItems}{" "}
+										</span>
+									</>
+								) : (
+									<>
+										<span>Total Number of Search Cars {demo.length} </span>
+									</>
+								)}
 							</div>
 
-							<form
-								id='viewform'
-								class='s-submit clearfix hidden-xs'
-								onSubmit={handleSaveData}
+							<Link to='/' className='b-breadCumbs__page'>
+								Home
+							</Link>
+							<span className='fa fa-angle-right'></span>
+							<a className='b-breadCumbs__page m-active'>Buy Car</a>
+
+							<div
+								className='b-pageHeader__search visible-xs  '
 								style={{
-									backgroundColor: "black",
-									width: "20%",
-									height: "30%",
+									marginTop: "-20px",
+									color: "white",
+									padding: "3px",
+									marginLeft: "187px",
 								}}>
-								<div class='row'>
-									<div class='col-xs-12 col-md-12'>
-										<div className='prise_mn'>
-											<div className='prizetext'>
-												<div className='textprize' style={{ color: "white" }}>
-													<span>{prizevalue[0]}</span>
-													<span className='rsarr'>
-														<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
-													</span>{" "}
-													-<span> {prizevalue[1]}</span>
-													<span className='rsarr'>
-														<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
-													</span>
+								{showdata === false ? (
+									<>
+										<span>Total Number of Cars {totalItems} </span>
+									</>
+								) : (
+									<>
+										<span>Total Number of Search Cars {demo.length} </span>
+									</>
+								)}
+							</div>
+						</div>
+					</div>
+
+					{/* filter section */}
+
+					{/* body details cars */}
+
+					<div className='drup_mn1 visible-xs '>
+						<div className='prise_mn'>
+							<ul id='cardrow'>
+								<li>
+									<select
+										id='selectdata2'
+										class=''
+										value={selectedItem}
+										onChange={handleSelectChange}>
+										<option value=''>Brand</option>
+										{data.map((item, index) => (
+											<option key={index} value={item.code}>
+												{item.description}
+											</option>
+										))}
+									</select>
+								</li>
+								<li>
+									<select
+										id='selectdata2'
+										class=''
+										value={selectmodel}
+										onChange={handleSelectChange3}>
+										<option value=''> Model </option>
+										{model.map((item, index) => (
+											<option key={index} value={item.code}>
+												{item.description}
+											</option>
+										))}
+									</select>
+								</li>
+
+								<li>
+									<select
+										id='selectdata2'
+										class=''
+										value={selectfuel}
+										onChange={handleSelectChange4}>
+										<option value=''> Fuel-type</option>
+										{fueldata.map((item, index) => (
+											<option key={index} value={item.code}>
+												{item.description}
+											</option>
+										))}
+									</select>
+								</li>
+							</ul>
+							<div className='prizetext'>
+								<div className='textprize' style={{ color: "white" }}>
+									<span>{prizevalue[0]}</span>
+									<span className='rsarr'>
+										<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+									</span>{" "}
+									-<span> {prizevalue[1]}</span>
+									<span className='rsarr'>
+										<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+									</span>
+								</div>
+							</div>
+
+							<div onClick={handleSaveData}>
+								<Slider
+									className={"prizeslider"}
+									onChange={setprizevalue}
+									value={prizevalue}
+									min={MIN}
+									max={MAX}
+								/>
+							</div>
+
+							<div
+								className='filterbutton visible-xs'
+								style={{ margin: "10px 20px 10px 60px" }}>
+								<button
+									id='filter_buton'
+									className=' btn-sm'
+									onClick={handleSaveData}>
+									Search
+								</button>
+								<button
+									id='filter_buton'
+									className=' btn-sm reset_btn'
+									onClick={reloadPage}
+									type='reset'>
+									Reset
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<section class='serach_sec2'>
+						<div className='container'>
+							<div className='row'>
+								<div className='col-md-12'>
+									<section class='about ab_ht'>
+										<div class='container'>
+											<div class='box-container hit_con'>
+												<img className='' src='images/form_bg.jpg' />
+												<div class='content'>
+													<div class='text'>
+														<div class='heading'>
+															<span>Search Your Car</span>
+														</div>
+														<h3>We make your drive memorable.</h3>
+
+														<div className='col-md-6 col-sm-6 col-xs-12'>
+															<div class=''>
+																<select
+																	onClick={handleSaveData}
+																	id='selectdata'
+																	class='pdg_dru'
+																	value={selectedItem}
+																	onChange={handleSelectChange}>
+																	<option value=''>Brand</option>
+																	{data.map((item, index) => (
+																		<option key={index} value={item.code}>
+																			{item.description}
+																		</option>
+																	))}
+																</select>
+																<span class='fa fa-caret'></span>
+															</div>
+														</div>
+
+														<div className='col-md-6 col-sm-6 col-xs-12'>
+															<div class=''>
+																<select
+																	id='selectdata'
+																	class='pdg_dru'
+																	onClick={handleSaveData}
+																	value={selectmodel}
+																	onChange={handleSelectChange3}>
+																	<option value=''> Model </option>
+																	{model.map((item, index) => (
+																		<option key={index} value={item.code}>
+																			{item.description}
+																		</option>
+																	))}
+																</select>
+																<span class='fa fa-caret-d'></span>
+															</div>
+														</div>
+
+														<div className='col-md-6 col-sm-6 col-xs-12'>
+															<div class='s-relative'>
+																<select
+																	id='selectdata'
+																	class='pdg_dru'
+																	onClick={handleSaveData}
+																	value={selectfuel}
+																	onChange={handleSelectChange4}>
+																	<option value=''> Fuel Type</option>
+																	{fueldata.map((item, index) => (
+																		<option key={index} value={item.code}>
+																			{item.description}
+																		</option>
+																	))}
+																</select>
+																<span class='fa fa-caret-'></span>
+															</div>
+														</div>
+
+														<div className='reng'>
+															<div className='col-md-6 col-sm-6 col-xs-12'>
+																<div className='prise_mn'>
+																	<div className='prizetext'>
+																		<div
+																			className='textprize'
+																			style={{ color: "white" }}>
+																			<span>{prizevalue[0]}</span>
+																			<span className='rsarr'>
+																				<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+																			</span>{" "}
+																			-<span> {prizevalue[1]}</span>
+																			<span className='rsarr'>
+																				<i class='fa-solid fa-indian-rupee-sign'></i>{" "}
+																			</span>
+																		</div>
+																	</div>
+
+																	<div onClick={handleSaveData}>
+																		<Slider
+																			className={"prizeslider"}
+																			onChange={setprizevalue}
+																			value={prizevalue}
+																			min={MIN}
+																			max={MAX}
+																		/>
+																	</div>
+																</div>
+															</div>
+
+															<div
+																id='fliterbutton'
+																className=''
+																style={{ alignItems: "center" }}>
+																<button
+																	id='filter_buton'
+																	className='btn-sm hid_on'
+																	onClick={handleSaveData}>
+																	Search
+																</button>
+
+																<button
+																	type='reset'
+																	style={{
+																		color: "black",
+
+																		backgroundColor: "#f76d2b",
+																	}}
+																	onClick={reloadPage}
+																	className='btn-sm btnn1 '>
+																	Clear Filter
+																</button>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
-
-											<div onClick={handleSaveData}>
-												<Slider
-													className={"prizeslider"}
-													onChange={setprizevalue}
-													value={prizevalue}
-													min={MIN}
-													max={MAX}
-												/>
-											</div>
 										</div>
-
-										<br />
-
-										<div class='col-xs-12 col-md-12 col-lg-12 col-xl-12'>
-											<div class=''>
-												<select
-													onClick={handleSaveData}
-													id='selectdata'
-													class=''
-													value={selectedItem}
-													onChange={handleSelectChange}>
-													<option value=''>Brand</option>
-													{data.map((item, index) => (
-														<option key={index} value={item.code}>
-															{item.description}
-														</option>
-													))}
-												</select>
-												<span class='fa fa-caret'></span>
-											</div>
-										</div>
-
-										<div
-											class='col-xs-12 col-md-12 col-lg-12 col-xl-12'
-											data-wow-delay='0.5s'>
-											<div class=''>
-												<select
-													id='selectdata'
-													class=''
-													onClick={handleSaveData}
-													value={selectmodel}
-													onChange={handleSelectChange3}>
-													<option value=''> Model </option>
-													{model.map((item, index) => (
-														<option key={index} value={item.code}>
-															{item.description}
-														</option>
-													))}
-												</select>
-												<span class='fa fa-caret-d'></span>
-											</div>
-										</div>
-
-										<div className='col-xs-12 col-md-12 col-lg-12 col-xl-12'>
-											<div class='s-relative'>
-												<select
-													id='selectdata'
-													class=''
-													onClick={handleSaveData}
-													value={selectfuel}
-													onChange={handleSelectChange4}>
-													<option value=''> Fuel Type</option>
-													{fueldata.map((item, index) => (
-														<option key={index} value={item.code}>
-															{item.description}
-														</option>
-													))}
-												</select>
-												<span class='fa fa-caret-'></span>
-											</div>
-										</div>
-
-										<br />
-										<br />
-
-										<div
-											id='fliterbutton'
-											className=''
-											style={{ alignItems: "center" }}>
-											<button
-												type='reset'
-												style={{
-													color: "black",
-
-													backgroundColor: "#f76d2b",
-												}}
-												onClick={reloadPage}
-												className='btn-sm btnn1 '>
-												Clear Filter
-											</button>
-											<br />
-											<br />
-										</div>
-									</div>
+									</section>
 								</div>
-							</form>
+							</div>
+						</div>
+					</section>
 
-							{showdata === false ? (
-								<>
-									{/* normal Stock */}
-									<div className='col-xs-12 col-md-12  col-lg-9 col-xl-9 '>
-										<div className='b-items itm_bg1'>
-											<div className='container'>
-												<div className='b-auto__main'></div>
-												<Row xs={12} md={3} id=''>
-													{currentData.length === 0 ? (
-														<>
-															<div
-																className='loader hidden-xs'
-																style={{
-																	marginLeft: "300px",
-																	marginTop: "200px",
-																}}>
-																<ReactLoading
-																	type='spin'
-																	color='#f76d2b'
-																	height={200}
-																	width={100}
-																/>
-															</div>
-															<div
-																className='loader visible-xs'
-																style={{
-																	marginTop: "41px",
-																	marginLeft: "115px",
-																}}>
-																<ReactLoading
-																	type='spin'
-																	color='#f76d2b'
-																	height={200}
-																	width={100}
-																/>
-															</div>
-														</>
-													) : (
-														<>
-															{currentData?.map((item) => {
-																const frontImage = item?.modelImages.find(
-																	(image) => image?.imageName === "Front"
-																);
-																if (frontImage) {
-																	return (
-																		<div key={frontImage.uri}>
-																			<Col>
-																				<div
-																					onClick={() =>
-																						singleProducthandle(
-																							item.uniqueSerial
-																						)
-																					}
-																					className=' card2 cr_pic b-auto__main-item '>
+					<div className='row' id='wid_siz'>
+						{showdata === false ? (
+							<>
+								{/* normal Stock */}
+								<div className='col-xs-12 col-md-12  col-lg-12 col-xl-12 '>
+									<div className='b-items itm_bg1'>
+										<div className='container'>
+											<div className='b-auto__main'></div>
+											<Row xs={12} md={4} id=''>
+												{currentData.length === 0 && !refreshing ? (
+													<>
+														<div
+															className='loader hidden-xs'
+															style={{
+																marginLeft: "300px",
+																marginTop: "200px",
+															}}>
+															<ReactLoading
+																type='spin'
+																color='#7d0000'
+																height={200}
+																width={100}
+															/>
+														</div>
+														<div
+															className='loader visible-xs'
+															style={{
+																marginTop: "41px",
+																marginLeft: "115px",
+															}}>
+															<ReactLoading
+																type='spin'
+																color='#7d0000'
+																height={200}
+																width={100}
+															/>
+														</div>
+													</>
+												) : (
+													<>
+														{currentData?.map((item) => {
+															const frontImage = item?.modelImages.find(
+																(image) => image?.imageName === "Front"
+															);
+															if (frontImage) {
+																return (
+																	<div
+																		className='cd_full2'
+																		key={frontImage.uri}>
+																		{item?.bookingFlag === "Y" ? (
+																			<>
+																				<div className='bokd_pic2'>
 																					<img
-																						style={{
-																							aspectRatio: "2/2",
-																							width: "100%",
-																						}}
-																						className=' img-responsive center-block'
-																						src={frontImage.uri}
-																						alt='nissan'
+																						className=''
+																						src='images/booked.png'
 																					/>
+																				</div>
+																			</>
+																		) : (
+																			<p
+																				className='newtext2'
+																				style={{ color: "white" }}>
+																				<i class='fa fa-check-circle ver_icn'></i>{" "}
+																				<></>
+																			</p>
+																		)}
 
+																		<Col>
+																			<div
+																				onClick={() =>
+																					singleProducthandle(item.uniqueSerial)
+																				}
+																				className=' card2 cr_pic b-auto__main-item '>
+																				{frontImage.uri === false ? (
+																					<>
+																						{" "}
+																						<img
+																							src='images/logo/defaulimag.png'
+																							style={{
+																								aspectRatio: "/2",
+																								width: "100%",
+																							}}
+																						/>
+																					</>
+																				) : (
+																					<>
+																						<img
+																							id='stockimagep1'
+																							style={{
+																								aspectRatio: "2/2",
+																								width: "100%",
+																							}}
+																							className=' img-responsive center-block'
+																							src={frontImage.uri}
+																							alt='nissan'
+																						/>
+
+																						{item?.bookingFlag === "Y" ? (
+																							<></>
+																						) : (
+																							<p
+																								className='newtext2'
+																								style={{ color: "white" }}>
+																								<i class='fa fa-check-circle ver_icn'></i>{" "}
+																								<></>
+																							</p>
+																						)}
+																					</>
+																				)}
+
+																				
+																				<div class='desi_tx2 dek_sel'>
 																					<div
-																						className=' d-flex b-items__cars-one-info-title'
+																						className=' d-flex b-items__cars-one-info-title dis_tx1'
 																						style={{
 																							fontSize: "16px",
 																							marginLeft: "20px",
@@ -704,6 +777,156 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 																						</div>{" "}
 																						<div style={{ marginLeft: "5px" }}>
 																							{item.vehModelCode}{" "}
+																						</div>
+																					</div>
+																				</div>
+
+																				<div class='rate_ts_mn'>
+																					<ul>
+																						<li>{item.vehOdometer} KMS</li>
+																						<li>{item.exteriorColor}</li>
+																						<li>{item.vehFuelCode}</li>
+																						<li>{item.transmissionDesc}</li>
+																					</ul>
+																				</div>
+																				<span
+																					style={{
+																						marginLeft: "19px",
+																					}}
+																					className='d-flex ml-6'>
+																					<i className=''></i>{" "}
+																					<div
+																						className='b-items__cars-one-info-title pric1'
+																						style={{ fontSize: "18px" }}>
+																						<i class='fa fa-rupee'></i>{" "}
+																						{item.vehSellPriceRecommended}
+																					</div>
+																				</span>
+																			</div>
+																		</Col>
+																	</div>
+																);
+															}
+														})}
+													</>
+												)}
+											</Row>
+											<div className='row' style={{}} id='cardrow'>
+												<Pagination
+													onPageChange={onPageChange}
+													currentpage={currentpage}
+													totalPage={totalPage}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</>
+						) : (
+							/* Search Data   */
+							<>
+								<>
+									{/* web view */}
+									<div className=' col-xs-12 col-md-12  col-lg-12 col-xl-12 '>
+										<div className='b-items itm_bg1'>
+											<div className='container'>
+												<div className='b-auto__main'></div>
+												<Row xs={12} md={4} id=''>
+													{currentData.length === 0 ? (
+														<div className='notdatafound'>
+															<h2>Vehicle Not Available</h2>
+														</div>
+													) : (
+														<>
+															{currentData?.map((item) => (
+																<div class='cd_full3' key={item.uniqueSerial}>
+																	{item?.bookingFlag === "Y" ? (
+																		<>
+																			<div className='bokd_pic2'>
+																				<img
+																					className=''
+																					src='images/booked.png'
+																				/>
+																			</div>
+																		</>
+																	) : (
+																		<p
+																			className='newtext2'
+																			style={{ color: "white" }}>
+																			<i class='fa fa-check-circle ver_icn'></i>{" "}
+																			<></>
+																		</p>
+																	)}
+
+																	<>
+																		<Col>
+																			<div
+																				onClick={() =>
+																					singleProducthandle(item.uniqueSerial)
+																				}
+																				className=''>
+																				<div className='card2 cr_pic b-auto__main-item '>
+																					<div className=''>
+																						{item?.modelImages.length === 0 ? (
+																							<>
+																								<img
+																									style={{
+																										aspectRatio: "2/2",
+																										width: "100%",
+																									}}
+																									src='images/logo/defaulimag.png'
+																									className='img-responsive center-block'
+																								/>
+																							</>
+																						) : (
+																							<>
+																								<img
+																									id='stockimagep1'
+																									style={{
+																										aspectRatio: "2/2",
+																										width: "100%",
+																									}}
+																									// id='pic_hit1'
+																									className='img-responsive center-block'
+																									src={
+																										item?.modelImages.length >
+																											0 &&
+																										item?.modelImages[0].uri
+																									}
+																									alt='jeep'
+																								/>
+
+																								{item?.bookingFlag === "Y" ? (
+																									<></>
+																								) : (
+																									<p
+																										className='newtext2'
+																										style={{ color: "white" }}>
+																										<i class='fa fa-check-circle ver_icn'></i>{" "}
+																										<></>
+																									</p>
+																								)}
+																							</>
+																						)}
+																					</div>
+																					<div class='desi_tx2 dek_sel'>
+																						<div
+																							className=' d-flex b-items__cars-one-info-title dis_tx1'
+																							style={{
+																								fontSize: "16px",
+																								marginLeft: "20px",
+																							}}>
+																							{" "}
+																							<li>
+																								{item.vehManufactureYear}{" "}
+																							</li>
+																							<li style={{ marginLeft: "5px" }}>
+																								{" "}
+																								{item.vehBrandCode}
+																							</li>{" "}
+																							<li style={{ marginLeft: "5px" }}>
+																								{item.vehModelCode}{" "}
+																							</li>
 																						</div>
 																					</div>
 
@@ -729,176 +952,34 @@ const StockCars = ({ detailspage, setDetailspage }) => {
 																						</div>
 																					</span>
 																				</div>
-																			</Col>
-																		</div>
-																	);
-																}
-															})}
+																			</div>
+																		</Col>
+																	</>
+																</div>
+															))}
 														</>
 													)}
 												</Row>
-												<div className='row' style={{}} id='cardrow'>
-													<Pagination
-														onPageChange={onPageChange}
-														currentpage={currentpage}
-														totalPage={totalPage}
-													/>
-												</div>
+
+												<Pagination
+													onPageChange={onPageChange}
+													currentpage={currentpage}
+													totalPage={totalPage}
+												/>
 											</div>
 										</div>
 									</div>
+									{/* phone View */}
 								</>
-							) : (
-								/* Search Data   */
-								<>
-									<>
-										{/* web view */}
-										<div className=' col-xs-12 col-md-12  col-lg-9 col-xl-9 '>
-											<div className='b-items itm_bg1'>
-												<div className='container'>
-													<div className='b-auto__main'></div>
-													<Row xs={12} md={3} id=''>
-														{currentData.length === 0 ? (
-															<div className='notdatafound'>
-																<p>vehicle Not Available</p>
-															</div>
-														) : (
-															<>
-																{currentData?.map((item) => (
-																	<div key={item.uniqueSerial}>
-																		<>
-																			<Col>
-																				<div
-																					onClick={() =>
-																						singleProducthandle(
-																							item.uniqueSerial
-																						)
-																					}
-																					className='card2 cr_pic b-auto__main-item '>
-																					<div className=''>
-																						<div className=''>
-																							<img
-																								style={{
-																									aspectRatio: "2/2",
-																									width: "100%",
-																								}}
-																								// id='pic_hit1'
-																								className='img-responsive center-block'
-																								src={
-																									item?.modelImages.length >
-																										0 &&
-																									item?.modelImages[0].uri
-																								}
-																								alt='jeep'
-																							/>
-																						</div>
-
-																						<div
-																							className=' d-flex b-items__cars-one-info-title'
-																							style={{
-																								fontSize: "16px",
-																								marginLeft: "20px",
-																							}}>
-																							{" "}
-																							<div>
-																								{item.vehManufactureYear}{" "}
-																							</div>
-																							<div
-																								style={{ marginLeft: "5px" }}>
-																								{" "}
-																								{item.vehBrandCode}
-																							</div>{" "}
-																							<div
-																								style={{ marginLeft: "5px" }}>
-																								{item.vehModelCode}{" "}
-																							</div>
-																						</div>
-
-																						<div class='rate_ts_mn'>
-																							<ul>
-																								<li>{item.vehOdometer} KMS</li>
-																								<li>{item.exteriorColor}</li>
-																								<li>{item.vehFuelCode}</li>
-																								<li>{item.transmissionDesc}</li>
-																							</ul>
-																						</div>
-																						<span
-																							style={{
-																								marginLeft: "19px",
-																							}}
-																							className='d-flex ml-6'>
-																							<i className=''></i>{" "}
-																							<div
-																								className='b-items__cars-one-info-title'
-																								style={{ fontSize: "18px" }}>
-																								<i class='fa fa-rupee'></i>{" "}
-																								{item.vehSellPriceRecommended}
-																							</div>
-																						</span>
-																					</div>
-																				</div>
-																			</Col>
-																		</>
-																	</div>
-																))}
-															</>
-														)}
-													</Row>
-
-													<Pagination
-														onPageChange={onPageChange}
-														currentpage={currentpage}
-														totalPage={totalPage}
-													/>
-												</div>
-											</div>
-										</div>
-										{/* phone View */}
-									</>
-								</>
-							)}
-						</div>
+							</>
+						)}
 					</div>
-
-					<div className='b-features'>
-						<div className='container'>
-							<div className='row'>
-								<div className='col-md-9 col-md-offset-3 col-xs-6 col-xs-offset-6'>
-									<ul className='b-features__items'>
-										<li
-											className='wow zoomInUp'
-											data-wow-delay='0.3s'
-											data-wow-offset='100'>
-											Low Prices, No Haggling
-										</li>
-										<li
-											className='wow zoomInUp'
-											data-wow-delay='0.3s'
-											data-wow-offset='100'>
-											Largest Car Dealership
-										</li>
-										<li
-											className='wow zoomInUp'
-											data-wow-delay='0.3s'
-											data-wow-offset='100'>
-											Multipoint Safety Check
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					{/* <!--b-features--> */}
 				</div>
-			) : (
-				<>
-					{selectedProduct ? (
-						<Details selectedProduct={selectedProduct} />
-					) : (
-						<div></div>
-					)}
-				</>
-			)}
+
+				{/* <!--b-features--> */}
+			</div>
+
+			<Footer />
 		</>
 	);
 };

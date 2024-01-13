@@ -12,8 +12,11 @@ import Slider from "react-slider";
 import "./prizerange.css";
 import ScrollTop from "./ScrollTop";
 import { Typography, makeStyles, TablePagination } from "@material-ui/core";
+import Navbar from "./Navbar";
+import Socalmedia from "./Socalmedia";
+import Footer from "./Footer";
 
-const Stockdetails = () => {
+const Stockdetails = ({ detailspage, setDetailspage }) => {
 	const [stockdata, setStockdata] = useState([]);
 	useEffect(() => {
 		const fetchData = async () => {
@@ -51,7 +54,6 @@ const Stockdetails = () => {
 					const responseData = await response.json();
 
 					setStockdata(responseData?.UsedCarVehStockDetail);
-					console.log(stockdata, "data stcok");
 				} else {
 					throw new Error(
 						`Request failed with status code: ${response.status}`
@@ -66,6 +68,8 @@ const Stockdetails = () => {
 	}, []);
 	return (
 		<div>
+			<Navbar />
+			<Socalmedia />
 			{showdata === false ? (
 				<>
 					{/* normal Stock */}
@@ -87,7 +91,6 @@ const Stockdetails = () => {
 																singleProducthandle(item.uniqueSerial)
 															}
 															className=' card2 b-auto__main-item '>
-															{/* {console.log(item.modelImages, "data image url")} */}
 															<img
 																style={{
 																	aspectRatio: "2/2",
@@ -173,7 +176,6 @@ const Stockdetails = () => {
 											<>
 												{demo?.map((item) => (
 													<div key={item.uniqueSerial}>
-														{console.log(demo, "check demo search data")}
 
 														<>
 															<Col>
@@ -252,6 +254,7 @@ const Stockdetails = () => {
 					</>
 				</>
 			)}
+			<Footer />
 		</div>
 	);
 };

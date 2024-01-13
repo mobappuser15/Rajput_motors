@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PageScrollTop from "./PageScrollTop";
+import Navbar from "./Navbar";
+import Socalmedia from "./Socalmedia";
+import Footer from "./Footer";
 
 const Insurance = () => {
 	return (
 		<>
+			<Navbar />
+			<Socalmedia />
 			<PageScrollTop />
 			<div
 				className='m-detail'
@@ -112,35 +117,9 @@ const Insurance = () => {
 				</div>
 			</section>
 			{/* footer top section */}
-			<div className='b-features'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-md-9 col-md-offset-3 col-xs-6 col-xs-offset-6'>
-							<ul className='b-features__items'>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Low Prices, No Haggling
-								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Largest Car Dealership
-								</li>
-								<li
-									className='wow zoomInUp'
-									data-wow-delay='0.3s'
-									data-wow-offset='100'>
-									Multipoint Safety Check
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+
 			{/* footer section  */}
+			<Footer />
 		</>
 	);
 };

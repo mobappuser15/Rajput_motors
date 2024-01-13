@@ -94,8 +94,8 @@ a.btn.m-btn.m-pay:hover,
 .m-index .b-count .m-main,
 .demo_changer .demo-icon
 {
-    background-color:#f76d2b;
-    fill: #f76d2b;
+    background-color:#7d0000;
+    fill: #7d0000;
 }
 
 
@@ -144,8 +144,8 @@ a.btn.m-btn.m-pay:hover,
 .b-items__pagination-main > span.m-active a,
 .b-items__pagination-main > span:hover a
 {
-    color:#f76d2b;
-    fill:#f76d2b;
+    color:#7d0000;
+    fill:#7d0000;
 }
 
 .b-nav__list ul li a:hover,
@@ -179,17 +179,17 @@ a.btn.m-btn.m-pay:hover,
 .b-auto__main-nav li.active:before,
 .b-welcome__services-circle
 {
-    border-color:#f76d2b;
+    border-color:#7d0000;
 }
 
 .b-submit__aside-step-inner-info-triangle
 {
-    border-left-color:#f76d2b;
+    border-left-color:#7d0000;
 }
 
 .b-compare__block-title > a,.b-more__info-block-title a
 {
-    border-bottom-color:#f76d2b;
+    border-bottom-color:#7d0000;
 }
 
 /* Color two */

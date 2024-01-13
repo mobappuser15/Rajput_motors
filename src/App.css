@@ -1,4 +1,4 @@
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
 	display: none;
 }
 
@@ -9,7 +9,6 @@ body {
 body {
 	scrollbar-width: "none";
 	/* background-color: rgb(36, 35, 35); */
-}
 
 .loading-message {
 	margin-top: -100px;
